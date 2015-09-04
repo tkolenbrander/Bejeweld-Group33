@@ -9,6 +9,10 @@ public class Gem {
 	
 	private GemType type;
 	
+	/**
+	 * Creates a Gem object with GemType t.
+	 * @param t GemType of the Gem.
+	 */
 	public Gem(GemType t) {
 		type = t;
 	}
@@ -19,5 +23,14 @@ public class Gem {
 	 */
 	public GemType getType() {
 		return type;
+	}
+	
+	/**
+   * Checks if two gems are equal.
+   * @param other gem to check
+   * @return true iff the two gems are equal.
+   */
+	public boolean equals(Gem other) {
+	  return this.type == other.type;
 	}
 }
