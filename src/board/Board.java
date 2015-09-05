@@ -23,6 +23,14 @@ public class Board {
 	}
 	
 	/**
+	 * Resets the board to how it came out of the constructor. Basically, the board is
+	 * reinitialised, that's it.
+	 */
+	public void reset() {
+	  initBoard();
+	}
+	
+	/**
 	 * Fills up the initially empty board with cells.
 	 */
 	private void initBoard() {
@@ -97,5 +105,18 @@ public class Board {
 	  result.add(getNeighbourAt(x, y, Direction.SOUTH));
 	  result.add(getNeighbourAt(x, y, Direction.WEST));
 	  return result;
+	}
+	
+	/**
+	 * Swaps the cells at locations (x1, y1) and (x2, y2).
+	 * @param x1 x-coordinate of cell 1
+	 * @param y1 y-coordinate of cell 1
+	 * @param x2 x-coordinate of cell 2
+	 * @param y2 y-coordinate of cell 2
+	 */
+	public void swap(int x1, int y1, int x2, int y2) {
+	  Cell temp = board[x1][y1];
+	  board[x1][y1] = board[x2][y2];
+	  board[x2][y2] = temp;
 	}
 }
