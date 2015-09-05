@@ -21,7 +21,15 @@ public class Board {
 		board = new Cell[BOARDSIZE][BOARDSIZE];
 		initBoard();
 	}
-	
+	  
+  /**
+   * Returns all the cells of the board
+   * @return
+   */
+  public Cell[][] getCells() {
+    return board;
+  }
+
 	/**
 	 * Resets the board to how it came out of the constructor. Basically, the board is
 	 * reinitialised, that's it.
@@ -86,15 +94,15 @@ public class Board {
 	}
 	
 	/**
-	 * Checks for a chain starting at the origin cell, at location (x, y), in the given direction.
+	 * Returns the chain starting at the origin cell, at location (x, y), in the given direction.
 	 * @param x x-coordinate of the origin cell
-	 * @param y	y-coordinate of the origin cel
+	 * @param y	y-coordinate of the origin cell
 	 * @param dir the direction of the chain, relative to the origin cell
 	 * @return a list of the positions of cells in the chain.
 	 * 		   the list will be empty iff there is no chain starting at location (x, y) in the given direction.
 	 */
-	public ArrayList<Position> getChainAt(int x, int y, Direction dir){
-		ArrayList<Position> chain = new ArrayList<Position>();
+	public List<Position> getChainAt(int x, int y, Direction dir){
+		List<Position> chain = new ArrayList<Position>();
 		if (isTripletInDir(x, y, dir)){
 			GemType currGemType = board[x][y].getGem().getType();
 			while (x >= 0 && x < BOARDSIZE && y >= 0 && y < BOARDSIZE){
@@ -111,23 +119,18 @@ public class Board {
 	}
 	
 	/**
-	 * Checks for all the cells on the board that are in a chain
+	 * Returns a list of all the chains of three or more of the same gems on the board.
 	 * @return a list of the positions of all the cells on the board that are in a chain.
 	 *		   the list will be empty iff there are no chains on the board.
 	 */
-	public ArrayList<Position> chainedCells(){
-		ArrayList<Position> chains = new ArrayList<Position>();
+	public List<List<Position>> chainedCells(){
+		List<List<Position>> chains = new ArrayList<List<Position>>();
 		for (int x = 0; x < BOARDSIZE; x++){
 			for (int y = 0; y < BOARDSIZE; y++){
 				for (int i = 1; i < 3; i++){
 					Direction dir = Direction.DIRECTIONS.get(i);
-					ArrayList<Position> chain = getChainAt(x, y, dir);
-					for (int j = 0; j < chain.size(); j++){
-						Position pos = chain.get(j);
-						if (!chains.contains(pos)){
-							chains.add(pos);
-						}
-					}
+					List<Position> chain = getChainAt(x, y, dir);
+					chains.add(chain);
 				}
 			}
 		}
@@ -135,7 +138,7 @@ public class Board {
 	}
 	
 	/**
-	 * checks the current board for any chains.
+	 * Checks if the current board has any chains.
 	 * @return true iff the current board has at least one chain.
 	 */
 	public boolean hasChain(){
@@ -159,15 +162,17 @@ public class Board {
 	public boolean checkMoves(){
 		for (int x = 0; x < BOARDSIZE; x++){
 			for (int y = 0; y < BOARDSIZE; y++){
-				Position currPos = new Position(x, y);
 				for (int i = 1; i < 3; i++){
 					Direction dir = Direction.DIRECTIONS.get(i);
 					int newX = x + dir.getDX();
 					int newY = y + dir.getDY();
+					if (newX == BOARDSIZE || newY == BOARDSIZE) {
+					  continue;
+					}
 					swap(x, y, newX, newY);
 					if (hasChain()){
 						swap(x, y, newX, newY);
-						return true;
+						return true;    //possibility to return positions for hint system.
 					}
 					swap(x, y, newX, newY);
 				}
@@ -225,15 +230,7 @@ public class Board {
 	  board[x1][y1] = board[x2][y2];
 	  board[x2][y2] = temp;
 	}
-	
-	/**
-	 * Returns all the cells of the board
-	 * @return
-	 */
-	public Cell[][] getCells() {
-		return board;
-	}
-	
+
 	/*
 	public void printBoard() {
 	  System.out.println("Board: ");
