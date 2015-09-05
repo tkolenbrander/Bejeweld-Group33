@@ -53,27 +53,127 @@ public class Board {
 	 *         three of the same gems.
 	 */
 	public boolean isTripletAt(int x, int y) {
-	  GemType currGemType = board[x][y].getGem().getType();
-	  List<Cell> neighbours = getNeighboursOf(x, y);
-	  for (int i = 0; i < neighbours.size(); i++) { //check all neighbouring cells
-	    Cell neighbour = neighbours.get(i);
-	    if (neighbour == null || neighbour.getGem() == null) {                  
-	      continue;                                // but a cell can be non-existent or empty.
+	  for (int i = 0; i < 4; i++) {
+	    Direction dir = Direction.DIRECTIONS.get(i);
+	    if(isTripletInDir(x, y, dir)){
+	      return true;
 	    }
-	    GemType neighbourGemType = neighbour.getGem().getType();
-	    if (neighbourGemType == currGemType) {    // if these are equal, continue in that direction.
-	      Direction dir = Direction.DIRECTIONS.get(i);
-	      Cell secondNeighbour = getNeighbourAt(x + dir.getDX(), y + dir.getDY(), dir);
-	      if (secondNeighbour == null || secondNeighbour.getGem() == null) {
-	        continue;
-	      }
-	      if (neighbourGemType == secondNeighbour.getGem().getType()) {
-	        return true;
-	      }
-	    }
-	    
 	  }
 	  return false;
+	}
+	
+	/**
+	 * Checks if the origin cell, at location (x, y), is part of a chain of three 
+	 * of the same gems in the given direction.
+	 * @param x x-coordinate of the origin cell
+	 * @param y y-coordinate of the origin cell
+	 * @param dir the direction of the chain, relative to the origin cell
+	 * @return true iff the origin cell, at location (x, y), is part of a chain of
+	 *         three of the same gems in the given direction.
+	 */
+	public boolean isTripletInDir(int x, int y, Direction dir){
+		  GemType currGemType = board[x][y].getGem().getType();
+		  Cell neighbour = getNeighbourAt(x, y, dir);
+		  if (neighbour != null &&
+				  currGemType == neighbour.getGem().getType()){
+			  Cell tripletEnd = getNeighbourAt(x + dir.getDX(), y + dir.getDY(), dir);
+			  if (tripletEnd != null &&
+					  currGemType == tripletEnd.getGem().getType()){
+				  return true;
+			  }
+		  }
+		  return false;
+	}
+	
+	/**
+	 * Checks for a chain starting at the origin cell, at location (x, y), in the given direction.
+	 * @param x x-coordinate of the origin cell
+	 * @param y	y-coordinate of the origin cel
+	 * @param dir the direction of the chain, relative to the origin cell
+	 * @return a list of the positions of cells in the chain.
+	 * 		   the list will be empty iff there is no chain starting at location (x, y) in the given direction.
+	 */
+	public ArrayList<Position> getChainAt(int x, int y, Direction dir){
+		ArrayList<Position> chain = new ArrayList<Position>();
+		if (isTripletInDir(x, y, dir)){
+			GemType currGemType = board[x][y].getGem().getType();
+			while (x >= 0 && x < BOARDSIZE && y >= 0 && y < BOARDSIZE){
+				if (currGemType == board[x][y].getGem().getType()){
+					chain.add(new Position(x, y));
+				} else {
+					break;
+				}
+				x = x + dir.getDX();
+				y = y + dir.getDY();
+			}
+		}
+		return chain;
+	}
+	
+	/**
+	 * Checks for all the cells on the board that are in a chain
+	 * @return a list of the positions of all the cells on the board that are in a chain.
+	 *		   the list will be empty iff there are no chains on the board.
+	 */
+	public ArrayList<Position> chainedCells(){
+		ArrayList<Position> chains = new ArrayList<Position>();
+		for (int x = 0; x < BOARDSIZE; x++){
+			for (int y = 0; y < BOARDSIZE; y++){
+				for (int i = 1; i < 3; i++){
+					Direction dir = Direction.DIRECTIONS.get(i);
+					ArrayList<Position> chain = getChainAt(x, y, dir);
+					for (int j = 0; j < chain.size(); j++){
+						Position pos = chain.get(j);
+						if (!chains.contains(pos)){
+							chains.add(pos);
+						}
+					}
+				}
+			}
+		}
+		return chains;
+	}
+	
+	/**
+	 * checks the current board for any chains.
+	 * @return true iff the current board has at least one chain.
+	 */
+	public boolean hasChain(){
+		for (int x = 0; x < BOARDSIZE; x++){
+			for (int y = 0; y < BOARDSIZE; y++){
+				for (int i = 1; i < 3; i++){
+					Direction dir = Direction.DIRECTIONS.get(i);
+					if (isTripletInDir(x, y, dir)){
+						return true;
+					}
+				}
+			}
+		}
+		return false;
+	}
+	
+	/**
+	 * Checks if the current board allows for a move that will create a chain
+	 * @return true iff any gem on the board can be swapped with its neighbour to create a chain.
+	 */
+	public boolean checkMoves(){
+		for (int x = 0; x < BOARDSIZE; x++){
+			for (int y = 0; y < BOARDSIZE; y++){
+				Position currPos = new Position(x, y);
+				for (int i = 1; i < 3; i++){
+					Direction dir = Direction.DIRECTIONS.get(i);
+					int newX = x + dir.getDX();
+					int newY = y + dir.getDY();
+					swap(x, y, newX, newY);
+					if (hasChain()){
+						swap(x, y, newX, newY);
+						return true;
+					}
+					swap(x, y, newX, newY);
+				}
+			}
+		}
+		return false;
 	}
 	
 	/**
