@@ -26,6 +26,22 @@ public class Game {
   }
   
   /**
+   * Returns the player
+   * @return The player
+   */
+  public Player getPlayer() {
+	  return player;
+  }
+  
+  /**
+   * Returns the board
+   * @return The board
+   */
+  public Board getBoard() {
+	  return board;
+  }
+  
+  /**
    * Starts the game.
    */
   public void start() {
