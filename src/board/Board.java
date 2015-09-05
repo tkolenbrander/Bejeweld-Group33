@@ -35,7 +35,7 @@ public class Board {
 	 */
 	private void initBoard() {
 	  for (int x = 0; x < BOARDSIZE; x++) {
-	    for (int y = 0; x < BOARDSIZE; x++) {
+	    for (int y = 0; y < BOARDSIZE; y++) {
 	      board[x][y] = new Cell(new Gem(GemType.randomGem()));
 	      while (isTripletAt(x, y)) {
 	        board[x][y] = new Cell(new Gem(GemType.randomGem()));
@@ -55,13 +55,19 @@ public class Board {
 	public boolean isTripletAt(int x, int y) {
 	  GemType currGemType = board[x][y].getGem().getType();
 	  List<Cell> neighbours = getNeighboursOf(x, y);
-	  for (int i = 0; i < neighbours.size(); i++) {
+	  for (int i = 0; i < neighbours.size(); i++) { //check all neighbouring cells
 	    Cell neighbour = neighbours.get(i);
+	    if (neighbour == null || neighbour.getGem() == null) {                  
+	      continue;                                // but a cell can be non-existent or empty.
+	    }
 	    GemType neighbourGemType = neighbour.getGem().getType();
-	    if (neighbourGemType == currGemType) {
+	    if (neighbourGemType == currGemType) {    // if these are equal, continue in that direction.
 	      Direction dir = Direction.DIRECTIONS.get(i);
-	      if (neighbourGemType 
-	          == getNeighbourAt(x + dir.getDX(), y + dir.getDY(), dir).getGem().getType()) {
+	      Cell secondNeighbour = getNeighbourAt(x + dir.getDX(), y + dir.getDY(), dir);
+	      if (secondNeighbour == null || secondNeighbour.getGem() == null) {
+	        continue;
+	      }
+	      if (neighbourGemType == secondNeighbour.getGem().getType()) {
 	        return true;
 	      }
 	    }
@@ -119,4 +125,16 @@ public class Board {
 	  board[x1][y1] = board[x2][y2];
 	  board[x2][y2] = temp;
 	}
+	
+	/*
+	public void printBoard() {
+	  System.out.println("Board: ");
+	  for (int y = 0; y < BOARDSIZE; y++) {
+	    for (int x = 0; x < BOARDSIZE; x++) {
+	      System.out.print(board[x][y].getGem().getType() + ", " + x + "," + y + "! ");
+	    }
+	    System.out.println();
+	  }
+	}
+	*/
 }

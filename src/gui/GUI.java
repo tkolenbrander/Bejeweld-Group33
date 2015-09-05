@@ -6,10 +6,13 @@ import javax.swing.JFrame;
 
 /**
  * The base class of the GUI.
- * @author Thomas
+ * @author Thomas Kolenbrander
  *
  */
-public class GUI extends JFrame{
+public class GUI extends JFrame  {
+  
+  private static final int WINDOW_X = 800;
+  private static final int WINDOW_Y = 600;
 	
 	/**
 	 * The mainframe of the GUI. All panels will be added to this frame
@@ -23,9 +26,9 @@ public class GUI extends JFrame{
 
 	/**
 	 * This is the main method which makes sure the GUI starts.
-	 * @param args
+	 * @param args args
 	 */
-	public static void main(String args[]) {
+	public static void main(String[] args) {
 		createGUI();
 	}
 	
@@ -33,8 +36,8 @@ public class GUI extends JFrame{
 	 * This method will build the GUI.
 	 */
 	public static void createGUI() {
-		mainFrame = new JFrame("Bejeweld");
-		mainFrame.setSize(800, 600);
+		mainFrame = new JFrame("Bejeweled");
+		mainFrame.setSize(WINDOW_X, WINDOW_Y);
 		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);		
 		mainFrame.setLayout(new BorderLayout());
 		
