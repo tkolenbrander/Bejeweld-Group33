@@ -223,6 +223,14 @@ public class Board {
 	  board[x2][y2] = temp;
 	}
 	
+	/**
+	 * Returns all the cells of the board
+	 * @return
+	 */
+	public Cell[][] getCells() {
+		return board;
+	}
+	
 	/*
 	public void printBoard() {
 	  System.out.println("Board: ");
