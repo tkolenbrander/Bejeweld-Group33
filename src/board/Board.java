@@ -21,7 +21,15 @@ public class Board {
 		board = new Cell[BOARDSIZE][BOARDSIZE];
 		initBoard();
 	}
-	
+	  
+  /**
+   * Returns all the cells of the board
+   * @return
+   */
+  public Cell[][] getCells() {
+    return board;
+  }
+
 	/**
 	 * Resets the board to how it came out of the constructor. Basically, the board is
 	 * reinitialised, that's it.
@@ -222,15 +230,7 @@ public class Board {
 	  board[x1][y1] = board[x2][y2];
 	  board[x2][y2] = temp;
 	}
-	
-	/**
-	 * Returns all the cells of the board
-	 * @return
-	 */
-	public Cell[][] getCells() {
-		return board;
-	}
-	
+
 	/*
 	public void printBoard() {
 	  System.out.println("Board: ");
