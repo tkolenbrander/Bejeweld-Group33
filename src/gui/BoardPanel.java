@@ -1,5 +1,7 @@
 package gui;
 
+import game.Game;
+
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -14,6 +16,7 @@ import board.Board;
 import board.Cell;
 import board.Gem;
 import board.GemType;
+import board.Position;
 
 /**
  * This class will make sure the board is visible.
@@ -34,9 +37,10 @@ public class BoardPanel extends JPanel implements MouseListener {
 	private boolean selected = false;
 
 	/**
-	 * The current selected gem.
+	 * The current selected gem, and its position.
 	 */
 	private Gem selectedGem;
+	private Position selectedPosition;
 	
 	/**
 	 * The current selected label.
@@ -124,9 +128,10 @@ public class BoardPanel extends JPanel implements MouseListener {
 			displayClicked(clicked, gem);
 			selected = true;
 			selectedGem = gem;
+			selectedPosition = new Position(x, y);
 			selectedLabel = clicked;
 		} else {
-			// Here we should implement the swapping
+		  makeMove(new Position(x, y));
 			displayUnClicked(selectedLabel, selectedGem);
 			selected = false;
 		}
@@ -190,6 +195,10 @@ public class BoardPanel extends JPanel implements MouseListener {
 		  break;
 		}
 		clicked.setIcon(icon);
+	}
+	
+	public void makeMove(Position p2) {
+	  game.makeMove(p2.getX(), p2.getY(), selectedPosition.getX(), selectedPosition.getY());
 	}
 
 	@Override
