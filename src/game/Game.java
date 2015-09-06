@@ -97,6 +97,7 @@ public class Game {
         if (!(board.checkMoves())){
         board.newBoard();
       }
+      }
       else {
         //move is not allowed, what now? Wanna play throw and catch with custom exceptions?
       }
