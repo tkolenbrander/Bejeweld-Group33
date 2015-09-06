@@ -37,6 +37,11 @@ public class GUI extends JFrame  {
 	protected static Game game;
 	
 	/**
+	 * The GUI.
+	 */
+	protected static GUI gui;
+	
+	/**
 	 * This is the main method which makes sure the GUI starts.
 	 * @param args args
 	 */
@@ -44,7 +49,10 @@ public class GUI extends JFrame  {
 		//Init game
 		game = new Game();
 		game.start();
-		
+		gui = new GUI();
+	}
+	
+	public GUI() {
 		createGUI();
 	}
 	
@@ -65,9 +73,18 @@ public class GUI extends JFrame  {
 		//Add the boardpanel
 		boardPanel = new BoardPanel();
 		mainFrame.add(boardPanel, BorderLayout.SOUTH);
-		//TODO
 		
 		mainFrame.setVisible(true);
+	}
+	
+	//TODO: The repaint doesn't seem to work right.
+	public void refreshBoard() {
+		System.out.println("Refreshing bruh");
+		mainFrame.remove(boardPanel);
+		boardPanel = new BoardPanel();
+		mainFrame.add(boardPanel, BorderLayout.SOUTH);	
+		mainFrame.repaint();
+		boardPanel.repaint();
 	}
 
 }

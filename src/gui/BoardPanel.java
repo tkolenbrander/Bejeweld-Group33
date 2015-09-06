@@ -51,14 +51,14 @@ public class BoardPanel extends JPanel implements MouseListener {
 	public BoardPanel() {
 		super();
 		setLayout(new GridLayout(Board.BOARDSIZE, Board.BOARDSIZE));
-		refresh();
+		initBoard();
 		// TODO
 	}
 
 	/**
-	 * Will refresh the board after a move.
+	 * Initializes the board.
 	 */
-	public void refresh() {
+	public void initBoard() {
 		Board board = GUI.game.getBoard();
 		Cell[][] cells = board.getCells();
 
@@ -99,7 +99,21 @@ public class BoardPanel extends JPanel implements MouseListener {
 			}
 		}
 	}
+	
+	/**
+	 * Refreshes the board after a move.
+	 */
+	public void refresh() {
+		removeAll();
+		System.out.println("Refreshing");
+		initBoard();
+		repaint();
+	}
 
+	/**
+	 * This is what happens when a JLabel (aka gem) is clicked.
+	 * @param clicked The label that is clicked.
+	 */
 	public void clicked(JLabel clicked) {
 		// Find the gem that is clicked
 		int x = 0;
@@ -139,6 +153,11 @@ public class BoardPanel extends JPanel implements MouseListener {
 		}
 	}
 
+	/**
+	 * Will display a red rectangle on a gem.
+	 * @param clicked The JLabel that is clicked.
+	 * @param gem The gem the JLabel displays.
+	 */
 	public void displayClicked(JLabel clicked, Gem gem) {
 		GemType type = gem.getType();
 		ImageIcon icon = null;
@@ -169,6 +188,11 @@ public class BoardPanel extends JPanel implements MouseListener {
 		clicked.setIcon(icon);
 	}
 	
+	/**
+	 * Removes the red rectangle on a gem
+	 * @param clicked The JLabel that is clicked.
+	 * @param gem The gem the JLabel displays.
+	 */
 	public void displayUnClicked(JLabel clicked, Gem gem) {
 		GemType type = gem.getType();
 		ImageIcon icon = null;
@@ -203,7 +227,7 @@ public class BoardPanel extends JPanel implements MouseListener {
 	  try {
 	    GUI.game.makeMove(p2.getX(), p2.getY(), selectedPosition.getX(), selectedPosition.getY());
 	    //TODO Refresh the board after a move
-	    //refresh();
+	    //GUI.gui.refreshBoard();
 	  }
 	  catch (MoveNotValidException e) {
 		GUI.scorePanel.setError(e.getMessage());
