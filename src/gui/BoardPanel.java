@@ -90,6 +90,9 @@ public class BoardPanel extends JPanel implements MouseListener {
 				case PURPLE:
 					icon = new ImageIcon("assets/textures/gems/gemPurple.jpg");
 					break;
+				case ORANGE:
+					icon = new ImageIcon("assets/textures/gems/gemOrange.jpg");
+					break;
 				}
 				JLabel label = new JLabel(icon);
 				label.setOpaque(true);
@@ -181,6 +184,9 @@ public class BoardPanel extends JPanel implements MouseListener {
 		case PURPLE:
 			icon = new ImageIcon("assets/textures/gems/gemPurpleClicked.png");
 			break;
+		case ORANGE:
+			icon = new ImageIcon("assets/textures/gems/gemOrangeClicked.jpg");
+			break;
 		default:   // Default blue clicked
 		  icon = new ImageIcon("assets/textures/gems/gemBlueClicked.png");
 		  break;
@@ -215,6 +221,9 @@ public class BoardPanel extends JPanel implements MouseListener {
 			break;
 		case PURPLE:
 			icon = new ImageIcon("assets/textures/gems/gemPurple.jpg");
+			break;
+		case ORANGE:
+			icon = new ImageIcon("assets/textures/gems/gemOrange.jpg");
 			break;
 		default: // Default icon is blue, for the time being
 		  icon = new ImageIcon("assets/textures/gems/gemBlue.jpg");
