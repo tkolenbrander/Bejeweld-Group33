@@ -181,17 +181,17 @@ public class Board {
 	/**
 	 * fills empty cells with new gems.
 	 */
-	public void fillemptycells(){
+	public void fillEmptyCells() {
 		 for (int x = 0; x < BOARDSIZE; x++) {
-			    for (int y = 0; y < BOARDSIZE; y++) {
-			    	if (board[x][y] == null){
-			    		board[x][y] = new Cell(new Gem(GemType.randomGem()));
-			    		while (isTripletAt(x, y)) {
-			    		board[x][y] = new Cell(new Gem(GemType.randomGem()));
-			    		}
-			    	}
-			    }
-		}
+			 for (int y = 0; y < BOARDSIZE; y++) {
+			   if (board[x][y] == null) {
+			     board[x][y] = new Cell(new Gem(GemType.randomGem()));
+			     while (isTripletAt(x, y)) {
+			       board[x][y] = new Cell(new Gem(GemType.randomGem()));
+			     }
+			   }
+			 }
+		 }
 	}
 	/**
 	 * Checks if the current board has any chains.
