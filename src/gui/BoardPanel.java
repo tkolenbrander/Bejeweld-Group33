@@ -56,7 +56,7 @@ public class BoardPanel extends JPanel implements MouseListener {
 	}
 
 	/**
-	 * Initializes the board.
+	 * Initialises the board.
 	 */
 	public void initBoard() {
 		Board board = GUI.game.getBoard();
@@ -114,7 +114,7 @@ public class BoardPanel extends JPanel implements MouseListener {
 	}
 
 	/**
-	 * This is what happens when a JLabel (aka gem) is clicked.
+	 * This is what happens when a JLabel (a.k.a. gem) is clicked.
 	 * @param clicked The label that is clicked.
 	 */
 	public void clicked(JLabel clicked) {
@@ -123,7 +123,7 @@ public class BoardPanel extends JPanel implements MouseListener {
 		int y = 0;
 		boolean stop = false;
 		for (int j = 0; j < labels.length; j++) {
-			for (int i = 0; i < labels[i].length; i++) {
+			for (int i = 0; i < labels[j].length; i++) {
 				if (clicked == labels[j][i]) {
 					x = i;
 					y = j;
