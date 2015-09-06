@@ -82,8 +82,14 @@ public class Game {
     if (inProgress) {
       if (x1 - x2 == -1 || x1 - x2 == 1 || y1 - y2 == -1 || y1 - y2 == 1) {
         board.swap(x1, y1, x2, y2);
-        //check if there is an update to the score.
-        //if this update is 0, then swap back using board.swap(x2, y2, x1, y1);
+        //check if the board has any chains
+        if (board.hasChain()){
+        	
+        }
+      //if no new chains, then swap back using board.swap(x2, y2, x1, y1);
+        else{
+        	board.swap(x2, y2, x1, y1);
+        }
         //player.addScore(score);
         //check if there are any possible moves left.
       }
