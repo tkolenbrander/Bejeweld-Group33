@@ -52,6 +52,16 @@ public class Board {
 	  }
 	}
 	
+	public boolean isAdjacent(int x1, int y1, int x2, int y2) {
+	  if ((x1 - x2 == 1 || x1 - x2 == -1) && y1 == y2) {
+	    return true;
+	  }
+	  if ((y1 - y2 == 1 || y1 - y2 == -1) && x1 == x2) {
+	    return true;
+	  }
+	  return false;
+	}
+	
 	/**
 	 * Checks if the origin cell, at location (x, y), is part of a chain of three 
 	 * of the same gems.
@@ -146,31 +156,32 @@ public class Board {
 		}
 		return chains;
 	}
+	
 	/**
-	 * Removes all the gems that are in a chain
+	 * Removes all the gems that are in a chain.
 	 */
 	public void removeChains() {
 		List<List<Position>> chains = chainedCells();
-		for (int i = 0; i < chains.size(); i++){
+		for (int i = 0; i < chains.size(); i++) {
 			List<Position> chain = chains.get(i); 
-			for(int v = 0; v < chain.size(); v++){
+			for (int v = 0; v < chain.size(); v++) {
 				Position pos = chain.get(v);
 				board[pos.getX()][pos.getY()] = null;
 			}
 		}
 	}
 	/**
-	 * when an empty cell is detected, the rows above them will fall down into the empty cell
+	 * When an empty cell is detected, the rows above them will fall down into the empty cell.
 	 */
-	public void falldown(){
-		for (int y = BOARDSIZE -1; y >= 0; y--) {
-		    for (int x = BOARDSIZE -1; x >= 0; x--) {
-		    if (board[x][y] == null){
-		    	for (int d = 1; d < BOARDSIZE - y; d++){
-		    		if (board[x][y-d] != null){
-			    	board[x][y] = board[x][y-d];
-			    	board[x][y-d] = null;
-			    	break;
+	public void falldown() {
+		for (int y = BOARDSIZE - 1; y >= 0; y--) {
+		    for (int x = BOARDSIZE - 1; x >= 0; x--) {
+		    if (board[x][y] == null) {
+		    	for (int d = 1; d < BOARDSIZE - y; d++) {
+		    		if (board[x][y - d] != null) {
+		    		  board[x][y] = board[x][y - d];
+		    		  board[x][y - d] = null;
+		    		  break;
 		    		}
 		    	}
 		    }  

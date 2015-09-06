@@ -1,5 +1,6 @@
 package game;
 
+import exceptions.MoveNotValidException;
 import board.Board;
 /**
  * Game class. Governs the entire game. In terms of the backend, this is the top of the dome.
@@ -77,30 +78,35 @@ public class Game {
    * @param y1 y-coordinate of cell 1
    * @param x2 x-coordinate of cell 2
    * @param y2 y-coordinate of cell 2
+   * @throws MoveNotValidException When the move is not allowed, because the cells 
+   * are not adjacent or because the move does not create a chain.
    */
-  public void makeMove(int x1, int y1, int x2, int y2) {
+  public void makeMove(int x1, int y1, int x2, int y2) throws MoveNotValidException {
     if (inProgress) {
-      if (x1 - x2 == -1 || x1 - x2 == 1 || y1 - y2 == -1 || y1 - y2 == 1) {
+      if (board.isAdjacent(x1, y1, x2, y2)) {
         board.swap(x1, y1, x2, y2);
-        //check if the board has any chains and remove them and properly fill the board
+        //check if the board has any chains and remove them and properly refill the board
         if (board.hasChain()) {
         	board.removeChains();
         	board.falldown();
         	board.fillEmptyCells();
         	//player.addScore(score);
+        	System.out.println("Succesful move!");
         }
-      //if no new chains, then swap back using board.swap(x2, y2, x1, y1);
-        else {
-          //TODO: throw custom exception.
+        else {  //if no new chains, then swap back using board.swap(x2, y2, x1, y1);
         	board.swap(x2, y2, x1, y1);
+        	System.out.println("Move doesn't make a chain");
+        	throw new MoveNotValidException("Move doesn't make a chain");
         }
-        //check if there are any possible moves left. and creates a random board if not
-        if (!(board.checkMoves())) {
-        //game over
-      }
+        
+        if (!(board.checkMoves())) {  // No more moves left means game over.
+          System.out.println("Game over");
+          stop();
+        }
       }
       else {
-        //move is not allowed, what now? Wanna play throw and catch with custom exceptions?
+        System.out.println("Cells not adjacent");
+        throw new MoveNotValidException("Cells not adjacent");
       }
     }
   }

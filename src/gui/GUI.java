@@ -43,6 +43,7 @@ public class GUI extends JFrame  {
 	public static void main(String[] args) {
 		//Init game
 		game = new Game();
+		game.start();
 		
 		createGUI();
 	}

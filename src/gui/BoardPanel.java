@@ -1,5 +1,6 @@
 package gui;
 
+import exceptions.MoveNotValidException;
 import game.Game;
 
 import javax.swing.ImageIcon;
@@ -198,7 +199,12 @@ public class BoardPanel extends JPanel implements MouseListener {
 	}
 	
 	public void makeMove(Position p2) {
-	  game.makeMove(p2.getX(), p2.getY(), selectedPosition.getX(), selectedPosition.getY());
+	  try {
+	    GUI.game.makeMove(p2.getX(), p2.getY(), selectedPosition.getX(), selectedPosition.getY());
+	  }
+	  catch (MoveNotValidException e) {
+	    //TODO: Thomas, Steven, make sure e.getMessage(); gets projected onto the screen somehow.
+	  }
 	}
 
 	@Override
