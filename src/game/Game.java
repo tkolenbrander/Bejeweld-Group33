@@ -87,10 +87,14 @@ public class Game {
         board.swap(x1, y1, x2, y2);
         //check if the board has any chains and remove them and properly refill the board
         if (board.hasChain()) {
+        	int bonus = 0;
+        	while (board.hasChain()){
         	board.removeChains();
         	board.falldown();
         	board.fillEmptyCells();
-        	//player.addScore(score);
+        	player.addScore(board.calculateScore(bonus));
+        	bonus++;
+        	}	
         	System.out.println("Succesful move!");
         }
         else {  //if no new chains, then swap back using board.swap(x2, y2, x1, y1);

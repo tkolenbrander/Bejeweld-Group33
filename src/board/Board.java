@@ -323,7 +323,22 @@ public class Board {
 		board[y1][x1] = board[y2][x2];
 		board[y2][x2] = temp;
 	}
-
+	public int calculateScore(int bonus){
+		int score = 0;
+		List<List<Position>> chains = chainedCells();
+		for (int i = 0; i < chains.size(); i++){
+			if (chains.get(i).size() == 3){
+				score = score + 50 + bonus * 50;	
+			}
+			if (chains.get(i).size() == 4){
+				score = score + 100 + bonus * 50;
+			}
+			if (chains.get(i).size() == 5){
+				score = score + 500 + bonus * 50;		
+		}		
+	}
+		return score;
+	}
 	/*
 	public void printBoard() {
 	  System.out.println("Board: ");
