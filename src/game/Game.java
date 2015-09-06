@@ -82,16 +82,20 @@ public class Game {
     if (inProgress) {
       if (x1 - x2 == -1 || x1 - x2 == 1 || y1 - y2 == -1 || y1 - y2 == 1) {
         board.swap(x1, y1, x2, y2);
-        //check if the board has any chains
+        //check if the board has any chains and remove them and properly fill the board
         if (board.hasChain()){
-        	
+        	board.removeChains();
+        	board.falldown();
+        	board.fillemptycells();
+        	//player.addScore(score);
         }
       //if no new chains, then swap back using board.swap(x2, y2, x1, y1);
         else{
         	board.swap(x2, y2, x1, y1);
         }
-        //player.addScore(score);
-        //check if there are any possible moves left.
+        //check if there are any possible moves left. and creates a random board if not
+        if (!(board.checkMoves())){
+        board.newBoard();
       }
       else {
         //move is not allowed, what now? Wanna play throw and catch with custom exceptions?

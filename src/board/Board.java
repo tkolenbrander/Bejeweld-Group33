@@ -51,6 +51,16 @@ public class Board {
 	    }
 	  }
 	}
+	public void newBoard() {
+	  for (int x = 0; x < BOARDSIZE; x++) {
+	    for (int y = 0; y < BOARDSIZE; y++) {
+	      board[x][y] = new Cell(new Gem(GemType.randomGem()));
+	      while (isTripletAt(x, y)) {
+	        board[x][y] = new Cell(new Gem(GemType.randomGem()));
+	      }
+	    }
+	  }
+	}
 	
 	/**
 	 * Checks if the origin cell, at location (x, y), is part of a chain of three 
@@ -137,7 +147,52 @@ public class Board {
 		}
 		return chains;
 	}
-	
+	/**
+	 * Removes all the gems that are in a chain
+	 */
+	public void removeChains() {
+		List<List<Position>> chains = chainedCells();
+		for (int i = 0; i < chains.size(); i++){
+			List<Position> chain = chains.get(i); 
+			for(int v = 0; v < chain.size(); v++){
+				Position pos = chain.get(v);
+				board[pos.getX()][pos.getY()] = null;
+			}
+		}
+	}
+	/**
+	 * when an empty cell is detected, the rows above them will fall down into the empty cell
+	 */
+	public void falldown(){
+		for (int y = BOARDSIZE -1; y >= 0; y--) {
+		    for (int x = BOARDSIZE -1; x >= 0; x--) {
+		    if (board[x][y] == null){
+		    	for (int d = 1; d < BOARDSIZE - y; d++){
+		    		if (board[x][y-d] != null){
+			    	board[x][y] = board[x][y-d];
+			    	board[x][y-d] = null;
+			    	break;
+		    		}
+		    	}
+		    }  
+		   }
+		}
+	}
+	/**
+	 * fills empty cells with new gems.
+	 */
+	public void fillemptycells(){
+		 for (int x = 0; x < BOARDSIZE; x++) {
+			    for (int y = 0; y < BOARDSIZE; y++) {
+			    	if (board[x][y] == null){
+			    		board[x][y] = new Cell(new Gem(GemType.randomGem()));
+			    		while (isTripletAt(x, y)) {
+			    		board[x][y] = new Cell(new Gem(GemType.randomGem()));
+			    		}
+			    	}
+			    }
+		}
+	}
 	/**
 	 * Checks if the current board has any chains.
 	 * @return true iff the current board has at least one chain.
