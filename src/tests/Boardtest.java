@@ -31,24 +31,24 @@ public class BoardTest {
 	public void falldownSingleChangeTest() {
 	  Cell[][] cells = board.getCells();
 	  Gem gem2 = cells[6][6].getGem();
-	  Gem gem3 = cells[6][5].getGem();
-	  Gem gem4 = cells[6][4].getGem();
-	  Gem gem5 = cells[6][3].getGem();
-	  Gem gem6 = cells[6][2].getGem();
-	  Gem gem7 = cells[6][1].getGem();
-	  Gem gem8 = cells[6][0].getGem();
+	  Gem gem3 = cells[5][6].getGem();
+	  Gem gem4 = cells[4][6].getGem();
+	  Gem gem5 = cells[3][6].getGem();
+	  Gem gem6 = cells[2][6].getGem();
+	  Gem gem7 = cells[1][6].getGem();
+	  Gem gem8 = cells[0][6].getGem();
 	  
 	  board.setCell(null, 6, 7);
 	  board.falldown();
 	  
-	  assertNotNull(cells[6][7]);
-	  assertEquals(gem2, cells[6][7].getGem());
+	  assertNotNull(cells[7][6]);
+	  assertEquals(gem2, cells[7][6].getGem());
 	  assertEquals(gem3, cells[6][6].getGem());
-	  assertEquals(gem4, cells[6][5].getGem());
-	  assertEquals(gem5, cells[6][4].getGem());
-	  assertEquals(gem6, cells[6][3].getGem());
-	  assertEquals(gem7, cells[6][2].getGem());
-	  assertEquals(gem8, cells[6][1].getGem());
+	  assertEquals(gem4, cells[5][6].getGem());
+	  assertEquals(gem5, cells[4][6].getGem());
+	  assertEquals(gem6, cells[3][6].getGem());
+	  assertEquals(gem7, cells[2][6].getGem());
+	  assertEquals(gem8, cells[1][6].getGem());
 	}
 	
 	/**
@@ -58,11 +58,11 @@ public class BoardTest {
 	@SuppressWarnings("magicnumber")
 	public void falldownThreeVerticalTest() {
 	  Cell[][] cells = board.getCells();
-	  Gem gem4 = cells[7][4].getGem();
-	  Gem gem5 = cells[7][3].getGem();
-	  Gem gem6 = cells[7][2].getGem();
-	  Gem gem7 = cells[7][1].getGem();
-	  Gem gem8 = cells[7][0].getGem();
+	  Gem gem4 = cells[4][7].getGem();
+	  Gem gem5 = cells[3][7].getGem();
+	  Gem gem6 = cells[2][7].getGem();
+	  Gem gem7 = cells[1][7].getGem();
+	  Gem gem8 = cells[0][7].getGem();
 	  
 	  board.setCell(null, 7, 7);
 	  board.setCell(null, 7, 6);
@@ -70,12 +70,12 @@ public class BoardTest {
 	  board.falldown();
 	  
 	  assertNotNull(cells[7][7]);
-	  assertNotNull(cells[7][6]);
-	  assertNotNull(cells[7][5]);
+	  assertNotNull(cells[6][7]);
+	  assertNotNull(cells[5][7]);
 	  assertEquals(gem4, cells[7][7].getGem());
-	  assertEquals(gem5, cells[7][6].getGem());
-	  assertEquals(gem6, cells[7][5].getGem());
-	  assertEquals(gem7, cells[7][4].getGem());
-	  assertEquals(gem8, cells[7][3].getGem());
+	  assertEquals(gem5, cells[6][7].getGem());
+	  assertEquals(gem6, cells[5][7].getGem());
+	  assertEquals(gem7, cells[4][7].getGem());
+	  assertEquals(gem8, cells[3][7].getGem());
 	}
 }
