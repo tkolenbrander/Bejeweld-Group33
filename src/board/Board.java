@@ -141,7 +141,16 @@ public class Board {
 				for (int i = 1; i < 3; i++) {
 					Direction dir = Direction.DIRECTIONS.get(i);
 					List<Position> chain = getChainAt(x, y, dir);
-					chains.add(chain);
+					boolean toAdd = true;
+					for (List<Position> existingChain : chains) {
+					  if (existingChain.containsAll(chain)) {
+					    toAdd = false;
+					    break;
+					  }
+					}
+					if (toAdd) {
+					  chains.add(chain);
+					}
 				}
 			}
 		}
