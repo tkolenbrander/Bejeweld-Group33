@@ -58,7 +58,7 @@ public class Board {
 	 * @param y1 y-coordinate of cell 1
 	 * @param x2 x-coordinate of cell 2
 	 * @param y2 y-coordinate of cell 2
-	 * @return
+	 * @return returns true if two cells are adjecent
 	 */
 	public boolean isAdjacent(int x1, int y1, int x2, int y2) {
 		if ((x1 - x2 == 1 || x1 - x2 == -1) && y1 == y2) {
@@ -69,7 +69,15 @@ public class Board {
 		}
 		return false;
 	}
-
+	/**
+	 * sets a cell at index x,y.
+	 * @param cell cell to be set
+	 * @param x x-coordinate of the cell
+	 * @param y y-coordinate of the cell
+	 */
+	public void setCell(Cell cell, int x, int y) {
+		board[x][y] = cell;
+	}
 	/**
 	 * Checks if the origin cell, at location (x, y), is part of a chain of three 
 	 * of the same gems.
@@ -186,7 +194,7 @@ public class Board {
 			for (int x = BOARDSIZE - 1; x >= 0; x--) {
 				if (board[x][y] == null) {
 					for (int d = 1; d <= y; d++) {
-						if (y != 0){
+						if (y != 0) {
 							if (board[x][y - d] != null) {
 								board[x][y] = board[x][y - d];
 								board[x][y - d] = null;
