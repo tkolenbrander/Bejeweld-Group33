@@ -126,13 +126,14 @@ public class BoardPanel extends JPanel implements MouseListener {
 		GemType type = gem.getType();
 		System.out.println("You clicked: " + type);
 		if (!selected) {
+			GUI.scorePanel.noError();
 			displayClicked(clicked, gem);
 			selected = true;
 			selectedGem = gem;
 			selectedPosition = new Position(x, y);
 			selectedLabel = clicked;
 		} else {
-		  makeMove(new Position(x, y));
+		    makeMove(new Position(x, y));
 			displayUnClicked(selectedLabel, selectedGem);
 			selected = false;
 		}
@@ -201,9 +202,11 @@ public class BoardPanel extends JPanel implements MouseListener {
 	public void makeMove(Position p2) {
 	  try {
 	    GUI.game.makeMove(p2.getX(), p2.getY(), selectedPosition.getX(), selectedPosition.getY());
+	    //TODO Refresh the board after a move
+	    //refresh();
 	  }
 	  catch (MoveNotValidException e) {
-	    //TODO: Thomas, Steven, make sure e.getMessage(); gets projected onto the screen somehow.
+		GUI.scorePanel.setError(e.getMessage());
 	  }
 	}
 

@@ -24,7 +24,7 @@ public class GUI extends JFrame  {
 	/**
 	 * This panel will display the score of the player.
 	 */
-	private static ScorePanel scorePanel;
+	protected static ScorePanel scorePanel;
 	
 	/**
 	 * This panel will display the board of the game.
