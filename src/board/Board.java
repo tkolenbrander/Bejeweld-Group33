@@ -185,7 +185,7 @@ public class Board {
 		for (int y = BOARDSIZE - 1; y >= 0; y--) {
 			for (int x = BOARDSIZE - 1; x >= 0; x--) {
 				if (board[x][y] == null) {
-					for (int d = 1; d < y; d++) {
+					for (int d = 1; d <= y; d++) {
 						if (y != 0){
 							if (board[x][y - d] != null) {
 								board[x][y] = board[x][y - d];
