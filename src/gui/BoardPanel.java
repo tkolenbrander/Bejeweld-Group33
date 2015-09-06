@@ -45,7 +45,7 @@ public class BoardPanel extends JPanel implements MouseListener {
 
 	public BoardPanel() {
 		super();
-		setLayout(new GridLayout(8, 8));
+		setLayout(new GridLayout(Board.BOARDSIZE, Board.BOARDSIZE));
 		refresh();
 		// TODO
 	}
@@ -57,7 +57,7 @@ public class BoardPanel extends JPanel implements MouseListener {
 		Board board = GUI.game.getBoard();
 		Cell[][] cells = board.getCells();
 
-		labels = new JLabel[8][8];
+		labels = new JLabel[Board.BOARDSIZE][Board.BOARDSIZE];
 		for (int i = 0; i < cells.length; i++) {
 			for (int j = 0; j < cells[i].length; j++) {
 				Gem gem = cells[i][j].getGem();
@@ -103,8 +103,8 @@ public class BoardPanel extends JPanel implements MouseListener {
 		for (int i = 0; i < labels.length; i++) {
 			for (int j = 0; j < labels[i].length; j++) {
 				if (clicked == labels[i][j]) {
-					y = i;
-					x = j;
+					x = i;
+					y = j;
 					stop = true;
 					break;
 				}
@@ -116,11 +116,11 @@ public class BoardPanel extends JPanel implements MouseListener {
 
 		Board board = GUI.game.getBoard();
 		Cell[][] cells = board.getCells();
-		Cell cell = cells[y][x];
+		Cell cell = cells[x][y];
 		Gem gem = cell.getGem();
 		GemType type = gem.getType();
 		System.out.println("You clicked: " + type);
-		if(!selected) {
+		if (!selected) {
 			displayClicked(clicked, gem);
 			selected = true;
 			selectedGem = gem;
@@ -134,10 +134,7 @@ public class BoardPanel extends JPanel implements MouseListener {
 
 	public void displayClicked(JLabel clicked, Gem gem) {
 		GemType type = gem.getType();
-		
-		// Default blue clicked
-		ImageIcon icon = new ImageIcon(
-				"assets/textures/gems/gemBlueClicked.png");
+		ImageIcon icon = null;
 
 		switch (type) {
 		case BLUE:
@@ -158,15 +155,16 @@ public class BoardPanel extends JPanel implements MouseListener {
 		case PURPLE:
 			icon = new ImageIcon("assets/textures/gems/gemPurpleClicked.png");
 			break;
+		default:   // Default blue clicked
+		  icon = new ImageIcon("assets/textures/gems/gemBlueClicked.png");
+		  break;
 		}
 		clicked.setIcon(icon);
 	}
 	
 	public void displayUnClicked(JLabel clicked, Gem gem) {
 		GemType type = gem.getType();
-		// Default icon is blue, for the time being
-		ImageIcon icon = new ImageIcon(
-				"assets/textures/gems/gemBlue.jpg");
+		ImageIcon icon = null;
 
 		switch (type) {
 		case BLUE:
@@ -187,6 +185,9 @@ public class BoardPanel extends JPanel implements MouseListener {
 		case PURPLE:
 			icon = new ImageIcon("assets/textures/gems/gemPurple.jpg");
 			break;
+		default: // Default icon is blue, for the time being
+		  icon = new ImageIcon("assets/textures/gems/gemBlue.jpg");
+		  break;
 		}
 		clicked.setIcon(icon);
 	}

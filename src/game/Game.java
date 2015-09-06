@@ -26,7 +26,7 @@ public class Game {
   }
   
   /**
-   * Returns the player
+   * Returns the player.
    * @return The player
    */
   public Player getPlayer() {
@@ -34,7 +34,7 @@ public class Game {
   }
   
   /**
-   * Returns the board
+   * Returns the board.
    * @return The board
    */
   public Board getBoard() {
