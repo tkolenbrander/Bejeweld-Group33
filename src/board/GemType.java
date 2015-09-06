@@ -20,7 +20,8 @@ public enum GemType {
 	GREEN, 
 	YELLOW, 
 	WHITE, 
-	PURPLE;
+	PURPLE,
+	ORANGE;
 	
 	private static final List<GemType> GEMTYPES = 
 	    Collections.unmodifiableList(Arrays.asList(values()));
