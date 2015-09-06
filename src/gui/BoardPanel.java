@@ -63,9 +63,9 @@ public class BoardPanel extends JPanel implements MouseListener {
 		Cell[][] cells = board.getCells();
 
 		labels = new JLabel[Board.BOARDSIZE][Board.BOARDSIZE];
-		for (int i = 0; i < cells.length; i++) {
-			for (int j = 0; j < cells[i].length; j++) {
-				Gem gem = cells[i][j].getGem();
+		for (int y = 0; y < cells.length; y++) {
+			for (int x = 0; x < cells[y].length; x++) {
+				Gem gem = cells[y][x].getGem();
 				GemType type = gem.getType();
 				// Default icon is blue, for the time being
 				ImageIcon icon = new ImageIcon(
@@ -94,7 +94,7 @@ public class BoardPanel extends JPanel implements MouseListener {
 				JLabel label = new JLabel(icon);
 				label.setOpaque(true);
 				label.addMouseListener(this);
-				labels[i][j] = label;
+				labels[y][x] = label;
 				add(label);
 			}
 		}
@@ -119,9 +119,9 @@ public class BoardPanel extends JPanel implements MouseListener {
 		int x = 0;
 		int y = 0;
 		boolean stop = false;
-		for (int i = 0; i < labels.length; i++) {
-			for (int j = 0; j < labels[i].length; j++) {
-				if (clicked == labels[i][j]) {
+		for (int j = 0; j < labels.length; j++) {
+			for (int i = 0; i < labels[i].length; i++) {
+				if (clicked == labels[j][i]) {
 					x = i;
 					y = j;
 					stop = true;
@@ -135,7 +135,7 @@ public class BoardPanel extends JPanel implements MouseListener {
 
 		Board board = GUI.game.getBoard();
 		Cell[][] cells = board.getCells();
-		Cell cell = cells[x][y];
+		Cell cell = cells[y][x];
 		Gem gem = cell.getGem();
 		GemType type = gem.getType();
 		System.out.println("You clicked: " + type);
@@ -227,10 +227,10 @@ public class BoardPanel extends JPanel implements MouseListener {
 	  try {
 	    GUI.game.makeMove(p2.getX(), p2.getY(), selectedPosition.getX(), selectedPosition.getY());
 	    //TODO Refresh the board after a move
-	    //GUI.gui.refreshBoard();
+	    refresh();
 	  }
 	  catch (MoveNotValidException e) {
-		GUI.scorePanel.setError(e.getMessage());
+	    GUI.scorePanel.setError(e.getMessage());
 	  }
 	}
 

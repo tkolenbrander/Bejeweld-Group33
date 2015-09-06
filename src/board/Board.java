@@ -21,6 +21,15 @@ public class Board {
 		board = new Cell[BOARDSIZE][BOARDSIZE];
 		initBoard();
 	}
+	
+	/**
+	 * Constructor for a board, allowing the board to be set to a predefined map.
+	 * Only used in testing as of now.
+	 * @param cells board
+	 */
+	public Board(Cell[][] cells) {
+	  board = cells;
+	}
 
 	/**
 	 * Returns all the cells of the board.
@@ -42,11 +51,11 @@ public class Board {
 	 * Fills up the initially empty board with cells.
 	 */
 	private void initBoard() {
-		for (int x = 0; x < BOARDSIZE; x++) {
-			for (int y = 0; y < BOARDSIZE; y++) {
-				board[x][y] = new Cell(new Gem(GemType.randomGem()));
+		for (int y = 0; y < BOARDSIZE; y++) {
+			for (int x = 0; x < BOARDSIZE; x++) {
+				board[y][x] = new Cell(new Gem(GemType.randomGem()));
 				while (isTripletAt(x, y)) {
-					board[x][y] = new Cell(new Gem(GemType.randomGem()));
+					board[y][x] = new Cell(new Gem(GemType.randomGem()));
 				}
 			}
 		}
@@ -58,7 +67,7 @@ public class Board {
 	 * @param y1 y-coordinate of cell 1
 	 * @param x2 x-coordinate of cell 2
 	 * @param y2 y-coordinate of cell 2
-	 * @return returns true if two cells are adjecent
+	 * @return returns true iff two cells are adjacent
 	 */
 	public boolean isAdjacent(int x1, int y1, int x2, int y2) {
 		if ((x1 - x2 == 1 || x1 - x2 == -1) && y1 == y2) {
@@ -69,14 +78,15 @@ public class Board {
 		}
 		return false;
 	}
+	
 	/**
-	 * sets a cell at index x,y.
+	 * Sets a cell at location (x, y).
 	 * @param cell cell to be set
 	 * @param x x-coordinate of the cell
 	 * @param y y-coordinate of the cell
 	 */
 	public void setCell(Cell cell, int x, int y) {
-		board[x][y] = cell;
+		board[y][x] = cell;
 	}
 	/**
 	 * Checks if the origin cell, at location (x, y), is part of a chain of three 
@@ -107,7 +117,7 @@ public class Board {
 	 *         three of the same gems in the given direction.
 	 */
 	public boolean isTripletInDir(int x, int y, Direction dir) {
-		GemType currGemType = board[x][y].getGem().getType();
+		GemType currGemType = board[y][x].getGem().getType();
 		Cell neighbour = getNeighbourAt(x, y, dir);
 		if (neighbour != null && currGemType == neighbour.getGem().getType()) {
 			Cell tripletEnd = getNeighbourAt(x + dir.getDX(), y + dir.getDY(), dir);
@@ -130,9 +140,9 @@ public class Board {
 	public List<Position> getChainAt(int x, int y, Direction dir) {
 		List<Position> chain = new ArrayList<Position>();
 		if (isTripletInDir(x, y, dir)) {
-			GemType currGemType = board[x][y].getGem().getType();
+			GemType currGemType = board[y][x].getGem().getType();
 			while (x >= 0 && x < BOARDSIZE && y >= 0 && y < BOARDSIZE) {
-				if (currGemType == board[x][y].getGem().getType()) {
+				if (currGemType == board[y][x].getGem().getType()) {
 					chain.add(new Position(x, y));
 				} else {
 					break;
@@ -152,8 +162,8 @@ public class Board {
 	@SuppressWarnings("magicnumber")
 	public List<List<Position>> chainedCells() {
 		List<List<Position>> chains = new ArrayList<List<Position>>();
-		for (int x = 0; x < BOARDSIZE; x++) {
-			for (int y = 0; y < BOARDSIZE; y++) {
+		for (int y = 0; y < BOARDSIZE; y++) {
+			for (int x = 0; x < BOARDSIZE; x++) {
 				for (int i = 1; i < 3; i++) {
 					Direction dir = Direction.DIRECTIONS.get(i);
 					List<Position> chain = getChainAt(x, y, dir);
@@ -178,26 +188,25 @@ public class Board {
 	 */
 	public void removeChains() {
 		List<List<Position>> chains = chainedCells();
-		for (int i = 0; i < chains.size(); i++) {
-			List<Position> chain = chains.get(i); 
-			for (int v = 0; v < chain.size(); v++) {
-				Position pos = chain.get(v);
-				board[pos.getX()][pos.getY()] = null;
+		for (List<Position> chain : chains) { 
+			for (Position pos : chain) {
+				board[pos.getY()][pos.getX()] = null;
 			}
 		}
 	}
+	
 	/**
 	 * When an empty cell is detected, the rows above them will fall down into the empty cell.
 	 */
 	public void falldown() {
 		for (int y = BOARDSIZE - 1; y >= 0; y--) {
 			for (int x = BOARDSIZE - 1; x >= 0; x--) {
-				if (board[x][y] == null) {
+				if (board[y][x] == null) {
 					for (int d = 1; d <= y; d++) {
 						if (y != 0) {
-							if (board[x][y - d] != null) {
-								board[x][y] = board[x][y - d];
-								board[x][y - d] = null;
+							if (board[y-d][x] != null) {
+								board[y][x] = board[y-d][x];
+								board[y-d][x] = null;
 								break;
 							}
 						}
@@ -206,17 +215,15 @@ public class Board {
 			}
 		}
 	}
+	
 	/**
-	 * fills empty cells with new gems.
+	 * Fills empty cells with new gems.
 	 */
 	public void fillEmptyCells() {
-		for (int x = 0; x < BOARDSIZE; x++) {
-			for (int y = 0; y < BOARDSIZE; y++) {
-				if (board[x][y] == null) {
-					board[x][y] = new Cell(new Gem(GemType.randomGem()));
-					while (isTripletAt(x, y)) {
-						board[x][y] = new Cell(new Gem(GemType.randomGem()));
-					}
+		for (int y = 0; y < BOARDSIZE; y++) {
+			for (int x = 0; x < BOARDSIZE; x++) {
+				if (board[y][x] == null) {
+					board[y][x] = new Cell(new Gem(GemType.randomGem()));
 				}
 			}
 		}
@@ -227,8 +234,8 @@ public class Board {
 	 */
 	@SuppressWarnings("magicnumber")
 	public boolean hasChain() {
-		for (int x = 0; x < BOARDSIZE; x++) {
-			for (int y = 0; y < BOARDSIZE; y++) {
+		for (int y = 0; y < BOARDSIZE; y++) {
+			for (int x = 0; x < BOARDSIZE; x++) {
 				for (int i = 1; i < 3; i++) {
 					Direction dir = Direction.DIRECTIONS.get(i);
 					if (isTripletInDir(x, y, dir)) {
@@ -246,8 +253,8 @@ public class Board {
 	 */
 	@SuppressWarnings("magicnumber")
 	public boolean checkMoves() {
-		for (int x = 0; x < BOARDSIZE; x++) {
-			for (int y = 0; y < BOARDSIZE; y++) {
+		for (int y = 0; y < BOARDSIZE; y++) {
+			for (int x = 0; x < BOARDSIZE; x++) {
 				for (int i = 1; i < 3; i++) {
 					Direction dir = Direction.DIRECTIONS.get(i);
 					int newX = x + dir.getDX();
@@ -280,7 +287,7 @@ public class Board {
 		int newX = x + dir.getDX();
 		int newY = y + dir.getDY();
 		if (newX >= 0 && newX < BOARDSIZE && newY >= 0 && newY < BOARDSIZE) {
-			return board[newX][newY];
+			return board[newY][newX];
 		}
 		else {
 			return null;
@@ -289,7 +296,7 @@ public class Board {
 
 	/**
 	 * Gets a list of all neighbours of the cell at (x,y).
-	 * This list is sorted north, east, south, west. If a neighbour is non-existant
+	 * This list is sorted NORTH, EAST, SOUTH, WEST. If a neighbour is non-existent
 	 * in a direction, then it will be null.
 	 * @param x x-coordinate of the cell to get all neighbours of
 	 * @param y y-coordinate of the cell to get all neighbours of
@@ -312,9 +319,9 @@ public class Board {
 	 * @param y2 y-coordinate of cell 2
 	 */
 	public void swap(int x1, int y1, int x2, int y2) {
-		Cell temp = board[x1][y1];
-		board[x1][y1] = board[x2][y2];
-		board[x2][y2] = temp;
+		Cell temp = board[y1][x1];
+		board[y1][x1] = board[y2][x2];
+		board[y2][x2] = temp;
 	}
 
 	/*

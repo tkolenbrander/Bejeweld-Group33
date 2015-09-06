@@ -5,6 +5,7 @@ import static org.junit.Assert.assertNotNull;
 import board.Cell;
 import board.Gem;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import board.Board;
@@ -15,13 +16,19 @@ import board.Board;
  */
 public class BoardTest {
   
+  private Board board;
+  
+  @Before
+  public void setUp() {
+    board = new Board();
+  }
+  
   /**
    * Tests the falldown method with a single cell missing.
    */
 	@Test
 	@SuppressWarnings("magicnumber")
 	public void falldownSingleChangeTest() {
-	  Board board = new Board();
 	  Cell[][] cells = board.getCells();
 	  Gem gem2 = cells[6][6].getGem();
 	  Gem gem3 = cells[6][5].getGem();
@@ -50,7 +57,6 @@ public class BoardTest {
 	@Test
 	@SuppressWarnings("magicnumber")
 	public void falldownThreeVerticalTest() {
-	  Board board = new Board();
 	  Cell[][] cells = board.getCells();
 	  Gem gem4 = cells[7][4].getGem();
 	  Gem gem5 = cells[7][3].getGem();
