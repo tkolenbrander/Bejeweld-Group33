@@ -96,7 +96,7 @@ public class Game {
         }
         //check if there are any possible moves left. and creates a random board if not
         if (!(board.checkMoves())) {
-        board.newBoard();
+        //game over
       }
       }
       else {

@@ -51,16 +51,6 @@ public class Board {
 	    }
 	  }
 	}
-	public void newBoard() {
-	  for (int x = 0; x < BOARDSIZE; x++) {
-	    for (int y = 0; y < BOARDSIZE; y++) {
-	      board[x][y] = new Cell(new Gem(GemType.randomGem()));
-	      while (isTripletAt(x, y)) {
-	        board[x][y] = new Cell(new Gem(GemType.randomGem()));
-	      }
-	    }
-	  }
-	}
 	
 	/**
 	 * Checks if the origin cell, at location (x, y), is part of a chain of three 
