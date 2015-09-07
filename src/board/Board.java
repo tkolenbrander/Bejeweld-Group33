@@ -339,7 +339,7 @@ public class Board {
 	}
 		return score;
 	}
-	/*
+	
 	public void printBoard() {
 	  System.out.println("Board: ");
 	  for (int y = 0; y < BOARDSIZE; y++) {
@@ -349,5 +349,5 @@ public class Board {
 	    System.out.println();
 	  }
 	}
-	 */
+	 
 }

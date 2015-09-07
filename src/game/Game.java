@@ -89,10 +89,10 @@ public class Game {
         if (board.hasChain()) {
         	int bonus = 0;
         	while (board.hasChain()){
+            player.addScore(board.calculateScore(bonus));        		
         	board.removeChains();
         	board.falldown();
         	board.fillEmptyCells();
-        	player.addScore(board.calculateScore(bonus));
         	bonus++;
         	}	
         	System.out.println("Succesful move!");

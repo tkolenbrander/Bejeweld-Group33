@@ -52,7 +52,6 @@ public class BoardPanel extends JPanel implements MouseListener {
 		super();
 		setLayout(new GridLayout(Board.BOARDSIZE, Board.BOARDSIZE));
 		initBoard();
-		// TODO
 	}
 
 	/**
@@ -110,6 +109,7 @@ public class BoardPanel extends JPanel implements MouseListener {
 		removeAll();
 		System.out.println("Refreshing");
 		initBoard();
+		validate();
 		repaint();
 	}
 
@@ -151,6 +151,8 @@ public class BoardPanel extends JPanel implements MouseListener {
 			selectedLabel = clicked;
 		} else {
 		    makeMove(new Position(x, y));
+		    int newScore = GUI.game.getPlayer().getScore();
+		    GUI.scorePanel.setScore(newScore);
 			displayUnClicked(selectedLabel, selectedGem);
 			selected = false;
 		}
