@@ -30,7 +30,11 @@ public class Gem {
    * @param other gem to check
    * @return true iff the two gems are equal.
    */
-	public boolean equals(Gem other) {
-	  return this.type == other.type;
+	@Override
+	public boolean equals(Object other) {
+	  if (other instanceof Gem) {
+	    return this.type == ((Gem) other).type;
+	  }
+	  return false;
 	}
 }
