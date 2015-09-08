@@ -14,7 +14,7 @@ import board.Board;
  * @author Wytze Elhorst
  *
  */
-public class Boardtest {
+public class BoardTest {
   
   private Board board;
   
