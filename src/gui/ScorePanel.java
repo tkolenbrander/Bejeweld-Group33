@@ -1,6 +1,7 @@
 package gui;
 
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.GridLayout;
 
 import javax.swing.JLabel;
@@ -25,9 +26,13 @@ public class ScorePanel extends JPanel {
 	
 	public ScorePanel() {
 		super();
-		setLayout(new GridLayout(1,2));
+		setLayout(new GridLayout(2, 1));
 		scoreLabel = new JLabel("Score: 0");
+		scoreLabel.setFont(new Font("Arial", Font.PLAIN, 22));
+		scoreLabel.setHorizontalAlignment(JLabel.CENTER);
 		errorLabel = new JLabel();
+		errorLabel.setFont(new Font("Arial", Font.PLAIN, 22));
+		errorLabel.setHorizontalAlignment(JLabel.CENTER);
 		add(scoreLabel);
 		add(errorLabel);
 	}
@@ -36,7 +41,7 @@ public class ScorePanel extends JPanel {
 	 * This function updates the score of a player.
 	 */
 	public void setScore(int score) {
-		String text = "Score " + score;
+		String text = "Score: " + score;
 		scoreLabel.setText(text);
 	}
 
