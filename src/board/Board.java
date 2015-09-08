@@ -189,7 +189,7 @@ public class Board {
 	public void removeChains() {
 		List<List<Position>> chains = chainedCells();
 		for (List<Position> chain : chains) { 
-			System.out.println("Chained " + chain.size() + " " + board[chain.get(0).getY()][chain.get(0).getX()].getGem().getType() + " gems");
+			System.out.println("Chained " + chain.size() + " gems");
 			for (Position pos : chain) {
 				board[pos.getY()][pos.getX()] = null;
 			}
