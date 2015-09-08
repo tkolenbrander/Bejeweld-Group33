@@ -9,7 +9,7 @@ import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
 import javax.swing.JFrame;
-
+//Swag
 /**
  * The base class of the GUI.
  * @author Thomas Kolenbrander
