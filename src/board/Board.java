@@ -174,7 +174,7 @@ public class Board {
 							break;
 						}
 					}
-					if (toAdd) {
+					if (toAdd && chain.size() != 0) {
 						chains.add(chain);
 					}
 				}
@@ -189,6 +189,7 @@ public class Board {
 	public void removeChains() {
 		List<List<Position>> chains = chainedCells();
 		for (List<Position> chain : chains) { 
+			System.out.println("Chained " + chain.size() + " gems");
 			for (Position pos : chain) {
 				board[pos.getY()][pos.getX()] = null;
 			}
