@@ -23,6 +23,29 @@ public class BoardTest {
   public void setUp() {
     board = new Board();
   }
+  @Test
+  public void swapTest() {
+	  Gem bl = new Gem(GemType.BLUE);
+	  Gem wh = new Gem(GemType.WHITE);
+	  Gem gr = new Gem(GemType.GREEN);
+	  Gem pu = new Gem(GemType.PURPLE);
+	  Gem or = new Gem(GemType.ORANGE);
+	  Cell b = new Cell(bl);
+	  Cell w = new Cell(wh);
+	  Cell g = new Cell(gr);
+	  Cell p = new Cell(pu);
+	  Cell o = new Cell(or);
+	  Cell[][] cells = new Cell[][] {{b, w, b, w, b, w, b, w}, {g, p, g, p, g, p, g, p},
+			  {b, w, b, w, b, w, b, w}, {g, p, g, p, g, p, g, p}, {b, w, b, w, b, w, b, w},
+			  {g, p, g, p, g, p, g, p}, {b, w, b, w, b, w, b, o}, {g, p, g, p, g, p, g, null}};
+	  Board board = new Board(cells);
+	 board.swap(0, 0, 0, 1);
+	 Cell[][] cells2 = new Cell[][] {{g, w, b, w, b, w, b, w}, {b, p, g, p, g, p, g, p},
+			  {b, w, b, w, b, w, b, w}, {g, p, g, p, g, p, g, p}, {b, w, b, w, b, w, b, w},
+			  {g, p, g, p, g, p, g, p}, {b, w, b, w, b, w, b, o}, {g, p, g, p, g, p, g, null}};
+	  Board board2 = new Board(cells2);
+	assertEquals(board2, board);
+  }
   
   /**
    * Tests the falldown method with a single cell missing.
