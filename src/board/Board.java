@@ -353,8 +353,26 @@ public class Board {
 	}
 	public boolean equals(Object board) {
 		if (board instanceof Board) {
-		Board board2 = (Board) board;
-		return (Arrays.deepEquals(board2.getCells(), this.getCells()));
+			Board board2 = (Board) board;
+			Cell[][] cells = this.getCells();
+			Cell[][] cells2 = board2.getCells();
+			for (int x = 0; x < BOARDSIZE; x++) {
+				for (int y = 0; y < BOARDSIZE; y++) {
+					if (cells[x][y] == null) {
+						if (!(cells2[x][y] == null)) {
+							return false;
+						}
+					}
+					if (!(cells[x][y]  == null) && !(cells2[x][y] == null)) {
+						if (cells[x][y].equals(cells2[x][y])) {
+						}
+						else {
+							return false;
+						}
+					}
+				}
+			}
+			return true;
 		}
 		return false;
 	}
