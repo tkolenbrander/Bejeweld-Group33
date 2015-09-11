@@ -19,7 +19,7 @@ public class GUI extends JFrame  {
 	/**
 	 * The mainframe of the GUI. All panels will be added to this frame
 	 */
-	private static JFrame mainFrame;
+	protected static JFrame mainFrame;
 	
 	/**
 	 * This panel will display the score of the player.

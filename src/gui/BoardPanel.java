@@ -243,6 +243,9 @@ public class BoardPanel extends JPanel implements MouseListener {
 	  catch (MoveNotValidException e) {
 	    GUI.scorePanel.setError(e.getMessage());
 	  }
+	  if(!GUI.game.inProgress()){
+		  GUI.scorePanel.setError("Game over!");
+	  }
 	}
 
 	@Override
