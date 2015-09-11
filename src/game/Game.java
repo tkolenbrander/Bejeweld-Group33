@@ -59,6 +59,14 @@ public class Game {
   }
   
   /**
+   * Returns true if the game is in progress.
+   * @return True if the game is in progress.
+   */
+  public boolean inProgress() {
+	  return inProgress;
+  }
+  
+  /**
    * Resets the game to how it was when it was just initialised.
    * Ahhh, I remember it like it was yesterday. He was just such a cute little game.
    * Wait, it was yesterday...
