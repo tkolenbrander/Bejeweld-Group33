@@ -1,9 +1,13 @@
 package gui;
 
+import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -24,17 +28,38 @@ public class ScorePanel extends JPanel {
 	 */
 	private JLabel errorLabel;
 	
+	/**
+	 * This button will restart the game.
+	 */
+	private JButton restartButton;
+	
 	public ScorePanel() {
 		super();
-		setLayout(new GridLayout(2, 1));
+		setLayout(new GridBagLayout());
+		GridBagConstraints c = new GridBagConstraints();
 		scoreLabel = new JLabel("Score: 0");
 		scoreLabel.setFont(new Font("Arial", Font.PLAIN, 22));
 		scoreLabel.setHorizontalAlignment(JLabel.CENTER);
 		errorLabel = new JLabel();
 		errorLabel.setFont(new Font("Arial", Font.PLAIN, 22));
 		errorLabel.setHorizontalAlignment(JLabel.CENTER);
-		add(scoreLabel);
-		add(errorLabel);
+		restartButton = new JButton("Restart!");	
+		
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.weightx = 0.5;
+		c.gridx = 0;
+		c.gridy = 0;
+		add(scoreLabel, c);
+		
+		c.gridx = 1;
+		c.gridy = 0;
+		add(restartButton, c);
+		
+		c.gridx = 0;
+		c.gridy = 1;
+		c.gridwidth = 2;
+		add(errorLabel, c);
+
 	}
 	
 	/**
