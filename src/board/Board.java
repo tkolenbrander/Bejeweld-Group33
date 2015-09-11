@@ -1,6 +1,7 @@
 package board;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -21,14 +22,14 @@ public class Board {
 		board = new Cell[BOARDSIZE][BOARDSIZE];
 		initBoard();
 	}
-	
+
 	/**
 	 * Constructor for a board, allowing the board to be set to a predefined map.
 	 * Only used in testing as of now.
 	 * @param cells board
 	 */
 	public Board(Cell[][] cells) {
-	  board = cells;
+		board = cells;
 	}
 
 	/**
@@ -78,7 +79,7 @@ public class Board {
 		}
 		return false;
 	}
-	
+
 	/**
 	 * Sets a cell at location (x, y).
 	 * @param cell cell to be set
@@ -195,7 +196,7 @@ public class Board {
 			}
 		}
 	}
-	
+
 	/**
 	 * When an empty cell is detected, the rows above them will fall down into the empty cell.
 	 */
@@ -216,7 +217,7 @@ public class Board {
 			}
 		}
 	}
-	
+
 	/**
 	 * Fills empty cells with new gems.
 	 */
@@ -324,6 +325,7 @@ public class Board {
 		board[y1][x1] = board[y2][x2];
 		board[y2][x2] = temp;
 	}
+	
 	public int calculateScore(int bonus){
 		int score = 0;
 		List<List<Position>> chains = chainedCells();
@@ -336,19 +338,26 @@ public class Board {
 			}
 			if (chains.get(i).size() == 5){
 				score = score + 500 + bonus * 50;		
-		}		
-	}
+			}		
+		}
 		return score;
 	}
-	
+
 	public void printBoard() {
-	  System.out.println("Board: ");
-	  for (int y = 0; y < BOARDSIZE; y++) {
-	    for (int x = 0; x < BOARDSIZE; x++) {
-	      System.out.print(board[x][y].getGem().getType() + ", " + x + "," + y + "! ");
-	    }
-	    System.out.println();
-	  }
+		System.out.println("Board: ");
+		for (int y = 0; y < BOARDSIZE; y++) {
+			for (int x = 0; x < BOARDSIZE; x++) {
+				System.out.print(board[x][y].getGem().getType() + ", " + x + "," + y + "! ");
+			}
+			System.out.println();
+		}
 	}
-	 
+
+	public boolean equals(Object board) {
+		if (board instanceof Board) {
+			Board that = (Board) board;
+			return Arrays.deepEquals(this.getCells(), that.getCells());
+		}
+		return false;
+	}
 }
