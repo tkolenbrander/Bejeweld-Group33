@@ -46,13 +46,17 @@ public class Cell {
 	 * @param other cell to check
 	 * @return true iff the two cells are equal.
 	 */
-	public boolean equals(Cell other) {
-	  if (this.occupant == null && other.occupant == null) {
-	    return true;
+	public boolean equals(Object other) {
+	  if (other instanceof Cell){
+		  Cell that = (Cell) other;
+		  if (this.occupant == null && that.occupant == null) {
+			    return true;
+			  }
+			  if (this.occupant == null || that.occupant == null) {
+			    return false;
+			  }
+		  return this.occupant.equals(that.occupant);  
 	  }
-	  if (this.occupant == null || other.occupant == null) {
-	    return false;
-	  }
-	  return this.occupant.equals(other.occupant);
+	  return false;
 	}
 }

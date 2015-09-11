@@ -93,21 +93,19 @@ public class Game {
     if (inProgress) {
       if (board.isAdjacent(x1, y1, x2, y2)) {
         board.swap(x1, y1, x2, y2);
-        //check if the board has any chains and remove them and properly refill the board
-        if (board.hasChain()) {
+        if (board.hasChain()) { // check if the board has any chains
         	int bonus = 0;
-        	while (board.hasChain()){
+        	do {
             player.addScore(board.calculateScore(bonus));        		
-        	board.removeChains();
-        	board.falldown();
-        	board.fillEmptyCells();
-        	bonus++;
-        	}	
+            board.removeChains(); // remove them and properly refill the board
+            board.falldown();
+            board.fillEmptyCells();
+            bonus++;
+        	}	while (board.hasChain());
         	System.out.println("Succesful move!");
         }
         else {  //if no new chains, then swap back using board.swap(x2, y2, x1, y1);
         	board.swap(x2, y2, x1, y1);
-        	System.out.println("Move doesn't make a chain");
         	throw new MoveNotValidException("Move doesn't make a chain");
         }
         
@@ -117,7 +115,6 @@ public class Game {
         }
       }
       else {
-        System.out.println("Cells not adjacent");
         throw new MoveNotValidException("Cells not adjacent");
       }
     }

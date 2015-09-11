@@ -325,6 +325,7 @@ public class Board {
 		board[y1][x1] = board[y2][x2];
 		board[y2][x2] = temp;
 	}
+	
 	public int calculateScore(int bonus){
 		int score = 0;
 		List<List<Position>> chains = chainedCells();
@@ -351,10 +352,11 @@ public class Board {
 			System.out.println();
 		}
 	}
+
 	public boolean equals(Object board) {
 		if (board instanceof Board) {
-		Board board2 = (Board) board;
-		return (Arrays.deepEquals(board2.getCells(), this.getCells()));
+			Board that = (Board) board;
+			return Arrays.deepEquals(this.getCells(), that.getCells());
 		}
 		return false;
 	}
