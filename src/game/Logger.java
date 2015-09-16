@@ -24,7 +24,7 @@ public class Logger {
 	 * Logs all info and higher to a logfile.
 	 * @param text The text to be written.
 	 */
-	public static void logInfo(String text) {
+	public static void logInfo(final String text) {
 		if(logInfo) {
 			writeLog("[INFO]", text);
 		}
@@ -34,7 +34,7 @@ public class Logger {
 	 * Logs all warnings and higher to a logfile.
 	 * @param text The text to be written.
 	 */
-	public static void logWarning(String text) {
+	public static void logWarning(final String text) {
 		if(logWarning) {
 			writeLog("[WARNING]", text);
 		}
@@ -45,9 +45,9 @@ public class Logger {
 	 * @param level The severity of the message.
 	 * @param text The text to be written.
 	 */
-	public static void writeLog(String level, String text) {
-		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-		Date date = new Date();
+	public static void writeLog(final String level, final String text) {
+		DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+		final Date date = new Date();
 		
 		try(PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(path, true)))) {
 			out.println(level + " " + dateFormat.format(date) + " " + text);
