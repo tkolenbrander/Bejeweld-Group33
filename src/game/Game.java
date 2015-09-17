@@ -91,12 +91,13 @@ public class Game {
 	 */
 	public void makeMove(int x1, int y1, int x2, int y2) throws MoveNotValidException {
 		if (inProgress) {
-			Logger.logInfo("Attempting to swap gem at (" + x1 + "," + y1 + ") with (" + x2 + "," + y2 + ")");
+			Logger.logInfo(
+			    "Attempting to swap gem at (" + x1 + "," + y1 + ") with (" + x2 + "," + y2 + ")");
 			if (board.isAdjacent(x1, y1, x2, y2)) {
 				board.swap(x1, y1, x2, y2);
 				if (board.hasChain()) { // check if the board has any chains
 					int bonus = 0;
-					Logger.logInfo("Move was succesful");
+					Logger.logInfo("Move was successful");
 
 					do {
 						player.addScore(board.calculateScore(bonus));        		
