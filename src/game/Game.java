@@ -108,7 +108,6 @@ public class Game {
 				}
 				else {  //if no new chains, then swap back using board.swap(x2, y2, x1, y1);
 					board.swap(x2, y2, x1, y1);
-					Logger.logInfo("Move did not make a chain");
 					throw new MoveNotValidException("Move doesn't make a chain");
 				}
 
@@ -118,7 +117,6 @@ public class Game {
 				}
 			}
 			else {
-				Logger.logWarning("Move was invalid");
 				throw new MoveNotValidException("Cells not adjacent");
 			}
 		}
