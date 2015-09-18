@@ -19,12 +19,42 @@ public final class Logger {
 	private static final String PATH = "logfile.txt"; //static path for now
 	private static boolean logInfo = true; //TODO: config options in GUI
 	private static boolean logWarning = true;
+	
+	private static PrintWriter out;
+	static {
+	  try {
+	    out = new PrintWriter(new BufferedWriter(new FileWriter(PATH, true)));
+	  }
+	  catch (IOException e) {
+	    e.printStackTrace();
+	  }
+	}
 
 	/**
 	 * This is a utility class, we don't want it to be instantiated.
 	 */
 	private Logger() {
 	  throw new AssertionError("Instantiating utility class...");
+	}
+	
+	/**
+	 * Sets the PrintWriter-object that this class uses to write away to the files.
+	 * This method is purely used for testing purposes.
+	 * 
+	 * @param print PrintWriter object.
+	 */
+	public static void setWriter(PrintWriter print) {
+	  out = print;
+	}
+	
+	/**
+	 * Returns the PrintWriter-object that this class uses to write away to the files.
+	 * This method is also purely used for testing purposes.
+	 * 
+	 * @return PrintWriter object.
+	 */
+	public static PrintWriter getWriter() {
+	  return out;
 	}
 	
 	/**
@@ -81,15 +111,7 @@ public final class Logger {
 	 */
 	private static void writeLog(final String level, final String text) {
 		DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-		final Date date = new Date();
-		
-		try (PrintWriter out = 
-		    new PrintWriter(new BufferedWriter(new FileWriter(PATH, true)))) {
-			out.println(level + " " + dateFormat.format(date) + " " + text);
-			out.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		out.println(level + " " + dateFormat.format(new Date()) + " " + text);
 	}
 	
 	/**
