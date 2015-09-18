@@ -38,7 +38,7 @@ public final class Logger {
 	 * @param level level of messages to be logged.
 	 * 
 	 */
-	public void setLogLevel(int level) {
+	public static void setLogLevel(int level) {
 	  switch (level) {
 	  case 0:
 	    logInfo = false;
@@ -90,5 +90,19 @@ public final class Logger {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	/**
+	 * @return If info logs are written to a file.
+	 */
+	public static boolean getLogInfo() {
+		return logInfo;
+	}
+	
+	/**
+	 * @return If warning logs are written to a file.
+	 */
+	public static boolean getLogWarning() {
+		return logWarning;
 	}
 }
