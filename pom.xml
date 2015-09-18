@@ -5,6 +5,18 @@
   <version>0.0.1-SNAPSHOT</version>
   <name>SEM Bejeweled</name>
   <description>Bejeweled for the course Software Engineering Methods</description>
+  <dependencies>
+	<dependency>
+		<groupId>junit</groupId>
+		<artifactId>junit</artifactId>
+		<version>4.12</version>
+	</dependency>
+	<dependency>
+		<groupId>org.mockito</groupId>
+		<artifactId>mockito-core</artifactId>
+		<version>2.0.5-beta</version>
+	</dependency>
+  </dependencies>
   <build>
     <sourceDirectory>src</sourceDirectory>
     <plugins>

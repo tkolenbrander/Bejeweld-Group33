@@ -1,5 +1,7 @@
 package exceptions;
 
+import game.Logger;
+
 /**
  * Custom exception for when a move is not valid.
  * @author Bart van Oort
@@ -20,7 +22,7 @@ public class MoveNotValidException extends RuntimeException {
    */
   public MoveNotValidException(String s) { 
     super(s);
-    System.out.println(s);
+    Logger.logWarning(s);
   }
   
   /**
