@@ -4,6 +4,9 @@ import game.Game;
 import game.Logger;
 
 import java.awt.BorderLayout;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 
 import javax.swing.JFrame;
 
@@ -12,7 +15,7 @@ import javax.swing.JFrame;
  * @author Thomas Kolenbrander
  *
  */
-public class GUI extends JFrame  {
+public class GUI extends JFrame implements WindowListener {
 
 	private static final int WINDOW_X = 520;
 	private static final int WINDOW_Y = 600;
@@ -76,10 +79,45 @@ public class GUI extends JFrame  {
 		//Add the boardpanel
 		boardPanel = new BoardPanel();
 		mainFrame.add(boardPanel, BorderLayout.SOUTH);
+		
+		mainFrame.addWindowListener(new WindowAdapter() {
+	         public void windowClosing(WindowEvent windowEvent){
+	        	 Logger.logInfo("Game closed");
+	        	 Logger.close();
+	         } 
+		}); 
 
 		mainFrame.setVisible(true);
 
 		Logger.logInfo("Game succesfully initialised");
+	}
+
+	@Override
+	public void windowOpened(WindowEvent e) {		
+	}
+
+	@Override
+	public void windowClosing(WindowEvent e) {		
+	}
+
+	@Override
+	public void windowClosed(WindowEvent e) {		
+	}
+
+	@Override
+	public void windowIconified(WindowEvent e) {		
+	}
+
+	@Override
+	public void windowDeiconified(WindowEvent e) {		
+	}
+
+	@Override
+	public void windowActivated(WindowEvent e) {		
+	}
+
+	@Override
+	public void windowDeactivated(WindowEvent e) {		
 	}
 
 }

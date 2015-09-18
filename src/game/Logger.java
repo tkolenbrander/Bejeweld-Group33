@@ -127,4 +127,11 @@ public final class Logger {
 	public static boolean getLogWarning() {
 		return logWarning;
 	}
+	
+	/**
+	 * Closes the PrintWriter.
+	 */
+	public static void close(){
+		out.close();
+	}
 }
