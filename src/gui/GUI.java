@@ -1,6 +1,7 @@
 package gui;
 
 import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
@@ -40,6 +41,9 @@ public class GUI extends Application {
 	 * @param primaryStage The stage.
 	 */
 	public void start(Stage stage) {
+		FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(GUI.class.getResource("/assets/config/gui.fxml"));
+		
 		Group root = new Group();
 		Scene scene = new Scene(root, WINDOW_X, WINDOW_Y);
 		
