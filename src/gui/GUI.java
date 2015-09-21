@@ -3,6 +3,8 @@ package gui;
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 /**
@@ -19,6 +21,9 @@ public class GUI extends Application {
 	 */
 	private static final int WINDOW_X = 520;
 	private static final int WINDOW_Y = 600;
+	
+	private Pane boardPane;
+    private Label scoreLabel;
 
 	/**
 	 * Main class to launch the application.
