@@ -1,123 +1,132 @@
 package gui;
 
-import game.Game;
-import game.Logger;
+import javafx.application.Application;
+import javafx.scene.Group;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 
-import java.awt.BorderLayout;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
-
-import javax.swing.JFrame;
-//Swag
 /**
- * The base class of the GUI.
- * @author Thomas Kolenbrander
+ * Base class of the GUI.
+ * 
+ * @author Steven Meijer & Thomas Kolenbrander
  *
  */
-public class GUI extends JFrame implements WindowListener {
 
+public class GUI extends Application {
+
+	/**
+	 * X and Y dimensions of the board.
+	 */
 	private static final int WINDOW_X = 520;
 	private static final int WINDOW_Y = 600;
 
 	/**
-	 * The mainframe of the GUI. All panels will be added to this frame
-	 */
-	protected static JFrame mainFrame;
-
-	/**
-	 * This panel will display the score of the player.
-	 */
-	protected static ScorePanel scorePanel;
-
-	/**
-	 * This panel will display the board of the game.
-	 */
-	private static BoardPanel boardPanel;
-
-	/**
-	 * This is our main game with the player and the board.
-	 */
-	protected static Game game;
-
-	/**
-	 * The GUI.
-	 */
-	protected static GUI gui;
-
-	/**
-	 * This is the main method which makes sure the GUI starts.
-	 * @param args args
+	 * Main class to launch the application.
+	 * 
+	 * @param args Launch arguments.
 	 */
 	public static void main(String[] args) {
-		//Init game
-		game = new Game();
-		game.start();
-		gui = new GUI();
-	}
-
-	public GUI() {
-		createGUI();
+		launch(args);
 	}
 
 	/**
-	 * This method will build the GUI.
+	 * JavaFX start class, that sets the properties of the GUI.
+	 * 
+	 * @param primaryStage The stage.
 	 */
-	public static void createGUI() {
-		Logger.logInfo("Game started");
-
-		mainFrame = new JFrame("Bejeweled");
-		mainFrame.setSize(WINDOW_X, WINDOW_Y);
-		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);		
-		mainFrame.setLayout(new BorderLayout());
-		mainFrame.setResizable(false);
-
-		//Add the scorepanel
-		scorePanel = new ScorePanel();
-		mainFrame.add(scorePanel, BorderLayout.NORTH);
-
-		//Add the boardpanel
-		boardPanel = new BoardPanel();
-		mainFrame.add(boardPanel, BorderLayout.SOUTH);
+	public void start(Stage stage) {
+		Group root = new Group();
+		Scene scene = new Scene(root, WINDOW_X, WINDOW_Y);
 		
-		mainFrame.addWindowListener(new WindowAdapter() {
-	         public void windowClosing(WindowEvent windowEvent){
-	        	 Logger.logInfo("Game closed");
-	        	 Logger.close();
-	         } 
-		}); 
+		// Properties of the stage
+		stage.setTitle("SwekJeweld");
+		stage.setResizable(false);
+		stage.centerOnScreen();
+		stage.setScene(scene);
+		stage.show();
 
-		mainFrame.setVisible(true);
-
-		Logger.logInfo("Game succesfully initialised");
 	}
-
-	@Override
-	public void windowOpened(WindowEvent e) {		
-	}
-
-	@Override
-	public void windowClosing(WindowEvent e) {		
-	}
-
-	@Override
-	public void windowClosed(WindowEvent e) {		
-	}
-
-	@Override
-	public void windowIconified(WindowEvent e) {		
-	}
-
-	@Override
-	public void windowDeiconified(WindowEvent e) {		
-	}
-
-	@Override
-	public void windowActivated(WindowEvent e) {		
-	}
-
-	@Override
-	public void windowDeactivated(WindowEvent e) {		
-	}
-
 }
+
+//OLD Swing GUI below, use for reference
+
+//package gui;
+//
+//import game.Game;
+//
+//import java.awt.BorderLayout;
+//
+//import javax.swing.JFrame;
+//
+///**
+// * The base class of the GUI.
+// * @author Thomas Kolenbrander
+// *
+// */
+//public class GUI extends JFrame  {
+//  
+//  private static final int WINDOW_X = 520;
+//  private static final int WINDOW_Y = 600;
+//	
+//	/**
+//	 * The mainframe of the GUI. All panels will be added to this frame
+//	 */
+//	private static JFrame mainFrame;
+//	
+//	/**
+//	 * This panel will display the score of the player.
+//	 */
+//	protected static ScorePanel scorePanel;
+//	
+//	/**
+//	 * This panel will display the board of the game.
+//	 */
+//	private static BoardPanel boardPanel;
+//	
+//	/**
+//	 * This is our main game with the player and the board.
+//	 */
+//	protected static Game game;
+//	
+//	/**
+//	 * The GUI.
+//	 */
+//	protected static GUI gui;
+//	
+//	/**
+//	 * This is the main method which makes sure the GUI starts.
+//	 * @param args args
+//	 */
+//	public static void main(String[] args) {
+//		//Init game
+//		game = new Game();
+//		game.start();
+//		gui = new GUI();
+//	}
+//	
+//	public GUI() {
+//		createGUI();
+//	}
+//	
+//	/**
+//	 * This method will build the GUI.
+//	 */
+//	public static void createGUI() {
+//		mainFrame = new JFrame("Bejeweled");
+//		mainFrame.setSize(WINDOW_X, WINDOW_Y);
+//		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);		
+//		mainFrame.setLayout(new BorderLayout());
+//		mainFrame.setResizable(false);
+//		
+//		//Add the scorepanel
+//		scorePanel = new ScorePanel();
+//		mainFrame.add(scorePanel, BorderLayout.NORTH);
+//		
+//		//Add the boardpanel
+//		boardPanel = new BoardPanel();
+//		mainFrame.add(boardPanel, BorderLayout.SOUTH);
+//		
+//		mainFrame.setVisible(true);
+//	}
+//
+//}
