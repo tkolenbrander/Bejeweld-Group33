@@ -2,9 +2,11 @@ package gui;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Group;
+import javafx.geometry.Insets;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
+import javafx.scene.control.Button;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
@@ -12,9 +14,7 @@ import javafx.stage.Stage;
  * Base class of the GUI.
  * 
  * @author Steven Meijer & Thomas Kolenbrander
- *
  */
-
 public class GUI extends Application {
 
 	/**
@@ -22,9 +22,8 @@ public class GUI extends Application {
 	 */
 	private static final int WINDOW_X = 520;
 	private static final int WINDOW_Y = 600;
-	
+
 	private Pane boardPane;
-    private Label scoreLabel;
 
 	/**
 	 * Main class to launch the application.
@@ -42,11 +41,15 @@ public class GUI extends Application {
 	 */
 	public void start(Stage stage) {
 		FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(GUI.class.getResource("/assets/config/gui.fxml"));
-		
-		Group root = new Group();
-		Scene scene = new Scene(root, WINDOW_X, WINDOW_Y);
-		
+		loader.setLocation(GUI.class.getResource("/assets/config/gui.fxml"));
+
+		BorderPane borderPane = new BorderPane();
+		Scene scene = new Scene(borderPane, WINDOW_X, WINDOW_Y);
+
+		HBox hbox = addScorePanel();
+		borderPane.setTop(hbox);
+		borderPane.setCenter(boardPane);
+
 		// Properties of the stage
 		stage.setTitle("SwekJeweld");
 		stage.setResizable(false);
@@ -55,6 +58,35 @@ public class GUI extends Application {
 		stage.show();
 
 	}
+
+	/**
+	 * Adds a score panel to the top of the screen.
+	 * @return The HBox containing all that is needed for the score panel.
+	 */
+	public HBox addScorePanel() {
+		HBox hbox = new HBox();
+		hbox.setPadding(new Insets(15, 12, 15, 12));
+		hbox.setSpacing(10);
+		hbox.setStyle("-fx-background-color: #3366ff;");
+
+		Button buttonPause = new Button("Pause Game");
+		buttonPause.setPrefSize(100, 20);
+
+		Button buttonRestart = new Button("Restart Game");
+		buttonRestart.setPrefSize(100, 20);
+
+		hbox.getChildren().addAll(buttonPause, buttonRestart);
+
+		return hbox;
+	}
+	
+	/**
+	 * @return The boardPane
+	 */
+	public Pane getBoardPane() {
+		return boardPane;
+	}
+	
 }
 
 //OLD Swing GUI below, use for reference
