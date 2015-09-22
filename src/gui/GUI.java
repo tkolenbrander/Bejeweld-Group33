@@ -2,6 +2,7 @@ package gui;
 
 import game.Game;
 import game.Logger;
+import game.SaveGame;
 
 import java.awt.BorderLayout;
 import java.awt.event.WindowAdapter;
@@ -81,9 +82,11 @@ public class GUI extends JFrame implements WindowListener {
 		mainFrame.add(boardPanel, BorderLayout.SOUTH);
 		
 		mainFrame.addWindowListener(new WindowAdapter() {
-	         public void windowClosing(WindowEvent windowEvent){
+		       @Override
+	         public void windowClosing(WindowEvent windowEvent) {
 	        	 Logger.logInfo("Game closed");
 	        	 Logger.close();
+	        	 SaveGame.close();
 	         } 
 		}); 
 

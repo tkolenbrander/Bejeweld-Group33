@@ -350,18 +350,26 @@ public class Board {
 	}
 
 	/**
-	 * Prints the board.
+	 * Returns a String representing the board in the format for a saved game.
+	 * @return returns a string with the saved board.
 	 */
-	public void printBoard() {
-		System.out.println("Board: ");
+	public String toString() {
+	  final String eol = System.getProperty("line.separator");
+	  String result = "";
 		for (int y = 0; y < BOARDSIZE; y++) {
 			for (int x = 0; x < BOARDSIZE; x++) {
-				System.out.print(board[x][y].getGem().getType() + ", " + x + "," + y + "! ");
+				result += board[y][x].getGem().getType() + " ";
 			}
-			System.out.println();
+			result += eol;
 		}
+		return result;
 	}
 
+	/**
+	 * Checks if two boards are equal.
+	 * @return if the two boards are equal or not.
+	 */
+	@Override
 	public boolean equals(Object board) {
 		if (board instanceof Board) {
 			Board that = (Board) board;
