@@ -326,23 +326,32 @@ public class Board {
 		board[y2][x2] = temp;
 	}
 	
-	public int calculateScore(int bonus){
+	/**
+	 * Calculates the score the player is supposed to receive from the current board.
+	 * @param bonus Initial bonus.
+	 * @return score the player should receive.
+	 */
+	@SuppressWarnings("magicnumber")
+	public int calculateScore(int bonus) {
 		int score = 0;
 		List<List<Position>> chains = chainedCells();
-		for (int i = 0; i < chains.size(); i++){
-			if (chains.get(i).size() == 3){
+		for (int i = 0; i < chains.size(); i++) {
+			if (chains.get(i).size() == 3) {
 				score = score + 50 + bonus * 50;	
 			}
-			if (chains.get(i).size() == 4){
+			if (chains.get(i).size() == 4) {
 				score = score + 100 + bonus * 50;
 			}
-			if (chains.get(i).size() == 5){
+			if (chains.get(i).size() == 5) {
 				score = score + 500 + bonus * 50;		
 			}		
 		}
 		return score;
 	}
 
+	/**
+	 * Prints the board.
+	 */
 	public void printBoard() {
 		System.out.println("Board: ");
 		for (int y = 0; y < BOARDSIZE; y++) {
