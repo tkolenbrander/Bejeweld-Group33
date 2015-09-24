@@ -69,28 +69,28 @@ public class Gem {
 	 */
 	public Image getImageClicked() {
 		Image image = new Image("file:assets/textures/gems/gemMissing.png"); 
-
+		
 		switch (type) {
 		case BLUE:
-			image = new Image("assets/textures/gems/gemBlueClicked.png");
+			image = new Image("file:assets/textures/gems/gemBlueClicked.png");
 			break;
 		case RED:
-			image = new Image("assets/textures/gems/gemRedClicked.png");
+			image = new Image("file:assets/textures/gems/gemRedClicked.png");
 			break;
 		case GREEN:
-			image = new Image("assets/textures/gems/gemGreenClicked.png");
+			image = new Image("file:assets/textures/gems/gemGreenClicked.png");
 			break;
 		case YELLOW:
-			image = new Image("assets/textures/gems/gemYellowClicked.png");
+			image = new Image("file:assets/textures/gems/gemYellowClicked.png");
 			break;
 		case WHITE:
-			image = new Image("assets/textures/gems/gemWhiteClicked.png");
+			image = new Image("file:assets/textures/gems/gemWhiteClicked.png");
 			break;
 		case PURPLE:
-			image = new Image("assets/textures/gems/gemPurpleClicked.png");
+			image = new Image("file:assets/textures/gems/gemPurpleClicked.png");
 			break;
 		case ORANGE:
-			image = new Image("assets/textures/gems/gemOrangeClicked.png");
+			image = new Image("file:assets/textures/gems/gemOrangeClicked.png");
 			break;
 		}
 		
