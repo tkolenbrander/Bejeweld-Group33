@@ -326,33 +326,50 @@ public class Board {
 		board[y2][x2] = temp;
 	}
 	
-	public int calculateScore(int bonus){
+	/**
+	 * Calculates the score the player is supposed to receive from the current board.
+	 * @param bonus Initial bonus.
+	 * @return score the player should receive.
+	 */
+	@SuppressWarnings("magicnumber")
+	public int calculateScore(int bonus) {
 		int score = 0;
 		List<List<Position>> chains = chainedCells();
-		for (int i = 0; i < chains.size(); i++){
-			if (chains.get(i).size() == 3){
+		for (int i = 0; i < chains.size(); i++) {
+			if (chains.get(i).size() == 3) {
 				score = score + 50 + bonus * 50;	
 			}
-			if (chains.get(i).size() == 4){
+			if (chains.get(i).size() == 4) {
 				score = score + 100 + bonus * 50;
 			}
-			if (chains.get(i).size() == 5){
+			if (chains.get(i).size() == 5) {
 				score = score + 500 + bonus * 50;		
 			}		
 		}
 		return score;
 	}
 
-	public void printBoard() {
-		System.out.println("Board: ");
+	/**
+	 * Returns a String representing the board in the format for a saved game.
+	 * @return returns a string with the saved board.
+	 */
+	public String toString() {
+	  final String eol = System.getProperty("line.separator");
+	  String result = "";
 		for (int y = 0; y < BOARDSIZE; y++) {
 			for (int x = 0; x < BOARDSIZE; x++) {
-				System.out.print(board[x][y].getGem().getType() + ", " + x + "," + y + "! ");
+				result += board[y][x].getGem().getType() + " ";
 			}
-			System.out.println();
+			result += eol;
 		}
+		return result;
 	}
 
+	/**
+	 * Checks if two boards are equal.
+	 * @return if the two boards are equal or not.
+	 */
+	@Override
 	public boolean equals(Object board) {
 		if (board instanceof Board) {
 			Board that = (Board) board;
