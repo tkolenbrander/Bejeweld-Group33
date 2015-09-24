@@ -21,7 +21,6 @@ public class BoardPane implements MouseListener {
 	private GridPane gridPane;
 
 	public BoardPane() {
-		super();
 		initBoard();
 	}
 
@@ -35,34 +34,34 @@ public class BoardPane implements MouseListener {
 		for (int y = 0; y < cells.length; y++) {
 			for (int x = 0; x < cells[y].length; x++) {
 				GemType type = cells[y][x].getGem().getType();
-				Image icon = new Image("assets/textures/gems/gemNone.png"); //TODO: Fancy class for getting image icon
+				Image icon = new Image("file:assets/textures/gems/gemMissing.png"); //TODO: Fancy class for getting image icon
 
 				switch (type) {
 				case BLUE:
-					icon = new Image("assets/textures/gems/gemBlue.png");
+					icon = new Image("file:assets/textures/gems/gemBlue.png");
 					break;
 				case RED:
-					icon = new Image("assets/textures/gems/gemRed.png");
+					icon = new Image("file:assets/textures/gems/gemRed.png");
 					break;
 				case GREEN:
-					icon = new Image("assets/textures/gems/gemGreen.png");
+					icon = new Image("file:assets/textures/gems/gemGreen.png");
 					break;
 				case YELLOW:
-					icon = new Image("assets/textures/gems/gemYellow.png");
+					icon = new Image("file:assets/textures/gems/gemYellow.png");
 					break;
 				case WHITE:
-					icon = new Image("assets/textures/gems/gemWhite.png");
+					icon = new Image("file:assets/textures/gems/gemWhite.png");
 					break;
 				case PURPLE:
-					icon = new Image("assets/textures/gems/gemPurple.png");
+					icon = new Image("file:assets/textures/gems/gemPurple.png");
 					break;
 				case ORANGE:
-					icon = new Image("assets/textures/gems/gemOrange.png");
+					icon = new Image("file:assets/textures/gems/gemOrange.png");
 					break;
 				}
 				
 				ImageView image = new ImageView(icon);
-				gridPane.add(image, y, x);
+				//gridPane.add(image, y, x);
 			}
 		}
 	}

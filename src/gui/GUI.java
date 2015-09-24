@@ -26,7 +26,7 @@ public class GUI extends Application {
 	private static final int WINDOW_Y = 600;
 	
 	protected static Game game;
-	private BoardPane gridPane;
+	private BoardPane boardPane;
 
 	/**
 	 * Main class to launch the application.
@@ -51,12 +51,12 @@ public class GUI extends Application {
 		BorderPane borderPane = new BorderPane();
 		Scene scene = new Scene(borderPane, WINDOW_X, WINDOW_Y);
 
-		gridPane = new BoardPane();
-		
+		boardPane = new BoardPane();
 		HBox hbox = addScorePanel();
+		
 		borderPane.setTop(hbox);
 		//TODO Fix board being loaded from BoardPane class, into the center of the borderPane
-		//borderPane.setCenter(gridPane);
+		borderPane.setCenter(boardPane.getBoardPane());
 
 		// Properties of the stage
 		stage.setTitle("SwekJeweld");
