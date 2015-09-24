@@ -25,7 +25,7 @@ public class Board {
 
 	/**
 	 * Constructor for a board, allowing the board to be set to a predefined map.
-	 * Only used in testing as of now.
+	 * Used in testing and loading a saved game
 	 * @param cells board
 	 */
 	public Board(Cell[][] cells) {

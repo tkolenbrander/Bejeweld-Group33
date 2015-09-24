@@ -25,7 +25,18 @@ public class Game {
 		board = new Board();
 		inProgress = false;
 	}
-
+	
+	/**
+	 * Creates a new game object, with the given board and player.
+	 * This constructor is used for loading the game.
+	 * The game is paused at the start.
+	 */
+	public Game(Board newBoard, Player newPlayer) {
+		player = newPlayer;
+		board = newBoard;
+		inProgress = false;
+	}
+	
 	/**
 	 * Returns the player.
 	 * @return The player
