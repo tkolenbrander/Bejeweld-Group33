@@ -75,8 +75,7 @@ public class ScorePanel extends JPanel {
             	GUI.game.stop();
         		GUI.game = new Game();
         		GUI.game.start();
-        		GUI.mainFrame.dispose();
-        		GUI.gui = new GUI();
+        		//TODO: Make sure the restart button refreshes the GUI
             }
         });
 	}

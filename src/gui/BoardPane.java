@@ -1,27 +1,37 @@
 package gui;
 
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-
 import board.Board;
 import board.Cell;
-import board.GemType;
-
+import board.Gem;
+import javafx.event.EventHandler;
+import javafx.scene.Node;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
+import javafx.scene.paint.ImagePattern;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.input.MouseEvent;
 
 /**
  * Class that creates the board and passes it to the GUI.
  * 
  * @author Steven Meijer & Thomas Kolenbrander
  */
-public class BoardPane implements MouseListener {
+public class BoardPane {
 
 	private GridPane gridPane;
 	
+	private ImageView[][] imageviews;
+	
+	private ImageView selectedView;
+	
+	private boolean selected = false;
+
 	public BoardPane() {
-		gridPane = new GridPane();
+		gridPane = new GridPane();	
+		imageviews = new ImageView[Board.BOARDSIZE][Board.BOARDSIZE];
 		initBoard();
 	}
 
@@ -34,36 +44,19 @@ public class BoardPane implements MouseListener {
 
 		for (int y = 0; y < cells.length; y++) {
 			for (int x = 0; x < cells[y].length; x++) {
-				GemType type = cells[y][x].getGem().getType();
-				Image imagePath = new Image("file:assets/textures/gems/gemMissing.png"); //TODO: Fancy class for getting image icon
-
-				switch (type) {
-				case BLUE:
-					imagePath = new Image("file:assets/textures/gems/gemBlue.png");
-					break;
-				case RED:
-					imagePath = new Image("file:assets/textures/gems/gemRed.png");
-					break;
-				case GREEN:
-					imagePath = new Image("file:assets/textures/gems/gemGreen.png");
-					break;
-				case YELLOW:
-					imagePath = new Image("file:assets/textures/gems/gemYellow.png");
-					break;
-				case WHITE:
-					imagePath = new Image("file:assets/textures/gems/gemWhite.png");
-					break;
-				case PURPLE:
-					imagePath = new Image("file:assets/textures/gems/gemPurple.png");
-					break;
-				case ORANGE:
-					imagePath = new Image("file:assets/textures/gems/gemOrange.png");
-					break;
-				}
+				Image icon = cells[x][y].getGem().getImage(); 
 				
-				final ImageView imageV = new ImageView();
-				imageV.setImage(imagePath);
-				gridPane.add(imageV, x, y);
+				ImageView image = new ImageView(icon);
+				
+				image.setOnMousePressed(new EventHandler<MouseEvent>() {
+				    public void handle(MouseEvent me) {	
+				    	int x = gridPane.getRowIndex((Node) me.getSource());
+				    	int y = gridPane.getColumnIndex((Node) me.getSource());
+				        clicked(x, y);
+				    }
+				});
+				imageviews[x][y] = image;
+				gridPane.add(image, y, x);
 			}
 		}
 	}
@@ -74,30 +67,20 @@ public class BoardPane implements MouseListener {
 	public GridPane getBoardPane() {
 		return gridPane;
 	}
+	
+	/**
+	 * Handles the event when a gem is clicked.
+	 * @param x The x coordinate of the gem.
+	 * @param y The y coordinate of the gem.
+	 */
+	public void clicked(int x, int y) {
+		Board board = GUI.game.getBoard();
+		Cell[][] cells = board.getCells();
+		Gem gem = cells[x][y].getGem();
+		
+		ImageView selected = imageviews[x][y];
 
-	@Override
-	public void mouseClicked(MouseEvent e) {
-		// TODO Auto-generated method stub
-	}
-
-	@Override
-	public void mouseEntered(MouseEvent e) {
-		// TODO Auto-generated method stub
-	}
-
-	@Override
-	public void mouseExited(MouseEvent e) {
-		// TODO Auto-generated method stub
-	}
-
-	@Override
-	public void mousePressed(MouseEvent e) {
-		// TODO Auto-generated method stub
-	}
-
-	@Override
-	public void mouseReleased(MouseEvent e) {
-		// TODO Auto-generated method stub
+		selected.setImage(new Image("file:assets/textures/gems/gemMissing.png"));
 	}
 
 }
