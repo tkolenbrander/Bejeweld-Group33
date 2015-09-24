@@ -19,6 +19,13 @@ public class Player {
   }
   
   /**
+   * Creates a new player with the given score.
+   */
+  public Player(int newScore) {
+    score = newScore;
+  }
+  
+  /**
    * Returns the score of the player.
    * @return score of the player.
    */
