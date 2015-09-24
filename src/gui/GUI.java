@@ -1,11 +1,13 @@
 package gui;
 
+import game.Game;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
@@ -22,8 +24,9 @@ public class GUI extends Application {
 	 */
 	private static final int WINDOW_X = 520;
 	private static final int WINDOW_Y = 600;
-
-	private Pane boardPane;
+	
+	protected static Game game;
+	private BoardPane gridPane;
 
 	/**
 	 * Main class to launch the application.
@@ -31,6 +34,8 @@ public class GUI extends Application {
 	 * @param args Launch arguments.
 	 */
 	public static void main(String[] args) {
+		game = new Game();
+		game.start();
 		launch(args);
 	}
 
@@ -46,9 +51,12 @@ public class GUI extends Application {
 		BorderPane borderPane = new BorderPane();
 		Scene scene = new Scene(borderPane, WINDOW_X, WINDOW_Y);
 
+		gridPane = new BoardPane();
+		
 		HBox hbox = addScorePanel();
 		borderPane.setTop(hbox);
-		borderPane.setCenter(boardPane);
+		//TODO Fix board being loaded from BoardPane class, into the center of the borderPane
+		//borderPane.setCenter(gridPane);
 
 		// Properties of the stage
 		stage.setTitle("SwekJeweld");
@@ -56,7 +64,6 @@ public class GUI extends Application {
 		stage.centerOnScreen();
 		stage.setScene(scene);
 		stage.show();
-
 	}
 
 	/**
@@ -65,7 +72,7 @@ public class GUI extends Application {
 	 */
 	public HBox addScorePanel() {
 		HBox hbox = new HBox();
-		hbox.setPadding(new Insets(15, 12, 15, 12));
+		hbox.setPadding(new Insets(15, 12, 15, 150));
 		hbox.setSpacing(10);
 		hbox.setStyle("-fx-background-color: #3366ff;");
 
@@ -78,13 +85,6 @@ public class GUI extends Application {
 		hbox.getChildren().addAll(buttonPause, buttonRestart);
 
 		return hbox;
-	}
-	
-	/**
-	 * @return The boardPane
-	 */
-	public Pane getBoardPane() {
-		return boardPane;
 	}
 	
 }

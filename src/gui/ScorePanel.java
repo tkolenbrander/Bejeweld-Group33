@@ -21,6 +21,7 @@ import javax.swing.JPanel;
  * @author Thomas
  *
  */
+@Deprecated
 public class ScorePanel extends JPanel {
 
 	/**

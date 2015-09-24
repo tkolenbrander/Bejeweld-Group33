@@ -25,6 +25,7 @@ import board.Position;
  * @author Thomas
  *
  */
+@Deprecated
 public class BoardPanel extends JPanel implements MouseListener {
 
 	/**
