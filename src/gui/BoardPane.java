@@ -19,8 +19,9 @@ import javafx.scene.layout.GridPane;
 public class BoardPane implements MouseListener {
 
 	private GridPane gridPane;
-
+	
 	public BoardPane() {
+		gridPane = new GridPane();
 		initBoard();
 	}
 
@@ -34,34 +35,35 @@ public class BoardPane implements MouseListener {
 		for (int y = 0; y < cells.length; y++) {
 			for (int x = 0; x < cells[y].length; x++) {
 				GemType type = cells[y][x].getGem().getType();
-				Image icon = new Image("file:assets/textures/gems/gemMissing.png"); //TODO: Fancy class for getting image icon
+				Image imagePath = new Image("file:assets/textures/gems/gemMissing.png"); //TODO: Fancy class for getting image icon
 
 				switch (type) {
 				case BLUE:
-					icon = new Image("file:assets/textures/gems/gemBlue.png");
+					imagePath = new Image("file:assets/textures/gems/gemBlue.png");
 					break;
 				case RED:
-					icon = new Image("file:assets/textures/gems/gemRed.png");
+					imagePath = new Image("file:assets/textures/gems/gemRed.png");
 					break;
 				case GREEN:
-					icon = new Image("file:assets/textures/gems/gemGreen.png");
+					imagePath = new Image("file:assets/textures/gems/gemGreen.png");
 					break;
 				case YELLOW:
-					icon = new Image("file:assets/textures/gems/gemYellow.png");
+					imagePath = new Image("file:assets/textures/gems/gemYellow.png");
 					break;
 				case WHITE:
-					icon = new Image("file:assets/textures/gems/gemWhite.png");
+					imagePath = new Image("file:assets/textures/gems/gemWhite.png");
 					break;
 				case PURPLE:
-					icon = new Image("file:assets/textures/gems/gemPurple.png");
+					imagePath = new Image("file:assets/textures/gems/gemPurple.png");
 					break;
 				case ORANGE:
-					icon = new Image("file:assets/textures/gems/gemOrange.png");
+					imagePath = new Image("file:assets/textures/gems/gemOrange.png");
 					break;
 				}
 				
-				ImageView image = new ImageView(icon);
-				//gridPane.add(image, y, x);
+				final ImageView imageV = new ImageView();
+				imageV.setImage(imagePath);
+				gridPane.add(imageV, x, y);
 			}
 		}
 	}

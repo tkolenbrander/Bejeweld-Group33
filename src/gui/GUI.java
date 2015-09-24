@@ -7,9 +7,7 @@ import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 /**
@@ -55,7 +53,6 @@ public class GUI extends Application {
 		HBox hbox = addScorePanel();
 		
 		borderPane.setTop(hbox);
-		//TODO Fix board being loaded from BoardPane class, into the center of the borderPane
 		borderPane.setCenter(boardPane.getBoardPane());
 
 		// Properties of the stage
