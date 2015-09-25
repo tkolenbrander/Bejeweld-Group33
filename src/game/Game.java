@@ -83,7 +83,6 @@ public class Game {
 	 * Wait, it was yesterday...
 	 */
 	public void reset() {
-		inProgress = false;
 		player.reset();
 		board.reset();
 		//reset any timers if there are any.

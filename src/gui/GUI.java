@@ -1,13 +1,15 @@
 package gui;
 
 import game.Game;
+import game.LoadGame;
 import game.Logger;
+import game.SaveGame;
+
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -106,14 +108,14 @@ public class GUI extends Application {
 		buttonSave.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                //TODO: Save the game
+                SaveGame.save(game);
             }
         });
 		
 		buttonLoad.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                //TODO: Load the game
+                LoadGame.load();
             }
         });
 
@@ -133,7 +135,7 @@ public class GUI extends Application {
 		buttonRestart.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                //TODO: Restart the game
+            	game.reset();
             }
         });
 		
