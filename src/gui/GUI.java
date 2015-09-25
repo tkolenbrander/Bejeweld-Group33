@@ -116,16 +116,14 @@ public class GUI extends Application {
 		buttonLoad.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-<<<<<<< HEAD
+              try {
                 game = LoadGame.load();
                 boardPane.refresh();
                 setScore(GUI.game.getPlayer().getScore());
-=======
-            	game.stop();
-                game = LoadGame.load();
-                game.start();
-                boardPane.refresh();
->>>>>>> f5a78e12c8ca9862b3ac001aead14f377807a52f
+              }
+              catch (Exception e) {
+                setError("Cannot load game!");
+              }
             }
         });
 		setScore(0);
