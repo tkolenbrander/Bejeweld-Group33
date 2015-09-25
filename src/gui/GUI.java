@@ -112,8 +112,7 @@ public class GUI extends Application {
             @Override
             public void handle(ActionEvent event) {
                 SaveGame.save(game);
-                setError("Game saved!"); }
-        });
+                setError("Game saved!"); } });
 		buttonLoad.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -123,16 +122,13 @@ public class GUI extends Application {
                 boardPane.refresh();
                 setScore(GUI.game.getPlayer().getScore());
                 setScore(GUI.game.getPlayer().getScore());
-                setError("Game loaded!");
-              }
+                setError("Game loaded!"); }
               catch (Exception e) {
-                setError("Cannot load game!"); }
-            }
-        });
+                setError("Cannot load game!"); } } });
 		setScore(0);
 		hbox.getChildren().addAll(scoreLabel, buttonSave, buttonLoad);
 		return hbox;  }
-	
+
 	/**
 	 * Adds the error panel at the bottom of the screen.
 	 * @return The HBox containing all that is needed for the error panel
