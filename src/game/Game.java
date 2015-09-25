@@ -30,6 +30,8 @@ public class Game {
 	 * Creates a new game object, with the given board and player.
 	 * This constructor is used for loading the game.
 	 * The game is paused at the start.
+	 * @param newBoard Board to be loaded into the game.
+	 * @param newPlayer Player to be loaded into the game.
 	 */
 	public Game(Board newBoard, Player newPlayer) {
 		player = newPlayer;

@@ -190,7 +190,6 @@ public class Board {
 	public void removeChains() {
 		List<List<Position>> chains = chainedCells();
 		for (List<Position> chain : chains) { 
-			System.out.println("Chained " + chain.size() + " gems");
 			for (Position pos : chain) {
 				board[pos.getY()][pos.getX()] = null;
 			}
@@ -206,9 +205,9 @@ public class Board {
 				if (board[y][x] == null) {
 					for (int d = 1; d <= y; d++) {
 						if (y != 0) {
-							if (board[y-d][x] != null) {
-								board[y][x] = board[y-d][x];
-								board[y-d][x] = null;
+							if (board[y - d][x] != null) {
+								board[y][x] = board[y - d][x];
+								board[y - d][x] = null;
 								break;
 							}
 						}
