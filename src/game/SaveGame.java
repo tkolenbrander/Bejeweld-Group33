@@ -11,7 +11,7 @@ import java.io.PrintWriter;
  *
  */
 public final class SaveGame {
-  
+  private static final Object SYNC = new Object();
   private static final String PATH = "savefile.bjw";
   private static PrintWriter out;
   static {
@@ -35,9 +35,22 @@ public final class SaveGame {
    * @param game Game to be saved.
    */
   public static void save(Game game) {
-    out.println(game.getPlayer().getScore());
-    out.print(game.getBoard().toString());
+    synchronized (SYNC) {
+      out.println(game.getPlayer().getScore());
+      out.print(game.getBoard().toString());
+      out.flush();
+      reset();
+    }
+  }
+  
+  private static void reset() {
     out.flush();
+    try {
+      out = new PrintWriter(new BufferedWriter(new FileWriter(PATH, false)));
+    }
+    catch (IOException e) {
+      e.printStackTrace();
+    }
   }
   
   /**

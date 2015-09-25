@@ -33,11 +33,19 @@ public final class LoadGame {
 	    throw new AssertionError("Instantiating utility class...");
 	  }
 	  
+	  private static void reset() {
+	    try {
+	      in = new Scanner(new FileReader(PATH));
+      } catch (FileNotFoundException e) {
+        e.printStackTrace();
+      }
+	  }
+	  
 	  /**
 	   * Loads the game from the last saved game
 	   * @return a new Game with the saved score and Board
 	   */
-	  public static Game load() {
+	  public static Game load() throws Exception {
 		  Player player = new Player(in.nextInt());
 		  
 		  Cell[][] cells = new Cell[Board.BOARDSIZE][Board.BOARDSIZE];
@@ -47,7 +55,7 @@ public final class LoadGame {
 					cells[y][x] = new Cell(new Gem(type));
 				}
 		  }
-		  in.reset();
+		  reset();
 		  return new Game(new Board(cells), player);
 	  }
 	  

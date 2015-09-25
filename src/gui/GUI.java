@@ -4,7 +4,6 @@ import game.Game;
 import game.LoadGame;
 import game.Logger;
 import game.SaveGame;
-
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -79,7 +78,7 @@ public class GUI extends Application {
 		borderPane.setBottom(errorPanel);
 
 		// Properties of the stage
-		stage.setTitle("SwekJeweld");
+		stage.setTitle("SwekJeweled");
 		stage.setResizable(false);
 		stage.centerOnScreen();
 		stage.setScene(scene);
@@ -109,16 +108,19 @@ public class GUI extends Application {
             @Override
             public void handle(ActionEvent event) {
                 SaveGame.save(game);
+                setError("Game saved!");
             }
         });
 		
 		buttonLoad.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                LoadGame.load();
+                game = LoadGame.load();
+                boardPane.refresh();
+                setScore(GUI.game.getPlayer().getScore());
             }
         });
-
+		setScore(0);
 		hbox.getChildren().addAll(scoreLabel, buttonSave, buttonLoad);
 		return hbox;
 	}
@@ -136,6 +138,7 @@ public class GUI extends Application {
             @Override
             public void handle(ActionEvent event) {
             	game.reset();
+            	boardPane.refresh();
             }
         });
 		
