@@ -118,6 +118,7 @@ public class GUI extends Application {
             public void handle(ActionEvent event) {
               try {
                 game = LoadGame.load();
+                game.start();
                 boardPane.refresh();
                 setScore(GUI.game.getPlayer().getScore());
               }
