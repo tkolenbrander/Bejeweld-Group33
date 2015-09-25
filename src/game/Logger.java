@@ -112,6 +112,7 @@ public final class Logger {
 	private static void writeLog(final String level, final String text) {
 		DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 		out.println(level + " " + dateFormat.format(new Date()) + " " + text);
+		out.flush();
 	}
 	
 	/**

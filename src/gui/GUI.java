@@ -1,15 +1,14 @@
 package gui;
 
 import game.Game;
+import game.Logger;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 /**
@@ -45,6 +44,8 @@ public class GUI extends Application {
 	 * @param primaryStage The stage.
 	 */
 	public void start(Stage stage) {
+		Logger.logInfo("Game started");
+		
 		FXMLLoader loader = new FXMLLoader();
 		loader.setLocation(GUI.class.getResource("/assets/config/gui.fxml"));
 
@@ -64,6 +65,8 @@ public class GUI extends Application {
 		stage.centerOnScreen();
 		stage.setScene(scene);
 		stage.show();
+		
+		Logger.logInfo("Game succesfully initialized");
 	}
 
 	/**

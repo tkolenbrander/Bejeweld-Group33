@@ -1,19 +1,18 @@
 package gui;
 
 import exceptions.MoveNotValidException;
+
+import game.Logger;
+
 import board.Board;
 import board.Cell;
 import board.Gem;
 import board.Position;
+
 import javafx.event.EventHandler;
 import javafx.scene.Node;
-import javafx.scene.control.Label;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
-import javafx.scene.paint.ImagePattern;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.input.MouseEvent;
 
 /**
@@ -167,6 +166,7 @@ public class BoardPane {
 		}
 		if (!GUI.game.inProgress()) {
 			// TODO: Game over
+			Logger.close();
 		}
 		return result;
 	}
