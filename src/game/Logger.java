@@ -132,7 +132,7 @@ public final class Logger {
 	/**
 	 * Closes the PrintWriter.
 	 */
-	public static void close(){
+	public static void close() {
 		out.close();
 	}
 }
