@@ -20,10 +20,10 @@ public final class LoadGame {
 	  private static Scanner in;
 	  static {
 		  try {
-			in = new Scanner(new FileReader(PATH));
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}
+		    in = new Scanner(new FileReader(PATH));
+		  } catch (FileNotFoundException e) {
+		    e.printStackTrace();
+		  }
 	  }
 	  
 	  /**
@@ -47,7 +47,7 @@ public final class LoadGame {
 					cells[y][x] = new Cell(new Gem(type));
 				}
 		  }
-		  
+		  in.reset();
 		  return new Game(new Board(cells), player);
 	  }
 	  
