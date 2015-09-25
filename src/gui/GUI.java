@@ -1,8 +1,11 @@
 package gui;
 
 import game.Game;
+import game.LoadGame;
 import game.Logger;
+import game.SaveGame;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
@@ -103,17 +106,21 @@ public class GUI extends Application {
 		Button buttonLoad = new Button("Load Game");
 		buttonLoad.setPrefSize(100, 20);
 		
+		
 		buttonSave.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                //TODO: Save the game
+                SaveGame.save(game);
             }
         });
 		
 		buttonLoad.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                //TODO: Load the game
+            	game.stop();
+                game = LoadGame.load();
+                game.start();
+                boardPane.refresh();
             }
         });
 
@@ -133,7 +140,10 @@ public class GUI extends Application {
 		buttonRestart.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                //TODO: Restart the game
+            	game.stop();
+                game = new Game();
+                game.start();
+               	boardPane.refresh();
             }
         });
 		
