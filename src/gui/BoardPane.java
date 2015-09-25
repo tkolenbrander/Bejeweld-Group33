@@ -23,7 +23,7 @@ import javafx.scene.input.MouseEvent;
 public class BoardPane {
 
 	/**
-	 * The main pane of this class
+	 * The main pane of this class.
 	 */
 	private GridPane gridPane;
 
@@ -51,7 +51,10 @@ public class BoardPane {
 	 * True if a gem is selected.
 	 */
 	private boolean selected = false;
-
+	
+	/**
+	 * Creates a new BoardPane.
+	 */
 	public BoardPane() {
 		gridPane = new GridPane();
 		imageviews = new ImageView[Board.BOARDSIZE][Board.BOARDSIZE];
@@ -62,7 +65,7 @@ public class BoardPane {
 	 * Initializes the board.
 	 */
 	public void initBoard() {
-		Board board = GUI.game.getBoard();
+		Board board = GUI.getGame().getBoard();
 		Cell[][] cells = board.getCells();
 
 		for (int y = 0; y < cells.length; y++) {
@@ -74,8 +77,8 @@ public class BoardPane {
 
 				image.setOnMousePressed(new EventHandler<MouseEvent>() {
 					public void handle(MouseEvent me) {
-						int y = gridPane.getRowIndex((Node) me.getSource());
-						int x = gridPane.getColumnIndex((Node) me.getSource());
+						int y = GridPane.getRowIndex((Node) me.getSource());
+						int x = GridPane.getColumnIndex((Node) me.getSource());
 						clicked(x, y);
 					}
 				});
@@ -101,7 +104,7 @@ public class BoardPane {
 	 *            The y coordinate of the gem.
 	 */
 	public void clicked(int x, int y) {
-		Board board = GUI.game.getBoard();
+		Board board = GUI.getGame().getBoard();
 		Cell[][] cells = board.getCells();
 		Gem gem = cells[y][x].getGem();
 
@@ -152,20 +155,21 @@ public class BoardPane {
 	 *            The first position.
 	 * @param p2
 	 *            The second position.
+	 * @return returns whether a move is possible
 	 */
 	public boolean makeMove(Position p1, Position p2) {
 		boolean result = false;
 		
 		try {
-			GUI.game.makeMove(p1.getX(), p1.getY(), p2.getX(), p2.getY());			
+			GUI.getGame().makeMove(p1.getX(), p1.getY(), p2.getX(), p2.getY());			
 			result = true;
-			GUI.gui.setError("");
-			GUI.gui.setScore(GUI.game.getPlayer().getScore());
+			GUI.getgui().setError("");
+			GUI.getgui().setScore(GUI.getGame().getPlayer().getScore());
 			refresh();
 		} catch (MoveNotValidException e) {
-			GUI.gui.setError(e.getMessage());
+			GUI.getgui().setError(e.getMessage());
 		}
-		if (!GUI.game.inProgress()) {
+		if (!GUI.getGame().inProgress()) {
 			// TODO: Game over
 			Logger.close();
 		}
@@ -177,7 +181,7 @@ public class BoardPane {
 	 */
 	public void refresh() {
 		gridPane.getChildren().removeAll(gridPane.getChildren());
-		GUI.gui.setScore(GUI.game.getPlayer().getScore());
+		GUI.getgui().setScore(GUI.getGame().getPlayer().getScore());
 		initBoard();
 	}
 }
