@@ -159,10 +159,11 @@ public class BoardPane {
 		try {
 			GUI.game.makeMove(p1.getX(), p1.getY(), p2.getX(), p2.getY());			
 			result = true;
-			System.out.println("move made");
+			GUI.gui.setError("");
+			GUI.gui.setScore(GUI.game.getPlayer().getScore());
 			refresh();
 		} catch (MoveNotValidException e) {
-			// TODO: Display error
+			GUI.gui.setError(e.getMessage());
 		}
 		if (!GUI.game.inProgress()) {
 			// TODO: Game over
