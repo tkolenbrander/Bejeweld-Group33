@@ -177,6 +177,7 @@ public class BoardPane {
 	 */
 	public void refresh() {
 		gridPane.getChildren().removeAll(gridPane.getChildren());
+		GUI.gui.setScore(GUI.game.getPlayer().getScore());
 		initBoard();
 	}
 }
