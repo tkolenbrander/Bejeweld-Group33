@@ -1,7 +1,5 @@
 package board;
 
-import javax.swing.ImageIcon;
-
 import javafx.scene.image.Image;
 
 /**
@@ -30,12 +28,11 @@ public class Gem {
 	}
 	
 	/**
-	 * Return the image of a gem
+	 * Return the image of a gem.
 	 * @return The image of a gem
 	 */
 	public Image getImage() {
 		Image image = new Image("file:assets/textures/gems/gemMissing.png");
-
 		switch (type) {
 		case BLUE:
 			image = new Image("file:assets/textures/gems/gemBlue.png");
@@ -58,18 +55,18 @@ public class Gem {
 		case ORANGE:
 			image = new Image("file:assets/textures/gems/gemOrange.png");
 			break;
+		default:
+		  break;
 		}
-		
 		return image;
 	}
 	
 	/**
-	 * Return the image of a gem when it's clicked
+	 * Return the image of a gem when it's clicked.
 	 * @return The image of a gem when it's clicked
 	 */
 	public Image getImageClicked() {
-		Image image = new Image("file:assets/textures/gems/gemMissing.png"); 
-		
+		Image image = new Image("file:assets/textures/gems/gemMissing.png"); 	
 		switch (type) {
 		case BLUE:
 			image = new Image("file:assets/textures/gems/gemBlueClicked.png");
@@ -92,8 +89,9 @@ public class Gem {
 		case ORANGE:
 			image = new Image("file:assets/textures/gems/gemOrangeClicked.png");
 			break;
-		}
-		
+		default:
+		  break;
+		}	
 		return image;
 	}
 	

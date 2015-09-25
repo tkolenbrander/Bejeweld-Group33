@@ -16,6 +16,7 @@ import java.util.Date;
  */
 public final class Logger {
 
+  private static final Object SYNC = new Object();
 	private static final String PATH = "logfile.txt"; //static path for now
 	private static boolean logInfo = true; //TODO: config options in GUI
 	private static boolean logWarning = true;
@@ -110,9 +111,11 @@ public final class Logger {
 	 * @param text The text to be written.
 	 */
 	private static void writeLog(final String level, final String text) {
-		DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-		out.println(level + " " + dateFormat.format(new Date()) + " " + text);
-		out.flush();
+	  synchronized (SYNC) {
+	    DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+	    out.println(level + " " + dateFormat.format(new Date()) + " " + text);
+	    out.flush();
+	  }
 	}
 	
 	/**
