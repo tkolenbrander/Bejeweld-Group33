@@ -121,7 +121,10 @@ public class GUI extends Application {
                 game = LoadGame.load();
                 game.start();
                 boardPane.refresh();
-                setScore(GUI.game.getPlayer().getScore()); }
+                setScore(GUI.game.getPlayer().getScore());
+                setScore(GUI.game.getPlayer().getScore());
+                setError("Game loaded!");
+              }
               catch (Exception e) {
                 setError("Cannot load game!"); }
             }
@@ -148,6 +151,7 @@ public class GUI extends Application {
             @Override
             public void handle(ActionEvent event) {
             	game.reset();
+            	game.start();
             	boardPane.refresh();
             }
         });
