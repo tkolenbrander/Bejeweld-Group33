@@ -13,16 +13,7 @@ import java.io.PrintWriter;
 public final class SaveGame {
   private static final Object SYNC = new Object();
   private static final String PATH = "savefile.bjw";
-  private static PrintWriter out;
-  static {
-    try {
-      out = new PrintWriter(new BufferedWriter(new FileWriter(PATH, false)));
-    }
-    catch (IOException e) {
-      e.printStackTrace();
-    }
-  }
-  
+
   /**
    * Since this is a utility class, we don't want this instantiated.
    */
@@ -36,27 +27,18 @@ public final class SaveGame {
    */
   public static void save(Game game) {
     synchronized (SYNC) {
-      out.println(game.getPlayer().getScore());
-      out.print(game.getBoard().toString());
-      out.flush();
-      reset();
+      PrintWriter out = null;
+      try {
+        out = new PrintWriter(new BufferedWriter(new FileWriter(PATH, false)));
+        out.println(game.getPlayer().getScore());
+        out.print(game.getBoard().toString());
+      }
+      catch (IOException e) {
+        e.printStackTrace();
+      }
+      finally {
+        out.close();
+      }
     }
-  }
-  
-  private static void reset() {
-    out.flush();
-    try {
-      out = new PrintWriter(new BufferedWriter(new FileWriter(PATH, false)));
-    }
-    catch (IOException e) {
-      e.printStackTrace();
-    }
-  }
-  
-  /**
-   * Closes the PrintWriter used in this class.
-   */
-  public static void close() {
-    out.close();
   }
 }

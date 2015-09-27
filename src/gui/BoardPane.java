@@ -171,6 +171,7 @@ public class BoardPane {
 		}
 		if (!GUI.getGame().inProgress()) {
 			// TODO: Game over
+		  GUI.getgui().setError("Game over!");
 			Logger.close();
 		}
 		return result;
