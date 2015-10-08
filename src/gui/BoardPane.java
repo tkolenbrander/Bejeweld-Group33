@@ -1,19 +1,23 @@
 package gui;
 
+import java.util.ArrayList;
+
 import exceptions.MoveNotValidException;
-
 import game.Logger;
-
 import board.Board;
 import board.Cell;
 import board.Gem;
 import board.Position;
-
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.input.MouseEvent;
+import javafx.util.Duration;
 
 /**
  * Class that creates the board and passes it to the GUI.
@@ -25,7 +29,7 @@ public class BoardPane {
 	/**
 	 * The main pane of this class.
 	 */
-	private GridPane gridPane;
+	private BorderPane borderPane;
 
 	/**
 	 * Contains all the imageviews of the sprites.
@@ -53,11 +57,17 @@ public class BoardPane {
 	private boolean selected = false;
 	
 	/**
+	 * Contains the animations.
+	 */
+	private TimelineController controller;
+	
+	/**
 	 * Creates a new BoardPane.
 	 */
 	public BoardPane() {
-		gridPane = new GridPane();
+		borderPane = new BorderPane();
 		imageviews = new ImageView[Board.BOARDSIZE][Board.BOARDSIZE];
+		controller = new TimelineController();
 		initBoard();		
 	}
 
@@ -74,16 +84,21 @@ public class BoardPane {
 
 				ImageView image = new ImageView();
 				displayNormal(image, gem);
+				image.setLayoutX(x*65);
+				image.setLayoutY(y*65);
 
 				image.setOnMousePressed(new EventHandler<MouseEvent>() {
 					public void handle(MouseEvent me) {
-						int y = GridPane.getRowIndex((Node) me.getSource());
-						int x = GridPane.getColumnIndex((Node) me.getSource());
+//						int y = GridPane.getRowIndex((Node) me.getSource());
+//						int x = GridPane.getColumnIndex((Node) me.getSource());
+						System.out.println(me.getSceneX() + ", " + (me.getSceneY() - 55));
+						int x = (int) me.getSceneX()/65;
+						int y = (int) (me.getSceneY() - 55)/65;
 						clicked(x, y);
 					}
 				});
 				imageviews[x][y] = image;
-				gridPane.add(image, x, y);
+				borderPane.getChildren().add(image);
 			}
 		}
 	}
@@ -91,8 +106,8 @@ public class BoardPane {
 	/**
 	 * @return The boardPane
 	 */
-	public GridPane getBoardPane() {
-		return gridPane;
+	public BorderPane getBoardPane() {
+		return borderPane;
 	}
 
 	/**
@@ -113,6 +128,10 @@ public class BoardPane {
 
 		if (selected) {			
 			makeMove(new Position(x, y), selectedPosition);
+//			final Timeline t = makeMove(selectedView, view, selectedPosition, new Position(x, y));
+//			t.play();
+			Timeline t = controller.getTimeline();
+			t.play();
 			displayNormal(selectedView, selectedGem);
 			selected = false;			
 		} else {
@@ -123,6 +142,18 @@ public class BoardPane {
 			selected = true;
 		}
 	}
+	
+//	public Timeline makeMove(ImageView v1, ImageView v2, Position p1, Position p2) {
+//		Timeline t = new Timeline();
+//		t.setCycleCount(1);
+//		t.setAutoReverse(false);
+//		KeyValue kv1 = new KeyValue(v1.xProperty(), 65);
+//		KeyValue kv2 = new KeyValue(v2.xProperty(), -65);
+//		KeyValue[] list = {kv1,kv2};
+//		KeyFrame kf = new KeyFrame(Duration.millis(500), list);
+//		t.getKeyFrames().add(kf);
+//		return t;		
+//	}
 
 	/**
 	 * Changes the sprite of the gem to the 'clicked' sprite.
@@ -181,7 +212,7 @@ public class BoardPane {
 	 * Updates the displayed board with the current board.
 	 */
 	public void refresh() {
-		gridPane.getChildren().removeAll(gridPane.getChildren());
+		borderPane.getChildren().removeAll(borderPane.getChildren());
 		GUI.getgui().setScore(GUI.getGame().getPlayer().getScore());
 		initBoard();
 	}
