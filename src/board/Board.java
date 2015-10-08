@@ -62,23 +62,7 @@ public class Board {
 		}
 	}
 
-	/**
-	 * Checks if two cells, at locations (x1, y1) and (x2, y2), are adjacent.
-	 * @param x1 x-coordinate of cell 1
-	 * @param y1 y-coordinate of cell 1
-	 * @param x2 x-coordinate of cell 2
-	 * @param y2 y-coordinate of cell 2
-	 * @return returns true iff two cells are adjacent
-	 */
-	public boolean isAdjacent(int x1, int y1, int x2, int y2) {
-		if ((x1 - x2 == 1 || x1 - x2 == -1) && y1 == y2) {
-			return true;
-		}
-		if ((y1 - y2 == 1 || y1 - y2 == -1) && x1 == x2) {
-			return true;
-		}
-		return false;
-	}
+
 
 	/**
 	 * Sets a cell at location (x, y).

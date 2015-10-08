@@ -2,6 +2,7 @@ package game;
 
 import exceptions.MoveNotValidException;
 import board.Board;
+import board.Position;
 /**
  * Game class. Governs the entire game. In terms of the backend, this is the top of the dome.
  * Straight from the top of my dome. Freestyler
@@ -105,7 +106,7 @@ public class Game {
 		if (inProgress) {
 			Logger.logInfo(
 			    "Attempting to swap gem at (" + x1 + "," + y1 + ") with (" + x2 + "," + y2 + ")");
-			if (board.isAdjacent(x1, y1, x2, y2)) {
+			if ((new Position(x1, y1)).isAdjacentTo(new Position(x2, y2))) {
 				board.swap(x1, y1, x2, y2);
 				if (board.hasChain()) { // check if the board has any chains
 					int bonus = 0;

@@ -50,4 +50,19 @@ public class Position {
 		return false;
 	}
 	
+	 /**
+   * Checks if two Positions, are adjacent.
+   * @param other The position to be checked against.
+   * @return returns true iff the two Positions are adjacent
+   */
+  public boolean isAdjacentTo(Position other) {
+    if ((this.x - other.x == 1 || this.x - other.x == -1) && this.y == other.y) {
+      return true;
+    }
+    if ((this.y - other.y == 1 || this.y - other.y == -1) && this.x == other.x) {
+      return true;
+    }
+    return false;
+  }
+	
 }
