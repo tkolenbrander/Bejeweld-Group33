@@ -1,7 +1,11 @@
 package game;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import exceptions.MoveNotValidException;
 import board.Board;
+import board.Change;
 import board.Position;
 /**
  * Game class. Governs the entire game. In terms of the backend, this is the top of the dome.
@@ -102,9 +106,13 @@ public class Game {
 	 * @param two Position on the board of the other selected gem
 	 * @throws MoveNotValidException When the move is not allowed, because the cells 
 	 * are not adjacent or because the move does not create a chain.
+	 * @return A list, containing several lists of changes, in order of how they should
+	 * be executed. 
 	 */
-	public void makeMove(Position one, Position two) throws MoveNotValidException {
-		if (moveAllowed(one, two)) {
+	public List<List<Change<Position>>> makeMove(Position one, Position two) 
+	    throws MoveNotValidException {
+	  List<List<Change<Position>>> changes = new ArrayList<List<Change<Position>>>();
+	  if (moveAllowed(one, two)) {
 			board.swap(one.getX(), one.getY(), two.getX(), two.getY());
 			if (board.hasChain()) { // check if the board has any chains
 				int bonus = 0;
@@ -112,9 +120,9 @@ public class Game {
 
 				do {
 					player.addScore(board.calculateScore(bonus));        		
-					board.removeChains(); // remove them and properly refill the board
-					board.falldown();
-					board.fillEmptyCells();
+					changes.add(board.removeChains()); // remove them and properly refill the board
+					changes.add(board.falldown());
+					changes.add(board.fillEmptyCells());
 					bonus++;
 				}	while (board.hasChain());
 			}
@@ -122,9 +130,10 @@ public class Game {
 				board.swap(two.getX(), two.getY(), one.getX(), one.getY());
 				throw new MoveNotValidException("Move doesn't make a chain");
 			}
-			//TimelineController.setList(changeList);
+			
 			isGameOver();
 		}
+		return changes;
 	}
 	
 	/**

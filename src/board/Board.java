@@ -62,8 +62,6 @@ public class Board {
 		}
 	}
 
-
-
 	/**
 	 * Sets a cell at location (x, y).
 	 * @param cell cell to be set
@@ -169,50 +167,74 @@ public class Board {
 	}
 
 	/**
-	 * Removes all the gems that are in a chain.
+	 * Removes all the gems that are in a chain and returns a list of the cells changed.
+	 * 
+	 * A cell has been removed, when the final position of created Change object 
+	 * is (-1, -1).
+	 * 
+	 * @return A list of removed Positions
 	 */
-	public void removeChains() {
+	public List<Change<Position>> removeChains() {
 		List<List<Position>> chains = chainedCells();
+		List<Change<Position>> changes = new ArrayList<Change<Position>>();
+		final Position removed = new Position(-1, -1);
 		for (List<Position> chain : chains) { 
 			for (Position pos : chain) {
 				board[pos.getY()][pos.getX()] = null;
+				changes.add(new Change<Position>(pos, removed));
 			}
 		}
+		return changes;
 	}
 
 	/**
-	 * When an empty cell is detected, the rows above them will fall down into the empty cell.
+	 * When an empty cell is detected, the cells above them will fall down into the empty cell.
+	 * 
+	 * @return a list of Change-objects, where the From object is the first filled cell
+	 * above the empty cell.
 	 */
-	public void falldown() {
+	public List<Change<Position>> falldown() {
+	  List<Change<Position>> changes = new ArrayList<Change<Position>>();
 		for (int y = BOARDSIZE - 1; y >= 0; y--) {
 			for (int x = BOARDSIZE - 1; x >= 0; x--) {
 				if (board[y][x] == null) {
 					for (int d = 1; d <= y; d++) {
-						if (y != 0) {
-							if (board[y - d][x] != null) {
-								board[y][x] = board[y - d][x];
-								board[y - d][x] = null;
-								break;
-							}
+						if (y != 0 && board[y - d][x] != null) {
+							board[y][x] = board[y - d][x];
+							board[y - d][x] = null;
+							changes.add(
+							    new Change<Position>(new Position(x, y - d), new Position(x, y)));
+							break;
 						}
 					}
 				}  
 			}
 		}
+		return changes;
 	}
 
 	/**
 	 * Fills empty cells with new gems.
+	 * 
+	 * A new gem is represented in the returned list as a Change-object with the
+	 * From-position being (-1, -1)
+	 * 
+	 * @return a list of Change-objects where the From position is (-1, -1).
 	 */
-	public void fillEmptyCells() {
+	public List<Change<Position>> fillEmptyCells() {
+	  List<Change<Position>> changes = new ArrayList<Change<Position>>();
+	  final Position newPos = new Position(-1, -1);
 		for (int y = 0; y < BOARDSIZE; y++) {
 			for (int x = 0; x < BOARDSIZE; x++) {
 				if (board[y][x] == null) {
 					board[y][x] = new Cell(new Gem(GemType.randomGem()));
+					changes.add(new Change<Position>(newPos, new Position(x, y)));
 				}
 			}
 		}
+		return changes;
 	}
+	
 	/**
 	 * Checks if the current board has any chains.
 	 * @return true iff the current board has at least one chain.
