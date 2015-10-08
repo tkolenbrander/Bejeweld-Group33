@@ -185,13 +185,13 @@ public class Board {
 	}
 
 	/**
-	 * Removes all the gems that are in a chain.
+	 * Destroys all the gems that are in a chain.
 	 */
 	public void removeChains() {
 		List<List<Position>> chains = chainedCells();
 		for (List<Position> chain : chains) { 
 			for (Position pos : chain) {
-				board[pos.getY()][pos.getX()] = null;
+				board[pos.getY()][pos.getX()].getGem().destroy(board, pos);
 			}
 		}
 	}

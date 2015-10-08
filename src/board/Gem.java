@@ -5,13 +5,14 @@ import java.util.List;
 import javafx.scene.image.Image;
 
 /**
- * Gem interface to represent the gems in Bejeweled.
+ * Gem class to represent the gems in Bejeweled.
  * 
  * @author Bart van Oort
  */
 public abstract class Gem {
 	
 	protected GemType type;
+	protected DestroyBehaviour onDestroy;
 	
 	/**
 	 * Creates a Gem object with GemType t.
@@ -40,6 +41,17 @@ public abstract class Gem {
 	 * @return The image of a gem when it's clicked
 	 */
 	public abstract Image getImageClicked();
+	
+	/**
+	 * Destroys this gem.
+	 * Gives a list of the positions of all the other gems that got destroyed when this gem got destroyed.
+	 * @param cells	Array of the cells containing all the gems
+	 * @param pos	The position of this gem on the board
+	 * @return		A list of the positions of all the other gems that got destroyed when this gem gets destroyed.
+	 */
+	public List<Position> destroy(Cell[][] cells, Position pos){
+		return onDestroy.destroy(cells, pos);
+	};
 	
 	/**
    * Checks if two gems are equal.

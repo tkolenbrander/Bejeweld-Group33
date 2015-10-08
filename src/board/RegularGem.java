@@ -10,6 +10,7 @@ public class RegularGem extends Gem{
 	 */
 	public RegularGem(GemType t) {
 		super(t);
+		onDestroy = new RegularDestroyBehaviour();
 	}
 	
 	/**
