@@ -6,8 +6,8 @@ import java.util.Scanner;
 
 import board.Board;
 import board.Cell;
-import board.Gem;
 import board.GemType;
+import board.RegularGem;
 
 /**
  * Utility class for loading the game from a saved game.
@@ -42,7 +42,7 @@ public final class LoadGame {
 	        for (int y = 0; y < Board.BOARDSIZE; y++) {
 	          for (int x = 0; x < Board.BOARDSIZE; x++) {
 	            GemType type = GemType.valueOf(in.next());
-	            cells[y][x] = new Cell(new Gem(type));
+	            cells[y][x] = new Cell(new RegularGem(type));
 	          }
 	        }
 	        return new Game(new Board(cells), player);

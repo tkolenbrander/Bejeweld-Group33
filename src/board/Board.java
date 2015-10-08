@@ -54,9 +54,9 @@ public class Board {
 	private void initBoard() {
 		for (int y = 0; y < BOARDSIZE; y++) {
 			for (int x = 0; x < BOARDSIZE; x++) {
-				board[y][x] = new Cell(new Gem(GemType.randomGem()));
+				board[y][x] = new Cell(new RegularGem(GemType.randomGem()));
 				while (isTripletAt(x, y)) {
-					board[y][x] = new Cell(new Gem(GemType.randomGem()));
+					board[y][x] = new Cell(new RegularGem(GemType.randomGem()));
 				}
 			}
 		}
@@ -224,7 +224,7 @@ public class Board {
 		for (int y = 0; y < BOARDSIZE; y++) {
 			for (int x = 0; x < BOARDSIZE; x++) {
 				if (board[y][x] == null) {
-					board[y][x] = new Cell(new Gem(GemType.randomGem()));
+					board[y][x] = new Cell(new RegularGem(GemType.randomGem()));
 				}
 			}
 		}
