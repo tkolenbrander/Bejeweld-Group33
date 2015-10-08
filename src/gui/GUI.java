@@ -1,9 +1,13 @@
 package gui;
 
+import java.util.Observable;
+import java.util.Observer;
+
 import game.Game;
 import game.LoadGame;
 import game.Logger;
 import game.SaveGame;
+
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -22,16 +26,16 @@ import javafx.stage.Stage;
  * 
  * @author Steven Meijer & Thomas Kolenbrander
  */
-public class GUI extends Application {
+public class GUI extends Application implements Observer {
 
 	/**
 	 * X and Y dimensions of the board.
 	 */
 	private static final int WINDOW_X = 520;
 	private static final int WINDOW_Y = 620;
-	
-	private static Game game;
+
 	private BoardPane boardPane;
+	private static Game game;
 	private static Label scoreLabel;
 	private static Label errorLabel;
 	private static GUI gui;
@@ -43,6 +47,7 @@ public class GUI extends Application {
 	protected static Game getGame() {
 		return game;
 	}
+	
 	/**
 	 * returns the gui.
 	 * @return gui
@@ -50,6 +55,7 @@ public class GUI extends Application {
 	protected static GUI getgui() {
 		return gui;
 	}
+	
 	/**
 	 * Main class to launch the application.
 	 * 
@@ -70,12 +76,16 @@ public class GUI extends Application {
 	@SuppressWarnings("magicnumber")
 	public void start(Stage stage) {
 		Logger.logInfo("Game started");	
+
 		FXMLLoader loader = new FXMLLoader();
 		loader.setLocation(GUI.class.getResource("/assets/config/gui.fxml"));
+
 		BorderPane borderPane = new BorderPane();
 		Scene scene = new Scene(borderPane, WINDOW_X, WINDOW_Y);	
-		scoreLabel = new Label("Score: ");
-		scoreLabel.setFont(new Font("Arial", 22));		
+
+		scoreLabel = new Label("Score: 0");
+		scoreLabel.setFont(new Font("Arial", 22));
+		
 		errorLabel = new Label("");
 		errorLabel.setFont(new Font("Arial", 22));
 		boardPane = new BoardPane();
@@ -84,13 +94,14 @@ public class GUI extends Application {
 		borderPane.setTop(hbox);
 		borderPane.setCenter(boardPane.getBoardPane());		
 		borderPane.setBottom(errorPanel);
-		
+
 		// Properties of the stage
 		stage.setTitle("SwekJeweled");
 		stage.setResizable(false);
 		stage.centerOnScreen();
 		stage.setScene(scene);
 		stage.show();
+
 		Logger.logInfo("Game succesfully initialized");
 	}
 
@@ -104,30 +115,38 @@ public class GUI extends Application {
 		hbox.setPadding(new Insets(15, 12, 15, 150));
 		hbox.setSpacing(10);
 		hbox.setStyle("-fx-background-color: #C0C0C0;");
+
 		Button buttonSave = new Button("Save Game");
 		buttonSave.setPrefSize(100, 20);
 		Button buttonLoad = new Button("Load Game");
 		buttonLoad.setPrefSize(100, 20);
+
 		buttonSave.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                SaveGame.save(game);
-                setError("Game saved!"); } });
+			@Override
+			public void handle(ActionEvent event) {
+				SaveGame.save(game);
+				setError("Game saved!"); } });
+
 		buttonLoad.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-              try {
-                game = LoadGame.load();
-                game.start();
-                boardPane.refresh();
-                setScore(GUI.game.getPlayer().getScore());
-                setScore(GUI.game.getPlayer().getScore());
-                setError("Game loaded!"); }
-              catch (Exception e) {
-                setError("Cannot load game!"); } } });
-		setScore(0);
+			@Override
+			public void handle(ActionEvent event) {
+				try {
+					game = LoadGame.load();
+					game.start();
+					boardPane.refresh();
+					//setScore(GUI.game.getPlayer().getScore());
+					setError("Game loaded!"); }
+				catch (Exception e) {
+					setError("Cannot load game!"); 
+				} 
+			} 
+		});
+
+		//setScore(0);
 		hbox.getChildren().addAll(scoreLabel, buttonSave, buttonLoad);
-		return hbox;  }
+
+		return hbox;  
+	}
 
 	/**
 	 * Adds the error panel at the bottom of the screen.
@@ -139,22 +158,24 @@ public class GUI extends Application {
 		hbox.setPadding(new Insets(15, 12, 15, 150));
 		hbox.setSpacing(10);
 		hbox.setStyle("-fx-background-color: #C0C0C0;");
-		
+
 		Button buttonRestart = new Button("Restart Game");
 		buttonRestart.setPrefSize(100, 20);
-		
+
 		buttonRestart.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-            	game.reset();
-            	game.start();
-            	boardPane.refresh();
-            }
-        });
-		
+			@Override
+			public void handle(ActionEvent event) {
+				game.reset();
+				game.start();
+				boardPane.refresh();
+			}
+		});
+
 		hbox.getChildren().addAll(errorLabel, buttonRestart);
+
 		return hbox;
 	}
+	
 	/**
 	 * sets a message for the error label.
 	 * @param s the message to be displayed
@@ -162,13 +183,25 @@ public class GUI extends Application {
 	public void setError(String s) {
 		errorLabel.setText(s);
 	}
+	
 	/**
 	 * sets a number for the score label.
 	 * @param score number to be displayed
 	 */
-	public void setScore(int score) {
+	public static void setScore(int score) {
 		String s = "Score: " + score;
 		scoreLabel.setText(s);
 	}
-	
+
+	/**
+	 * Sets a number for the score label.
+	 * @param o The observable object
+	 * @param arg The argument.
+	 */
+	@Override
+	public void update(Observable o, Object arg) {
+		String s = "Score: " + arg;
+		scoreLabel.setText(s);
+	}
+
 }
