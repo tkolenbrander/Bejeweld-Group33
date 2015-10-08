@@ -48,7 +48,7 @@ public class Change<K> {
   
   /**
    * Sets the state of the object after the change.
-   * @param f the state of the object after the change.
+   * @param t the state of the object after the change.
    */
   public void setTo(K t) {
     to = t;

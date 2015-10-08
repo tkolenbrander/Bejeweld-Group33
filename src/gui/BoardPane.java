@@ -192,7 +192,7 @@ public class BoardPane {
 		boolean result = false;
 		
 		try {
-			GUI.getGame().makeMove(p1.getX(), p1.getY(), p2.getX(), p2.getY());			
+			GUI.getGame().makeMove(p1, p2);			
 			result = true;
 			GUI.getgui().setError("");
 			GUI.getgui().setScore(GUI.getGame().getPlayer().getScore());
