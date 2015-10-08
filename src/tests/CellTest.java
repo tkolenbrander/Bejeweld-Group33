@@ -7,6 +7,7 @@ import org.junit.Test;
 import board.Cell;
 import board.Gem;
 import board.GemType;
+import board.RegularGem;
 
 /**
  * Tests the Cell class. Not really much to test there though...
@@ -28,8 +29,8 @@ public class CellTest {
    */
   @Test
   public void testCellFilled() {
-    Cell cell = new Cell(new Gem(GemType.BLUE));
-    assertTrue(cell.getGem().equals(new Gem(GemType.BLUE)));
+    Cell cell = new Cell(new RegularGem(GemType.BLUE));
+    assertTrue(cell.getGem().equals(new RegularGem(GemType.BLUE)));
   }
 
 }

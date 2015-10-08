@@ -1,7 +1,6 @@
 package tests;
 
 import static org.junit.Assert.assertEquals;
-
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -14,6 +13,7 @@ import board.Direction;
 import board.Gem;
 import board.GemType;
 import board.Position;
+import board.RegularGem;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -41,11 +41,11 @@ public class BoardTest {
 	 */
 	@Before
 	public void setUp() {
-		Gem bl = new Gem(GemType.BLUE);
-		Gem wh = new Gem(GemType.WHITE);
-		Gem gr = new Gem(GemType.GREEN);
-		Gem pu = new Gem(GemType.PURPLE);
-		Gem or = new Gem(GemType.ORANGE);
+		Gem bl = new RegularGem(GemType.BLUE);
+		Gem wh = new RegularGem(GemType.WHITE);
+		Gem gr = new RegularGem(GemType.GREEN);
+		Gem pu = new RegularGem(GemType.PURPLE);
+		Gem or = new RegularGem(GemType.ORANGE);
 		b = new Cell(bl);
 		w = new Cell(wh);
 		g = new Cell(gr);
@@ -98,7 +98,7 @@ public class BoardTest {
 	 */
 	@Test
 	public void setCellTest() {
-		Gem gem = new Gem(GemType.GREEN);
+		Gem gem = new RegularGem(GemType.GREEN);
 		Cell cell = new Cell(gem);
 		board.setCell(cell, 0, 0);
 		assertTrue(cell.equals(board.getCells()[0][0]));
