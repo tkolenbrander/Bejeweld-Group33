@@ -7,15 +7,14 @@ import java.util.List;
  * Class for a player. Currently only used for keeping track of his / her
  * score, but in light of possible future developments, it is good to have 
  * a good structure.
+ * 
  * @author Bart van Oort
- *
  */
 public class Player implements Score {
 
 	private int score;
 
 	private List<Observer> observers;
-	private String message;
 	private boolean changed;
 	private final Object MUTEX = new Object();
 
@@ -29,8 +28,9 @@ public class Player implements Score {
 
 	/**
 	 * Creates a new player with the given score.
+	 * @param newScore The new score of the player.
 	 */
-	public Player(int newScore) {
+	public Player(final int newScore) {
 		this.observers = new ArrayList<>();
 		score = newScore;
 	}
@@ -39,7 +39,7 @@ public class Player implements Score {
 	 * Returns the score of the player.
 	 * @return score of the player.
 	 */
-	public int getScore() {
+	public final int getScore() {
 		return score;
 	}
 
@@ -47,36 +47,53 @@ public class Player implements Score {
 	 * Adds score to the player's score.
 	 * @param add score to be added to the player's score.
 	 */
-	public void addScore(int add) {
-		score += add;
+	public final void addScore(final int add) {
+		this.score += add;
+		this.changed = true;
+		notifyObservers();
 	}
 
 	/**
 	 * Resets the player to its initial state, that is, score = 0..
 	 */
-	public void reset() {
+	public final void reset() {
 		score = 0;
 	}
 
+	/**
+	 * Registers this object to an observer.
+	 * @param obj The observer.
+	 */
 	@Override
-	public void register(Observer obj) {
-		if(obj == null) throw new NullPointerException("Null Observer");
+	public final void register(final Observer obj) {
+		if (obj == null) { 
+			throw new NullPointerException("Null Observer");
+		}
+		
 		synchronized (MUTEX) {
-			if(!observers.contains(obj)) {
+			if (!observers.contains(obj)) {
 				observers.add((Observer) obj);
-			};
+			}
 		}
 	}
 
+	/**
+	 * Unregisters this object from an observer.
+	 * @param obj The observer
+	 */
 	@Override
-	public void unregister(Observer obj) {
+	public final void unregister(final Observer obj) {
 		synchronized (MUTEX) {
 			observers.remove(obj);
 		}
 	}
 
+	/**
+	 * Notifies all observers from the observers ArrayList
+	 * 	if the observed object has changed.
+	 */
 	@Override
-	public void notifyObservers() {
+	public final void notifyObservers() {
 		List<Observer> observersLocal = null;
 
 		synchronized (MUTEX) {
@@ -93,10 +110,13 @@ public class Player implements Score {
 		}
 
 	}
-
+	
+	/**
+	 * Gets the updated score from the player.
+	 */
 	@Override
-	public Object getUpdate(Observer obj) {
-		return this.message;
+	public final Object getUpdate(final Observer obj) {
+		return score;
 	}
 
 }

@@ -1,9 +1,15 @@
 package game;
 
+/**
+ * Observer class for observing changes to an object.
+ * 
+ * @author Steven Meijer
+ */
 public interface Observer {
 
-    public void update();
-     
-    public void setSubject(Object object);
+	/**
+	 * Updates the object.
+	 */
+    void update();
 	
 }

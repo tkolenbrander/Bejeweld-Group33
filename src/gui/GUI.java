@@ -46,7 +46,7 @@ public class GUI extends Application implements Observer {
 	protected static Game getGame() {
 		return game;
 	}
-	
+
 	/**
 	 * returns the gui.
 	 * @return gui
@@ -54,7 +54,7 @@ public class GUI extends Application implements Observer {
 	protected static GUI getgui() {
 		return gui;
 	}
-	
+
 	/**
 	 * Main class to launch the application.
 	 * 
@@ -64,11 +64,11 @@ public class GUI extends Application implements Observer {
 		game = new Game();
 		game.start();
 		gui = new GUI();
-		
+
 		Player player = game.getPlayer();
 		Observer scoreObserver = gui;
 		player.register(scoreObserver);
-		
+
 		game.getPlayer().register(gui);
 		launch(args);
 	}
@@ -78,7 +78,6 @@ public class GUI extends Application implements Observer {
 	 * 
 	 * @param stage The stage.
 	 */
-	@SuppressWarnings("magicnumber")
 	public void start(Stage stage) {
 		Logger.logInfo("Game started");	
 
@@ -88,9 +87,9 @@ public class GUI extends Application implements Observer {
 		BorderPane borderPane = new BorderPane();
 		Scene scene = new Scene(borderPane, WINDOW_X, WINDOW_Y);	
 
-		scoreLabel = new Label("Score: 0");
+		scoreLabel = new Label("Score: ");
 		scoreLabel.setFont(new Font("Arial", 22));
-		
+
 		errorLabel = new Label("");
 		errorLabel.setFont(new Font("Arial", 22));
 		boardPane = new BoardPane();
@@ -114,7 +113,6 @@ public class GUI extends Application implements Observer {
 	 * Adds a score panel to the top of the screen.
 	 * @return The HBox containing all that is needed for the score panel.
 	 */
-	@SuppressWarnings("magicnumber")
 	public HBox addScorePanel() {
 		HBox hbox = new HBox();
 		hbox.setPadding(new Insets(15, 12, 15, 150));
@@ -139,7 +137,7 @@ public class GUI extends Application implements Observer {
 					game = LoadGame.load();
 					game.start();
 					boardPane.refresh();
-					//setScore(GUI.game.getPlayer().getScore());
+					setScore(GUI.game.getPlayer().getScore());
 					setError("Game loaded!"); }
 				catch (Exception e) {
 					setError("Cannot load game!"); 
@@ -147,7 +145,7 @@ public class GUI extends Application implements Observer {
 			} 
 		});
 
-		//setScore(0);
+		setScore(0);
 		hbox.getChildren().addAll(scoreLabel, buttonSave, buttonLoad);
 
 		return hbox;  
@@ -157,7 +155,6 @@ public class GUI extends Application implements Observer {
 	 * Adds the error panel at the bottom of the screen.
 	 * @return The HBox containing all that is needed for the error panel
 	 */
-	@SuppressWarnings("magicnumber")
 	public HBox addErrorPanel() {
 		HBox hbox = new HBox();
 		hbox.setPadding(new Insets(15, 12, 15, 150));
@@ -180,20 +177,20 @@ public class GUI extends Application implements Observer {
 
 		return hbox;
 	}
-	
+
 	/**
-	 * sets a message for the error label.
+	 * Sets a message for the error label.
 	 * @param s the message to be displayed
 	 */
-	public void setError(String s) {
+	protected final void setError(final String s) {
 		errorLabel.setText(s);
 	}
-	
+
 	/**
-	 * sets a number for the score label.
+	 * Sets a number for the score label.
 	 * @param score number to be displayed
 	 */
-	public static void setScore(int score) {
+	private static void setScore(final int score) {
 		String s = "Score: " + score;
 		scoreLabel.setText(s);
 	}
@@ -204,14 +201,10 @@ public class GUI extends Application implements Observer {
 	 * @param arg The argument.
 	 */
 	@Override
-	public void update() {
-		//
-	}
-
-	@Override
-	public void setSubject(Object object) {
-		// TODO Auto-generated method stub
-		
+	public final void update() {
+		int newScore = (int) game.getPlayer().getUpdate(gui);
+		System.out.println(newScore);
+		setScore(newScore);
 	}
 
 }
