@@ -15,7 +15,7 @@ public class Player implements Score {
 
 	private int score;
 
-	private List<Observer> observers;
+	private List<ScoreObserver> observers;
 	private String message;
 	private boolean changed;
 	private final Object MUTEX = new Object();
@@ -64,7 +64,7 @@ public class Player implements Score {
 		if(obj == null) throw new NullPointerException("Null Observer");
 		synchronized (MUTEX) {
 			if(!observers.contains(obj)) {
-				observers.add(obj);
+				observers.add((ScoreObserver) obj);
 			};
 		}
 	}
@@ -78,7 +78,7 @@ public class Player implements Score {
 
 	@Override
 	public void notifyObservers() {
-		List<Observer> observersLocal = null;
+		List<ScoreObserver> observersLocal = null;
 
 		synchronized (MUTEX) {
 			if (!changed) {
@@ -89,8 +89,8 @@ public class Player implements Score {
 			this.changed = false;
 		}
 		
-		for (Observer obj : observersLocal) {
-			obj.update(null, MUTEX); //?
+		for (ScoreObserver obj : observersLocal) {
+			obj.update();
 		}
 
 	}
