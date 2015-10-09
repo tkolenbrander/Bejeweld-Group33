@@ -76,5 +76,14 @@ public class Position {
 		}
 		return false;
 	}
+
+	/**
+	 * Returns a String representing this position in the format used for saving the game.
+	 * @return a String with the x and y coordinate, separated with a single space.
+	 */
+	@Override
+	public String toString(){
+		return this.x + " " + this.y;
+	}
 	
 }

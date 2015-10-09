@@ -285,6 +285,22 @@ public class Board {
 		}
 		return false;
 	}
+	
+	/**
+	 * Gets the positions of all the Power Gems on the board.
+	 * @return A list containing all the positions of Power Gems on the board.
+	 */
+	public List<Position> getPowerGems(){
+		List<Position> positions = new ArrayList<Position>();
+		for (int y = 0; y < BOARDSIZE; y++) {
+			for (int x = 0; x < BOARDSIZE; x++) {
+				if (board[y][x].getGem() instanceof PowerGem){
+					positions.add(new Position(x, y));
+				}
+			}
+		}
+		return positions;
+	}
 
 	/**
 	 * Gets the neighbouring cell in the direction dir from the origin cell at location (x,y)
