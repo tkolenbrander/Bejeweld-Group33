@@ -35,6 +35,8 @@ public class GUI extends Application {
 	private static Label scoreLabel;
 	private static Label errorLabel;
 	private static GUI gui;
+	private static HBox hbox;
+	private static BorderPane borderPane;
 
 	/**
 	 * Returns the game.
@@ -72,6 +74,7 @@ public class GUI extends Application {
 		launch(args);
 	}
 
+
 	/**
 	 * JavaFX start class, that sets the properties of the GUI.
 	 * 
@@ -82,14 +85,14 @@ public class GUI extends Application {
 		Logger.logInfo("Game started");	
 		FXMLLoader loader = new FXMLLoader();
 		loader.setLocation(GUI.class.getResource("/assets/config/gui.fxml"));
-		BorderPane borderPane = new BorderPane();
+		borderPane = new BorderPane();
 		Scene scene = new Scene(borderPane, WINDOW_X, WINDOW_Y);	
 		scoreLabel = new Label("Score: ");
 		scoreLabel.setFont(new Font("Arial", 22));		
 		errorLabel = new Label("");
 		errorLabel.setFont(new Font("Arial", 22));
 		boardPane = new BoardPane();
-		HBox hbox = addScorePanel();
+		hbox = addScorePanel();
 		HBox errorPanel = addErrorPanel();
 		borderPane.setTop(hbox);
 		borderPane.setCenter(boardPane.getBoardPane());		
@@ -102,6 +105,11 @@ public class GUI extends Application {
 		stage.setScene(scene);
 		stage.show();
 		Logger.logInfo("Game succesfully initialized");
+	}
+	
+	public void boxToFront(){
+		borderPane.getChildren().remove(hbox);
+		borderPane.setTop(hbox);
 	}
 
 	/**

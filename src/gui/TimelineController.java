@@ -86,8 +86,7 @@ public class TimelineController {
         ImageView newImage = new ImageView(GUI.getGame().getBoard().getCells()[to.getY()][to.getX()].getGem().getImage());
         imageViews[to.getX()][to.getY()] = newImage;
         newImage.setLayoutX(to.getX()*65);
-        newImage.setLayoutY(-65);
-       
+        newImage.setLayoutY(-65);     
         newImage.setOnMousePressed(new EventHandler<MouseEvent>() {
                       public void handle(MouseEvent me) {
                               System.out.println(me.getSceneX() + ", " + (me.getSceneY() - 55));
@@ -96,7 +95,8 @@ public class TimelineController {
                               GUI.getBoardPane().clicked(x, y, newImage);
                       }
               });
-       
+        GUI.getgui().boxToFront();
+        newImage.toBack();      
         GUI.getBoardPane().borderPane.getChildren().add(newImage);
         ImageView ivTo = imageViews[to.getX()][to.getY()];
         keyValues[i] = new KeyValue(ivTo.yProperty(), (to.getY()+1)*65, Interpolator.LINEAR);
