@@ -2,12 +2,16 @@ package game;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 import board.Board;
 import board.Cell;
-import board.Gem;
 import board.GemType;
+import board.Position;
+import board.PowerGem;
+import board.RegularGem;
 
 /**
  * Utility class for loading the game from a saved game.
@@ -38,11 +42,21 @@ public final class LoadGame {
 	      try {
 	        in = new Scanner(new FileReader(PATH));
 	        Player player = new Player(in.nextInt());
-		  
+	        int numOfPowerGems = in.nextInt();
+	        List<Position> powerPos = new ArrayList<Position>();
+	        for (int i = 0; i < numOfPowerGems; i++){
+	        	powerPos.add(new Position(in.nextInt(), in.nextInt()));
+	        }
+	        
 	        for (int y = 0; y < Board.BOARDSIZE; y++) {
 	          for (int x = 0; x < Board.BOARDSIZE; x++) {
 	            GemType type = GemType.valueOf(in.next());
-	            cells[y][x] = new Cell(new Gem(type));
+	            Position currPos = new Position(x, y);
+	            if (powerPos.contains(currPos)){
+	            	cells[y][x] = new Cell(new PowerGem(type));
+	            } else {
+		            cells[y][x] = new Cell(new RegularGem(type));
+	            }
 	          }
 	        }
 	        return new Game(new Board(cells), player);

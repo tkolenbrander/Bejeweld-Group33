@@ -3,6 +3,7 @@ package board;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 
 /**
  * Class to represent a Board.
@@ -54,9 +55,9 @@ public class Board {
 	private void initBoard() {
 		for (int y = 0; y < BOARDSIZE; y++) {
 			for (int x = 0; x < BOARDSIZE; x++) {
-				board[y][x] = new Cell(new Gem(GemType.randomGem()));
+				board[y][x] = new Cell(new RegularGem(GemType.randomGem()));
 				while (isTripletAt(x, y)) {
-					board[y][x] = new Cell(new Gem(GemType.randomGem()));
+					board[y][x] = new Cell(new RegularGem(GemType.randomGem()));
 				}
 			}
 		}
@@ -185,13 +186,23 @@ public class Board {
 	}
 
 	/**
-	 * Removes all the gems that are in a chain.
+	 * Destroys all the gems that are in a chain.
+	 * Creates a PowerGem when a chain of 4 or more is destroyed
 	 */
 	public void removeChains() {
 		List<List<Position>> chains = chainedCells();
-		for (List<Position> chain : chains) { 
+		for (List<Position> chain : chains) {
+			GemType type = null;
 			for (Position pos : chain) {
-				board[pos.getY()][pos.getX()] = null;
+				Cell cell = board[pos.getY()][pos.getX()];
+				if (cell != null){
+					type = cell.getGem().getType();
+					cell.getGem().destroy(board, pos);
+				}
+			}
+			if (chain.size() >= 4){
+				Position powerPos = chain.get((int)Math.random() * chain.size());
+				board[powerPos.getY()][powerPos.getX()] = new Cell(new PowerGem(type));
 			}
 		}
 	}
@@ -224,7 +235,7 @@ public class Board {
 		for (int y = 0; y < BOARDSIZE; y++) {
 			for (int x = 0; x < BOARDSIZE; x++) {
 				if (board[y][x] == null) {
-					board[y][x] = new Cell(new Gem(GemType.randomGem()));
+					board[y][x] = new Cell(new RegularGem(GemType.randomGem()));
 				}
 			}
 		}
@@ -273,6 +284,22 @@ public class Board {
 			}
 		}
 		return false;
+	}
+	
+	/**
+	 * Gets the positions of all the Power Gems on the board.
+	 * @return A list containing all the positions of Power Gems on the board.
+	 */
+	public List<Position> getPowerGems(){
+		List<Position> positions = new ArrayList<Position>();
+		for (int y = 0; y < BOARDSIZE; y++) {
+			for (int x = 0; x < BOARDSIZE; x++) {
+				if (board[y][x].getGem() instanceof PowerGem){
+					positions.add(new Position(x, y));
+				}
+			}
+		}
+		return positions;
 	}
 
 	/**

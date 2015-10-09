@@ -7,6 +7,7 @@ import org.junit.Test;
 
 import board.Gem;
 import board.GemType;
+import board.RegularGem;
 
 /**
  * Tests the Gem class.
@@ -20,8 +21,8 @@ public class GemTest {
    */
   @Test
   public void testEqualsTrue() {
-    Gem gem1 = new Gem(GemType.BLUE);
-    Gem gem2 = new Gem(GemType.BLUE);
+    Gem gem1 = new RegularGem(GemType.BLUE);
+    Gem gem2 = new RegularGem(GemType.BLUE);
     assertTrue(gem1.equals(gem2));
   }
   
@@ -30,8 +31,8 @@ public class GemTest {
    */
   @Test
   public void testEqualsFalse() {
-    Gem gem1 = new Gem(GemType.BLUE);
-    Gem gem2 = new Gem(GemType.GREEN);
+    Gem gem1 = new RegularGem(GemType.BLUE);
+    Gem gem2 = new RegularGem(GemType.GREEN);
     assertFalse(gem1.equals(gem2));
   }
   
@@ -40,7 +41,7 @@ public class GemTest {
    */
   @Test
   public void testEqualsOtherClass() {
-    Gem gem1 = new Gem(GemType.BLUE);
+    Gem gem1 = new RegularGem(GemType.BLUE);
     String lol = "Doesn't make sense";
     assertFalse(gem1.equals(lol));
   }
@@ -50,6 +51,6 @@ public class GemTest {
    */
   @Test
   public void testGetType() {
-    assertTrue((new Gem(GemType.BLUE)).getType().equals(GemType.BLUE));
+    assertTrue((new RegularGem(GemType.BLUE)).getType().equals(GemType.BLUE));
   }
 }
