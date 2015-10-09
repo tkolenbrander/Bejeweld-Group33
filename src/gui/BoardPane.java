@@ -93,7 +93,7 @@ public class BoardPane {
 						System.out.println(me.getSceneX() + ", " + (me.getSceneY() - 55));
 						int x = (int) me.getSceneX() / 65;
 						int y = (int) (me.getSceneY() - 55) / 65;
-						clicked(x, y);
+						clicked(x, y, image);
 					}
 				});
 				imageviews[x][y] = image;
@@ -129,12 +129,12 @@ public class BoardPane {
 	 * @param y
 	 *            The y coordinate of the gem.
 	 */
-	public void clicked(int x, int y) {
+	public void clicked(int x, int y, ImageView view) {
 		Board board = GUI.getGame().getBoard();
 		Cell[][] cells = board.getCells();
 		Gem gem = cells[y][x].getGem();
 
-		ImageView view = imageviews[x][y];
+		//ImageView view = imageviews[x][y];
 		System.out.println("Selected: " + gem.getType());
 
 		if (selected) {			

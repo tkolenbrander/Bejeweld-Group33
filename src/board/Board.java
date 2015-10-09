@@ -330,8 +330,8 @@ public class Board {
 		Cell temp = board[y1][x1];
 		board[y1][x1] = board[y2][x2];
 		board[y2][x2] = temp;
-		changes.add( new Change<Position>(new Position(x1, y1), new Position(x2, y2)));
 		changes.add( new Change<Position>(new Position(x2, y2), new Position(x1, y1)));
+		changes.add( new Change<Position>(new Position(x1, y1), new Position(x2, y2)));
 		return changes;
 	}
 	

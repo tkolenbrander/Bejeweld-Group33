@@ -47,6 +47,7 @@ public class TimelineController {
 			Timeline t = new Timeline();
 			t.getKeyFrames().add(keyFrame);
 			timelines[i] = t;
+			System.out.println(t.getKeyFrames());
 		}
 		//t.getKeyFrames().addAll(keyFrames);
 		//return t;
@@ -80,9 +81,10 @@ public class TimelineController {
 			  imageViews[from.getX()][from.getY()] = new ImageView();
 			}
 			else if (!from.isInBoard()) { //from is out of bounds, to is in bounds, comes from fillEmptyCells()
+			  imageViews[to.getX()][to.getY()] = new ImageView(GUI.getGame().getBoard().getCells()[to.getY()][to.getX()].getGem().getImage());
 			  ImageView ivTo = imageViews[to.getX()][to.getY()];
 			  keyValues[i] = new KeyValue(ivTo.yProperty(), 0, Interpolator.LINEAR);
-			  imageViews[to.getX()][to.getY()] = new ImageView(GUI.getGame().getBoard().getCells()[to.getY()][to.getX()].getGem().getImage());
+
 			}
 			else { //from is in bounds, to is out of bounds, comes from removeChains().
 			  ImageView ivFrom = imageViews[from.getX()][from.getY()];

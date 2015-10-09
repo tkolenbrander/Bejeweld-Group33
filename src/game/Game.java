@@ -129,6 +129,7 @@ public class Game {
 			}
 			else {  //if no new chains, then swap back using board.swap(x2, y2, x1, y1);
 				changes.add(board.swap(two.getX(), two.getY(), one.getX(), one.getY()));
+				TimelineController.setList(changes);
 				throw new MoveNotValidException("Move doesn't make a chain");
 			}
 			
