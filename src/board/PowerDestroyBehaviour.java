@@ -24,7 +24,6 @@ public class PowerDestroyBehaviour implements DestroyBehaviour{
 		cells[pos.getY()][pos.getX()] = null;
 		List<Position> destroyed = new ArrayList<Position>();
 		List<Position> surrounding = pos.getSurrounding();
-		System.out.println(surrounding.size());
 		for (Position surPos : surrounding){
 			Cell cell = cells[surPos.getY()][surPos.getX()];
 			List<Position> combo = null;
