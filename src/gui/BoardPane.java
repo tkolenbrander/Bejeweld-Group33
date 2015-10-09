@@ -84,16 +84,14 @@ public class BoardPane {
 
 				ImageView image = new ImageView();
 				displayNormal(image, gem);
-				image.setLayoutX(x*65);
-				image.setLayoutY(y*65);
+				image.setLayoutX(x * 65);
+				image.setLayoutY(y * 65);
 
 				image.setOnMousePressed(new EventHandler<MouseEvent>() {
 					public void handle(MouseEvent me) {
-//						int y = GridPane.getRowIndex((Node) me.getSource());
-//						int x = GridPane.getColumnIndex((Node) me.getSource());
 						System.out.println(me.getSceneX() + ", " + (me.getSceneY() - 55));
-						int x = (int) me.getSceneX()/65;
-						int y = (int) (me.getSceneY() - 55)/65;
+						int x = (int) me.getSceneX() / 65;
+						int y = (int) (me.getSceneY() - 55) / 65;
 						clicked(x, y);
 					}
 				});
@@ -108,6 +106,18 @@ public class BoardPane {
 	 */
 	public BorderPane getBoardPane() {
 		return borderPane;
+	}
+	
+	/**
+	 * Returns the imageviews.
+	 * @return the imageviews.
+	 */
+	public ImageView[][] getImageViews() {
+	  return imageviews;
+	}
+	
+	public void setImageViews(ImageView[][] views) {
+	  imageviews = views;
 	}
 
 	/**
@@ -128,8 +138,6 @@ public class BoardPane {
 
 		if (selected) {			
 			makeMove(new Position(x, y), selectedPosition);
-//			final Timeline t = makeMove(selectedView, view, selectedPosition, new Position(x, y));
-//			t.play();
 			Timeline t = controller.getTimeline();
 			t.play();
 			displayNormal(selectedView, selectedGem);
@@ -142,18 +150,6 @@ public class BoardPane {
 			selected = true;
 		}
 	}
-	
-//	public Timeline makeMove(ImageView v1, ImageView v2, Position p1, Position p2) {
-//		Timeline t = new Timeline();
-//		t.setCycleCount(1);
-//		t.setAutoReverse(false);
-//		KeyValue kv1 = new KeyValue(v1.xProperty(), 65);
-//		KeyValue kv2 = new KeyValue(v2.xProperty(), -65);
-//		KeyValue[] list = {kv1,kv2};
-//		KeyFrame kf = new KeyFrame(Duration.millis(500), list);
-//		t.getKeyFrames().add(kf);
-//		return t;		
-//	}
 
 	/**
 	 * Changes the sprite of the gem to the 'clicked' sprite.
@@ -180,7 +176,7 @@ public class BoardPane {
 	}
 
 	/**
-	 * Tries to make a move between two positions. True if succesful.
+	 * Tries to make a move between two positions. True if successful.
 	 * 
 	 * @param p1
 	 *            The first position.
@@ -196,7 +192,7 @@ public class BoardPane {
 			result = true;
 			GUI.getgui().setError("");
 			GUI.getgui().setScore(GUI.getGame().getPlayer().getScore());
-			refresh();
+			//refresh();
 		} catch (MoveNotValidException e) {
 			GUI.getgui().setError(e.getMessage());
 		}

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import exceptions.MoveNotValidException;
+import gui.TimelineController;
 import board.Board;
 import board.Change;
 import board.Position;
@@ -109,7 +110,7 @@ public class Game {
 	 * @return A list, containing several lists of changes, in order of how they should
 	 * be executed. 
 	 */
-	public List<List<Change<Position>>> makeMove(Position one, Position two) 
+	public void makeMove(Position one, Position two) 
 	    throws MoveNotValidException {
 	  List<List<Change<Position>>> changes = new ArrayList<List<Change<Position>>>();
 	  if (moveAllowed(one, two)) {
@@ -133,7 +134,7 @@ public class Game {
 			
 			isGameOver();
 		}
-		return changes;
+		TimelineController.setList(changes);
 	}
 	
 	/**

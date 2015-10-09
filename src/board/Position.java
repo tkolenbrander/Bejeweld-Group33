@@ -30,6 +30,19 @@ public class Position {
 	}
 	
 	/**
+	 * Returns the difference in x-value of two Positions.
+	 * Can be positive or negative.
+	 * 
+	 * Usage: from.deltaX(to);
+	 * 
+	 * @param to Position
+	 * @return difference in x-value between this and to.
+	 */
+	public int deltaX(Position to) {
+	  return to.x - this.x;
+	}
+	
+	/**
 	 * Returns y-coordinate of this Position.
 	 * @return y-coordinate of this Position.
 	 */
@@ -37,6 +50,19 @@ public class Position {
 		return y;
 	}
 	
+	/**
+   * Returns the difference in y-value of two Positions.
+   * Can be positive or negative.
+   * 
+   * Usage: from.deltaY(to);
+   * 
+   * @param to Position
+   * @return difference in y-value between this and to.
+   */
+  public int deltaY(Position to) {
+    return to.y - this.y;
+  }
+  
 	/**
 	 * Checks if two Positions are equal.
 	 * @returns true iff they are.
@@ -63,6 +89,10 @@ public class Position {
       return true;
     }
     return false;
+  }
+  
+  public boolean isInBoard() {
+    return this.x >= 0 && this.x < Board.BOARDSIZE && this.y >= 0 && this.y < Board.BOARDSIZE;
   }
 	
 }

@@ -31,25 +31,35 @@ public class GUI extends Application {
 	private static final int WINDOW_Y = 620;
 	
 	private static Game game;
-	private BoardPane boardPane;
+	private static BoardPane boardPane;
 	private static Label scoreLabel;
 	private static Label errorLabel;
 	private static GUI gui;
 
 	/**
-	 * returns the game.
-	 * @return game
+	 * Returns the game.
+	 * @return Game
 	 */
 	protected static Game getGame() {
 		return game;
 	}
+	
 	/**
-	 * returns the gui.
+	 * Returns the GUI.
 	 * @return gui
 	 */
 	protected static GUI getgui() {
 		return gui;
 	}
+	
+	/**
+	 * Returns the boardpane.
+	 * @return Boardpane.
+	 */
+	protected static BoardPane getBoardPane() {
+	  return boardPane;
+	}
+	
 	/**
 	 * Main class to launch the application.
 	 * 
