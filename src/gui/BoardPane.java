@@ -164,7 +164,6 @@ public class BoardPane {
 			GUI.getGame().makeMove(p1.getX(), p1.getY(), p2.getX(), p2.getY());			
 			result = true;
 			GUI.getgui().setError("");
-			GUI.getgui().setScore(GUI.getGame().getPlayer().getScore());
 			refresh();
 		} catch (MoveNotValidException e) {
 			GUI.getgui().setError(e.getMessage());
@@ -182,7 +181,6 @@ public class BoardPane {
 	 */
 	public void refresh() {
 		gridPane.getChildren().removeAll(gridPane.getChildren());
-		GUI.getgui().setScore(GUI.getGame().getPlayer().getScore());
 		initBoard();
 	}
 }
