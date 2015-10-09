@@ -6,6 +6,7 @@ import java.util.List;
 import javafx.animation.Interpolator;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
+import javafx.animation.SequentialTransition;
 import javafx.animation.Timeline;
 import javafx.scene.image.ImageView;
 import javafx.util.Duration;
@@ -33,17 +34,24 @@ public class TimelineController {
 	 * Generates animations from the changes.
 	 * @return The timeline with animations.
 	 */
-	public Timeline getTimeline() {
-		Timeline t = new Timeline();
+	public SequentialTransition getTimeline() {
+		//Timeline t = new Timeline();
+		Timeline[] timelines = new Timeline[list.size()];
+		SequentialTransition sequence = new SequentialTransition();	
 		KeyFrame[] keyFrames = new KeyFrame[list.size()];
 		for (int i = 0; i < list.size(); i++) {
 			List<Change<Position>> changes = list.get(i);
 			KeyValue[] keyValues = generateKeyValues(changes);
 			KeyFrame keyFrame = new KeyFrame(KF_DURATION, keyValues);
-			keyFrames[i] = keyFrame;
+			keyFrames[i] = keyFrame;	
+			Timeline t = new Timeline();
+			t.getKeyFrames().add(keyFrame);
+			timelines[i] = t;
 		}
-		t.getKeyFrames().addAll(keyFrames);
-		return t;
+		//t.getKeyFrames().addAll(keyFrames);
+		//return t;
+		sequence.getChildren().addAll(timelines);
+		return sequence;
 	}
 
 	/**
@@ -53,14 +61,14 @@ public class TimelineController {
 	 */
 	public KeyValue[] generateKeyValues(List<Change<Position>> changes) {
 		KeyValue[] keyValues = new KeyValue[changes.size()];
+		ImageView[][] imageViews = GUI.getBoardPane().getImageViews();
 		for (int i = 0; i < changes.size(); i++) {
 			Position from =  changes.get(i).getFrom();
 			Position to = changes.get(i).getTo();
 			int xDiff = from.deltaX(to);
-			int yDiff = from.deltaY(to);
-			ImageView[][] imageViews = GUI.getBoardPane().getImageViews();
+			int yDiff = from.deltaY(to);			
 			
-			if (from.isInBoard() && to.isInBoard()) { //means this comes from falldown()
+			if (from.isInBoard() && to.isInBoard()) { //means this comes from falldown() or swap()
 			  ImageView ivFrom = imageViews[from.getX()][from.getY()];
 			  if (xDiff == 0) {
 			    keyValues[i] = new KeyValue(ivFrom.yProperty(), yDiff * 65, Interpolator.LINEAR);
@@ -80,9 +88,9 @@ public class TimelineController {
 			  ImageView ivFrom = imageViews[from.getX()][from.getY()];
 			  keyValues[i] = new KeyValue(ivFrom.opacityProperty(), 0, Interpolator.LINEAR);
 			  imageViews[from.getX()][from.getY()] = new ImageView();
-			}
-			GUI.getBoardPane().setImageViews(imageViews);
+			}			
 		}
+		GUI.getBoardPane().setImageViews(imageViews);
 		return keyValues;
 	}
 	

@@ -10,6 +10,7 @@ import board.Gem;
 import board.Position;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
+import javafx.animation.SequentialTransition;
 import javafx.animation.Timeline;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
@@ -138,7 +139,9 @@ public class BoardPane {
 
 		if (selected) {			
 			makeMove(new Position(x, y), selectedPosition);
-			Timeline t = controller.getTimeline();
+			//Timeline t = controller.getTimeline();
+			//t.play();
+			SequentialTransition t = controller.getTimeline();
 			t.play();
 			displayNormal(selectedView, selectedGem);
 			selected = false;			

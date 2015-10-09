@@ -114,7 +114,7 @@ public class Game {
 	    throws MoveNotValidException {
 	  List<List<Change<Position>>> changes = new ArrayList<List<Change<Position>>>();
 	  if (moveAllowed(one, two)) {
-			board.swap(one.getX(), one.getY(), two.getX(), two.getY());
+			changes.add(board.swap(one.getX(), one.getY(), two.getX(), two.getY()));
 			if (board.hasChain()) { // check if the board has any chains
 				int bonus = 0;
 				Logger.logInfo("Move was successful");
@@ -128,7 +128,7 @@ public class Game {
 				}	while (board.hasChain());
 			}
 			else {  //if no new chains, then swap back using board.swap(x2, y2, x1, y1);
-				board.swap(two.getX(), two.getY(), one.getX(), one.getY());
+				changes.add(board.swap(two.getX(), two.getY(), one.getX(), one.getY()));
 				throw new MoveNotValidException("Move doesn't make a chain");
 			}
 			
