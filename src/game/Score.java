@@ -1,7 +1,5 @@
 package game;
 
-import java.util.Observer;
-
 public interface Score {
 
     public void register(Observer obj);

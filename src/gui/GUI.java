@@ -3,9 +3,10 @@ package gui;
 import game.Game;
 import game.LoadGame;
 import game.Logger;
+import game.Player;
 import game.SaveGame;
-import game.Score;
-import game.ScoreObserver;
+import game.Observer;
+
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -24,7 +25,7 @@ import javafx.stage.Stage;
  * 
  * @author Steven Meijer & Thomas Kolenbrander
  */
-public class GUI extends Application implements ScoreObserver {
+public class GUI extends Application implements Observer {
 
 	/**
 	 * X and Y dimensions of the board.
@@ -34,7 +35,6 @@ public class GUI extends Application implements ScoreObserver {
 
 	private BoardPane boardPane;
 	private static Game game;
-	private Score score;
 	private static Label scoreLabel;
 	private static Label errorLabel;
 	private static GUI gui;
@@ -64,6 +64,12 @@ public class GUI extends Application implements ScoreObserver {
 		game = new Game();
 		game.start();
 		gui = new GUI();
+		
+		Player player = game.getPlayer();
+		Observer scoreObserver = gui;
+		player.register(scoreObserver);
+		
+		game.getPlayer().register(gui);
 		launch(args);
 	}
 
@@ -199,13 +205,12 @@ public class GUI extends Application implements ScoreObserver {
 	 */
 	@Override
 	public void update() {
-		String s = "Score: " + score.getUpdate(null);
-		scoreLabel.setText(s);
+		//
 	}
 
 	@Override
-	public void setSubject(Score score) {
-		this.score = score;
+	public void setSubject(Object object) {
+		// TODO Auto-generated method stub
 		
 	}
 

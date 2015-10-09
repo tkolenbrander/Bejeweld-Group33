@@ -2,7 +2,6 @@ package game;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Observer;
 
 /**
  * Class for a player. Currently only used for keeping track of his / her
@@ -15,7 +14,7 @@ public class Player implements Score {
 
 	private int score;
 
-	private List<ScoreObserver> observers;
+	private List<Observer> observers;
 	private String message;
 	private boolean changed;
 	private final Object MUTEX = new Object();
@@ -64,7 +63,7 @@ public class Player implements Score {
 		if(obj == null) throw new NullPointerException("Null Observer");
 		synchronized (MUTEX) {
 			if(!observers.contains(obj)) {
-				observers.add((ScoreObserver) obj);
+				observers.add((Observer) obj);
 			};
 		}
 	}
@@ -78,7 +77,7 @@ public class Player implements Score {
 
 	@Override
 	public void notifyObservers() {
-		List<ScoreObserver> observersLocal = null;
+		List<Observer> observersLocal = null;
 
 		synchronized (MUTEX) {
 			if (!changed) {
@@ -89,7 +88,7 @@ public class Player implements Score {
 			this.changed = false;
 		}
 		
-		for (ScoreObserver obj : observersLocal) {
+		for (Observer obj : observersLocal) {
 			obj.update();
 		}
 
