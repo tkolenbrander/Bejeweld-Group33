@@ -65,10 +65,6 @@ public class GUI extends Application implements Observer {
 		game.start();
 		gui = new GUI();
 
-		Player player = game.getPlayer();
-		Observer scoreObserver = gui;
-		player.register(scoreObserver);
-
 		game.getPlayer().register(gui);
 		launch(args);
 	}
