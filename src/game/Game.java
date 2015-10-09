@@ -95,6 +95,11 @@ public class Game {
 		board.reset();
 		//reset any timers if there are any.
 	}
+	
+	public void swap(Position one, Position two) {
+	  board.swap(one.getX(), one.getY(), two.getX(), two.getY());
+	  TimelineController.swap(one, two);
+	}
 
 	/**
 	 * Lets the player make a move, as long as moveAllowed returns true.
@@ -114,7 +119,7 @@ public class Game {
 	    throws MoveNotValidException {
 	  List<List<Change<Position>>> changes = new ArrayList<List<Change<Position>>>();
 	  if (moveAllowed(one, two)) {
-			changes.add(board.swap(one.getX(), one.getY(), two.getX(), two.getY()));
+			swap(one, two);
 			if (board.hasChain()) { // check if the board has any chains
 				int bonus = 0;
 				Logger.logInfo("Move was successful");
@@ -128,7 +133,7 @@ public class Game {
 				}	while (board.hasChain());
 			}
 			else {  //if no new chains, then swap back using board.swap(x2, y2, x1, y1);
-				changes.add(board.swap(two.getX(), two.getY(), one.getX(), one.getY()));
+				swap(two, one);
 				TimelineController.setList(changes);
 				throw new MoveNotValidException("Move doesn't make a chain");
 			}

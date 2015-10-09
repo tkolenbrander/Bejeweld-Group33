@@ -8,7 +8,9 @@ import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.SequentialTransition;
 import javafx.animation.Timeline;
+import javafx.event.EventHandler;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.util.Duration;
 import board.Cell;
 import board.Change;
@@ -21,7 +23,7 @@ public class TimelineController {
 	 */
 	private static List<List<Change<Position>>> list;
 	
-	private static final Duration KF_DURATION = Duration.millis(500);
+	private static final Duration KF_DURATION = Duration.millis(1000);
 
 	/**
 	 * Simple constructor.
@@ -81,11 +83,24 @@ public class TimelineController {
 			  imageViews[from.getX()][from.getY()] = new ImageView();
 			}
 			else if (!from.isInBoard()) { //from is out of bounds, to is in bounds, comes from fillEmptyCells()
-			  imageViews[to.getX()][to.getY()] = new ImageView(GUI.getGame().getBoard().getCells()[to.getY()][to.getX()].getGem().getImage());
-			  ImageView ivTo = imageViews[to.getX()][to.getY()];
-			  keyValues[i] = new KeyValue(ivTo.yProperty(), 0, Interpolator.LINEAR);
-
-			}
+        ImageView newImage = new ImageView(GUI.getGame().getBoard().getCells()[to.getY()][to.getX()].getGem().getImage());
+        imageViews[to.getX()][to.getY()] = newImage;
+        newImage.setLayoutX(to.getX()*65);
+        newImage.setLayoutY(-65);
+       
+        newImage.setOnMousePressed(new EventHandler<MouseEvent>() {
+                      public void handle(MouseEvent me) {
+                              System.out.println(me.getSceneX() + ", " + (me.getSceneY() - 55));
+                              int x = (int) me.getSceneX() / 65;
+                              int y = (int) (me.getSceneY() - 55) / 65;
+                              GUI.getBoardPane().clicked(x, y, newImage);
+                      }
+              });
+       
+        GUI.getBoardPane().borderPane.getChildren().add(newImage);
+        ImageView ivTo = imageViews[to.getX()][to.getY()];
+        keyValues[i] = new KeyValue(ivTo.yProperty(), (to.getY()+1)*65, Interpolator.LINEAR);
+      }
 			else { //from is in bounds, to is out of bounds, comes from removeChains().
 			  ImageView ivFrom = imageViews[from.getX()][from.getY()];
 			  keyValues[i] = new KeyValue(ivFrom.opacityProperty(), 0, Interpolator.LINEAR);
@@ -96,35 +111,33 @@ public class TimelineController {
 		return keyValues;
 	}
 	
-	public void updateImageViews() {
-	  ImageView[][] views = GUI.getBoardPane().getImageViews();
-	  final Cell[][] cells = GUI.getGame().getBoard().getCells();
-	  for (List<Change<Position>> changes : list) {
-	    for (int i = 0; i < changes.size(); i++) {
-	      Position from =  changes.get(i).getFrom();
-	      Position to = changes.get(i).getTo();
-	      int xDiff = from.deltaX(to);
-	      int yDiff = from.deltaY(to);
-	      
-	      if (from.isInBoard() && to.isInBoard()) {
-	        ImageView ivFrom = views[from.getX()][from.getY()];
-	        if (xDiff == 0) {
-	          
-	        }
-	        else {
-	          
-	        }
-	      }
-	      else if (!from.isInBoard()) { //from is out of bounds, to is in bounds
-	        ImageView ivTo = views[to.getX()][to.getY()];
-	        
-	      }
-	      else { //from is in bounds, to is out of bounds.
-	        ImageView ivFrom = views[from.getX()][from.getY()];
-	        
-	      }
-	    }
+	public static void swap(Position one, Position two) {
+	  ImageView[][] imageViews = GUI.getBoardPane().getImageViews();
+	  SequentialTransition sequence = new SequentialTransition();
+	  Timeline t = new Timeline();
+	  KeyValue[] keyValues = new KeyValue[2];
+	  int xDiff = one.deltaX(two);
+	  int yDiff = one.deltaY(two);
+	  ImageView ivOne = imageViews[one.getX()][one.getY()];
+	  ImageView ivTwo = imageViews[two.getX()][two.getY()];
+	  
+	  if (xDiff == 0) {
+	    keyValues[0] = new KeyValue(ivOne.yProperty(), yDiff * 65, Interpolator.LINEAR);
+	    keyValues[1] = new KeyValue(ivTwo.yProperty(), -yDiff * 65, Interpolator.LINEAR);
 	  }
+	  else {
+	    keyValues[0] = new KeyValue(ivOne.xProperty(), xDiff * 65, Interpolator.LINEAR);
+      keyValues[1] = new KeyValue(ivTwo.xProperty(), -xDiff * 65, Interpolator.LINEAR);
+	  }
+	  
+	  ImageView temp = imageViews[one.getX()][one.getY()];
+	  imageViews[one.getX()][one.getY()] = imageViews[two.getX()][two.getY()];
+	  imageViews[two.getX()][two.getY()] = temp;
+	  
+	  KeyFrame keyFrame = new KeyFrame(KF_DURATION, keyValues);
+	  t.getKeyFrames().add(keyFrame);
+	  sequence.getChildren().add(t);
+	  GUI.getBoardPane().playSwapAnim(sequence);
 	}
 
 	/**

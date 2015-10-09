@@ -30,7 +30,7 @@ public class BoardPane {
 	/**
 	 * The main pane of this class.
 	 */
-	private BorderPane borderPane;
+	protected BorderPane borderPane;
 
 	/**
 	 * Contains all the imageviews of the sprites.
@@ -205,6 +205,10 @@ public class BoardPane {
 			Logger.close();
 		}
 		return result;
+	}
+	
+	public void playSwapAnim(SequentialTransition swapAnim) {
+	  swapAnim.play();
 	}
 
 	/**

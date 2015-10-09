@@ -325,14 +325,13 @@ public class Board {
 	 * @param x2 x-coordinate of cell 2
 	 * @param y2 y-coordinate of cell 2
 	 */
-	public List<Change<Position>> swap(int x1, int y1, int x2, int y2) {
+	public void swap(int x1, int y1, int x2, int y2) {
 		List<Change<Position>> changes = new ArrayList<Change<Position>>();
 		Cell temp = board[y1][x1];
 		board[y1][x1] = board[y2][x2];
 		board[y2][x2] = temp;
 		changes.add( new Change<Position>(new Position(x2, y2), new Position(x1, y1)));
 		changes.add( new Change<Position>(new Position(x1, y1), new Position(x2, y2)));
-		return changes;
 	}
 	
 	/**
