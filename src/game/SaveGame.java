@@ -4,6 +4,9 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
+
+import board.Position;
 
 /**
  * Utility class for saving the game to a save game.
@@ -30,7 +33,12 @@ public final class SaveGame {
       PrintWriter out = null;
       try {
         out = new PrintWriter(new BufferedWriter(new FileWriter(PATH, false)));
+        List<Position> powerPos = game.getBoard().getPowerGems();
         out.println(game.getPlayer().getScore());
+        out.println(powerPos.size());
+        for (Position pos : powerPos){
+        	out.println(pos);
+        }
         out.print(game.getBoard().toString());
       }
       catch (IOException e) {
