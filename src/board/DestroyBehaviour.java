@@ -16,6 +16,6 @@ public interface DestroyBehaviour {
 	 * @param pos	The position of the destroyed gem on the board
 	 * @return		A list of the positions of all the other gems that got destroyed when the given gem gets destroyed.
 	 */
-	public List<Position> destroy(Cell[][] cells, Position pos);;
+	public List<Position> destroy(Cell[][] cells, Position pos);
 	
 }
