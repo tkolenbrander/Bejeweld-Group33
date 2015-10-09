@@ -2,6 +2,11 @@ package board;
 
 import java.util.List;
 
+/**
+ * An interface for how gems get destroyed.
+ * @author Ruben
+ *
+ */
 public interface DestroyBehaviour {
 	
 	/**

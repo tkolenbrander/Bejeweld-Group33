@@ -3,6 +3,11 @@ package board;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * A class to represent the behaviour of destroying a regular gem
+ * @author Ruben
+ *
+ */
 public class RegularDestroyBehaviour implements DestroyBehaviour{
 
 	/**

@@ -191,7 +191,10 @@ public class Board {
 		List<List<Position>> chains = chainedCells();
 		for (List<Position> chain : chains) { 
 			for (Position pos : chain) {
-				board[pos.getY()][pos.getX()].getGem().destroy(board, pos);
+				Cell cell = board[pos.getY()][pos.getX()];
+				if (cell != null){
+					cell.getGem().destroy(board, pos);
+				}
 			}
 		}
 	}

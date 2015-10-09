@@ -2,6 +2,11 @@ package board;
 
 import javafx.scene.image.Image;
 
+/**
+ * A class to represent a regular gem on the board.
+ * @author Ruben
+ *
+ */
 public class RegularGem extends Gem{
 
 	/**
@@ -48,8 +53,8 @@ public class RegularGem extends Gem{
 	}
 	
 	/**
-	 * Return the image of a gem when it's clicked.
-	 * @return The image of a gem when it's clicked
+	 * Return the image of a regular gem when it's clicked.
+	 * @return The image of a regular gem when it's clicked
 	 */
 	public Image getImageClicked() {
 		Image image = new Image("file:assets/textures/gems/gemMissing.png"); 	
