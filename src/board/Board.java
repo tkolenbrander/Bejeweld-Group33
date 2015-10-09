@@ -3,6 +3,7 @@ package board;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 
 /**
  * Class to represent a Board.
@@ -186,15 +187,22 @@ public class Board {
 
 	/**
 	 * Destroys all the gems that are in a chain.
+	 * Creates a PowerGem when a chain of 4 or more is destroyed
 	 */
 	public void removeChains() {
 		List<List<Position>> chains = chainedCells();
-		for (List<Position> chain : chains) { 
+		for (List<Position> chain : chains) {
+			GemType type = null;
 			for (Position pos : chain) {
 				Cell cell = board[pos.getY()][pos.getX()];
 				if (cell != null){
+					type = cell.getGem().getType();
 					cell.getGem().destroy(board, pos);
 				}
+			}
+			if (chain.size() >= 4){
+				Position powerPos = chain.get((int)Math.random() * chain.size());
+				board[powerPos.getY()][powerPos.getX()] = new Cell(new PowerGem(type));
 			}
 		}
 	}

@@ -53,9 +53,9 @@ public class Position {
 		ArrayList<Position> positions = new ArrayList<Position>();
 		for (int x = -1; x <= 1; x++){
 			for (int y = -1; y <= 1; y++){
-				if ((this.x != x || this.y != y) &&
-						x >= 0 && x < Board.BOARDSIZE &&
-						y >= 0 && y < Board.BOARDSIZE){
+				if ((x != 0 || y != 0) &&
+						this.x+x >= 0 && this.x+x < Board.BOARDSIZE &&
+						this.y+y >= 0 && this.y+y < Board.BOARDSIZE){
 					Position pos = new Position(this.x+x, this.y+y);
 					positions.add(pos);
 				}
