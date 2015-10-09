@@ -134,6 +134,7 @@ public class GUI extends Application implements Observer {
 					game.start();
 					boardPane.refresh();
 					setScore(GUI.game.getPlayer().getScore());
+					game.getPlayer().register(gui);
 					setError("Game loaded!"); }
 				catch (Exception e) {
 					setError("Cannot load game!"); 
@@ -165,6 +166,7 @@ public class GUI extends Application implements Observer {
 			public void handle(ActionEvent event) {
 				game.reset();
 				game.start();
+				setScore(0);
 				boardPane.refresh();
 			}
 		});
