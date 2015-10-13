@@ -1,4 +1,4 @@
-package tests;
+package test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -8,17 +8,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import board.Cell;
-import board.Direction;
-import board.Gem;
-import board.GemType;
-import board.Position;
-import board.RegularGem;
+import main.board.*;
 
 import org.junit.Before;
 import org.junit.Test;
 
-import board.Board;
 /**
  * Test class that tests the Board class.
  * @author Wytze Elhorst

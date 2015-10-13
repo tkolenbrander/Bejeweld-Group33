@@ -1,4 +1,4 @@
-package game;
+package main.game;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
 
-import board.Position;
+import main.board.Position;
 
 /**
  * Utility class for saving the game to a save game.

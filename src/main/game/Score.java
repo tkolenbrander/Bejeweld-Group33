@@ -1,4 +1,4 @@
-package game;
+package main.game;
 
 /**
  * Interface for the Score of the game.

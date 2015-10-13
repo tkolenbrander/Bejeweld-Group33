@@ -1,7 +1,7 @@
-package game;
+package main.game;
 
-import exceptions.MoveNotValidException;
-import board.Board;
+import main.exceptions.MoveNotValidException;
+import main.board.Board;
 /**
  * Game class. Governs the entire game. In terms of the backend, this is the top of the dome.
  * Straight from the top of my dome. Freestyler

@@ -1,11 +1,10 @@
-package gui;
+package main.gui;
 
-import game.Game;
-import game.LoadGame;
-import game.Logger;
-import game.Player;
-import game.SaveGame;
-import game.Observer;
+import main.game.Game;
+import main.game.LoadGame;
+import main.game.Logger;
+import main.game.SaveGame;
+import main.game.Observer;
 
 import javafx.application.Application;
 import javafx.event.ActionEvent;

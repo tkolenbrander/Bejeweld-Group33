@@ -1,4 +1,4 @@
-package game;
+package main.game;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -6,12 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-import board.Board;
-import board.Cell;
-import board.GemType;
-import board.Position;
-import board.PowerGem;
-import board.RegularGem;
+import main.board.*;
 
 /**
  * Utility class for loading the game from a saved game.

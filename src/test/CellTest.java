@@ -1,13 +1,12 @@
-package tests;
+package test;
 
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-import board.Cell;
-import board.Gem;
-import board.GemType;
-import board.RegularGem;
+import main.board.Cell;
+import main.board.GemType;
+import main.board.RegularGem;
 
 /**
  * Tests the Cell class. Not really much to test there though...

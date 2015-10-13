@@ -1,4 +1,4 @@
-package tests;
+package test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -8,7 +8,7 @@ import java.util.Random;
 import org.junit.Before;
 import org.junit.Test;
 
-import board.GemType;
+import main.board.GemType;
 
 /**
  * Test for GemType enumeration.

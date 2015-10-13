@@ -1,13 +1,13 @@
-package tests;
+package test;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-import board.Gem;
-import board.GemType;
-import board.RegularGem;
+import main.board.Gem;
+import main.board.GemType;
+import main.board.RegularGem;
 
 /**
  * Tests the Gem class.

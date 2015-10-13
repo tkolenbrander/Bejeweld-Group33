@@ -1,6 +1,6 @@
-package exceptions;
+package main.exceptions;
 
-import game.Logger;
+import main.game.Logger;
 
 /**
  * Custom exception for when a move is not valid.

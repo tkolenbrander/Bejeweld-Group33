@@ -1,13 +1,13 @@
-package gui;
+package main.gui;
 
-import exceptions.MoveNotValidException;
+import main.exceptions.MoveNotValidException;
 
-import game.Logger;
+import main.game.Logger;
 
-import board.Board;
-import board.Cell;
-import board.Gem;
-import board.Position;
+import main.board.Board;
+import main.board.Cell;
+import main.board.Gem;
+import main.board.Position;
 
 import javafx.event.EventHandler;
 import javafx.scene.Node;
