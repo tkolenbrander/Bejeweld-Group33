@@ -12,7 +12,9 @@ import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.SequentialTransition;
 import javafx.animation.Timeline;
+import javafx.animation.Animation.Status;
 import javafx.event.EventHandler;
+import javafx.event.ActionEvent;
 import javafx.scene.Node;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
@@ -61,6 +63,11 @@ public class BoardPane {
 	 * Contains the animations.
 	 */
 	private TimelineController controller;
+	
+	/**
+	 * True if an animation is playing, otherwise false.
+	 */
+	private boolean animating = false;
 	
 	/**
 	 * Creates a new BoardPane.

@@ -23,6 +23,11 @@ public class TimelineController {
 	 */
 	private static List<List<Change<Position>>> list;
 	
+	/**
+	 * Contains all swap animations.
+	 */
+	private static List<Timeline> swapList;
+	
 	private static final Duration KF_DURATION = Duration.millis(1000);
 
 	/**
@@ -30,6 +35,7 @@ public class TimelineController {
 	 */
 	public TimelineController() {
 		list = new ArrayList<List<Change<Position>>>();
+		swapList = new ArrayList<Timeline>();
 	}
 
 	/**
@@ -37,9 +43,9 @@ public class TimelineController {
 	 * @return The timeline with animations.
 	 */
 	public SequentialTransition getTimeline() {
-		//Timeline t = new Timeline();
 		Timeline[] timelines = new Timeline[list.size()];
 		SequentialTransition sequence = new SequentialTransition();	
+		sequence.getChildren().addAll(swapList);
 		KeyFrame[] keyFrames = new KeyFrame[list.size()];
 		for (int i = 0; i < list.size(); i++) {
 			List<Change<Position>> changes = list.get(i);
@@ -51,8 +57,8 @@ public class TimelineController {
 			timelines[i] = t;
 			System.out.println(t.getKeyFrames());
 		}
-		//t.getKeyFrames().addAll(keyFrames);
-		//return t;
+		//System.out.println(swapList.get(0).getKeyFrames());
+		//System.out.println(swapList.get(1).getKeyFrames());
 		sequence.getChildren().addAll(timelines);
 		return sequence;
 	}
@@ -121,13 +127,26 @@ public class TimelineController {
 	  ImageView ivOne = imageViews[one.getX()][one.getY()];
 	  ImageView ivTwo = imageViews[two.getX()][two.getY()];
 	  
-	  if (xDiff == 0) {
-	    keyValues[0] = new KeyValue(ivOne.yProperty(), yDiff * 65, Interpolator.LINEAR);
-	    keyValues[1] = new KeyValue(ivTwo.yProperty(), -yDiff * 65, Interpolator.LINEAR);
-	  }
-	  else {
-	    keyValues[0] = new KeyValue(ivOne.xProperty(), xDiff * 65, Interpolator.LINEAR);
-      keyValues[1] = new KeyValue(ivTwo.xProperty(), -xDiff * 65, Interpolator.LINEAR);
+	  // When the size of swaplist is 0 this is the first swap animation.
+	  if(swapList.size() == 0) {
+		  if (xDiff == 0) {
+		    keyValues[0] = new KeyValue(ivOne.yProperty(), yDiff * 65, Interpolator.LINEAR);
+		    keyValues[1] = new KeyValue(ivTwo.yProperty(), -yDiff * 65, Interpolator.LINEAR);
+		  }
+		  else {
+		    keyValues[0] = new KeyValue(ivOne.xProperty(), xDiff * 65, Interpolator.LINEAR);
+		    keyValues[1] = new KeyValue(ivTwo.xProperty(), -xDiff * 65, Interpolator.LINEAR);
+		  }
+	  } else {
+		  if (xDiff == 0) {
+			    keyValues[0] = new KeyValue(ivOne.yProperty(), yDiff * 65, Interpolator.LINEAR);
+			    keyValues[1] = new KeyValue(ivTwo.yProperty(), -yDiff * 65, Interpolator.LINEAR);
+			  }
+			  else {
+				  System.out.println(xDiff);
+			    keyValues[0] = new KeyValue(ivOne.xProperty(), xDiff * 65, Interpolator.LINEAR);
+			    keyValues[1] = new KeyValue(ivTwo.xProperty(), -xDiff * 65, Interpolator.LINEAR);
+			  }
 	  }
 	  
 	  ImageView temp = imageViews[one.getX()][one.getY()];
@@ -137,7 +156,8 @@ public class TimelineController {
 	  KeyFrame keyFrame = new KeyFrame(KF_DURATION, keyValues);
 	  t.getKeyFrames().add(keyFrame);
 	  sequence.getChildren().add(t);
-	  GUI.getBoardPane().playSwapAnim(sequence);
+	  swapList.add(t);
+	  GUI.getBoardPane().setImageViews(imageViews);
 	}
 
 	/**
@@ -146,6 +166,10 @@ public class TimelineController {
 	 */
 	public static void setList(List<List<Change<Position>>> l) {
 		list = l;
+	}
+	
+	public static void clearSwapList() {
+		swapList = new ArrayList<Timeline>();
 	}
 
 }

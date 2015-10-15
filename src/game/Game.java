@@ -118,6 +118,7 @@ public class Game {
 	public void makeMove(Position one, Position two) 
 	    throws MoveNotValidException {
 	  List<List<Change<Position>>> changes = new ArrayList<List<Change<Position>>>();
+	  TimelineController.clearSwapList();
 	  if (moveAllowed(one, two)) {
 			swap(one, two);
 			if (board.hasChain()) { // check if the board has any chains
