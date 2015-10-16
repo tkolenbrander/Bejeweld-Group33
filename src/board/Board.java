@@ -177,11 +177,10 @@ public class Board {
 	public List<Change<Position>> removeChains() {
 		List<List<Position>> chains = chainedCells();
 		List<Change<Position>> changes = new ArrayList<Change<Position>>();
-		final Position removed = new Position(-1, -1);
 		for (List<Position> chain : chains) { 
 			for (Position pos : chain) {
 				board[pos.getY()][pos.getX()] = null;
-				changes.add(new Change<Position>(pos, removed));
+				changes.add(new Remove<Position>(pos));
 			}
 		}
 		return changes;
@@ -223,7 +222,6 @@ public class Board {
 	 */
 	public List<Change<Position>> fillEmptyCells() {
 	  List<Change<Position>> changes = new ArrayList<Change<Position>>();
-	  final Position newPos = new Position(-1, -1);
 		for (int y = 0; y < BOARDSIZE; y++) {
 			for (int x = 0; x < BOARDSIZE; x++) {
 				if (board[y][x] == null) {

@@ -16,6 +16,7 @@ import board.Cell;
 import board.Change;
 import board.Create;
 import board.Position;
+import board.Remove;
 
 public class TimelineController {
 
@@ -73,10 +74,11 @@ public class TimelineController {
 		KeyValue[] keyValues = new KeyValue[changes.size()];
 		ImageView[][] imageViews = GUI.getBoardPane().getImageViews();
 		for (int i = 0; i < changes.size(); i++) {
-			Position from = changes.get(i).getFrom();
-			Position to = changes.get(i).getTo();
+			Change<Position> change = changes.get(i);
+			Position from = change.getFrom();
+			Position to = change.getTo();
 			
-			if (from != null && to.isInBoard()) { //means this comes from falldown() or swap()
+			if (from != null && to != null) { //means this comes from falldown() or swap()
 			  int xDiff = from.deltaX(to);		
 			  ImageView ivFrom = imageViews[from.getX()][from.getY()];
 			  if (xDiff == 0) {
@@ -88,8 +90,8 @@ public class TimelineController {
 			  imageViews[to.getX()][to.getY()] = imageViews[from.getX()][from.getY()];
 			  imageViews[from.getX()][from.getY()] = new ImageView();
 			}
-			else if (changes.get(i) instanceof Create<?>) { //from is out of bounds, to is in bounds, comes from fillEmptyCells()
-				Create<Position> create = (Create<Position>) changes.get(i);
+			else if (change instanceof Create<?>) { //from is out of bounds, to is in bounds, comes from fillEmptyCells()
+				Create<Position> create = (Create<Position>) change;
         ImageView newImage = new ImageView(create.getGem().getImage());
         imageViews[to.getX()][to.getY()] = newImage;
         newImage.setX(to.getX()*65);
@@ -108,7 +110,7 @@ public class TimelineController {
         ImageView ivTo = imageViews[to.getX()][to.getY()];
         keyValues[i] = new KeyValue(ivTo.yProperty(), to.getY()*65, Interpolator.LINEAR);
       }
-			else { //from is in bounds, to is out of bounds, comes from removeChains().
+			else if (change instanceof Remove<?>) { //from is in bounds, to is out of bounds, comes from removeChains().
 			  ImageView ivFrom = imageViews[from.getX()][from.getY()];
 			  keyValues[i] = new KeyValue(ivFrom.opacityProperty(), 0, Interpolator.LINEAR);
 			  imageViews[from.getX()][from.getY()] = new ImageView();
@@ -124,7 +126,6 @@ public class TimelineController {
 	  Timeline t = new Timeline();
 	  KeyValue[] keyValues = new KeyValue[2];
 	  int xDiff = one.deltaX(two);
-	  int yDiff = one.deltaY(two);
 	  ImageView ivOne = imageViews[one.getX()][one.getY()];
 	  ImageView ivTwo = imageViews[two.getX()][two.getY()];
 	  
