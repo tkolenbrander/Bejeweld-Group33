@@ -17,18 +17,23 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.util.Duration;
 
+/**
+ * Class that controls the timeline, used for the animations.
+ * @author Thomas & Bart
+ *
+ */
 public class TimelineController {
 
 	/**
 	 * Contains all changes.
 	 */
 	private static List<List<Change<Position>>> list;
-	
+
 	/**
 	 * Contains all swap animations.
 	 */
 	private static List<Timeline> swapList;
-	
+
 	private static final Duration KF_DURATION = Duration.millis(300);
 
 	/**
@@ -48,6 +53,7 @@ public class TimelineController {
 		SequentialTransition sequence = new SequentialTransition();	
 		sequence.getChildren().addAll(swapList);
 		KeyFrame[] keyFrames = new KeyFrame[list.size()];
+
 		for (int i = 0; i < list.size(); i++) {
 			List<Change<Position>> changes = list.get(i);
 			KeyValue[] keyValues = generateKeyValues(changes);
@@ -58,10 +64,10 @@ public class TimelineController {
 			timelines[i] = t;
 			System.out.println(t.getKeyFrames());
 		}
-		//System.out.println(swapList.get(0).getKeyFrames());
-		//System.out.println(swapList.get(1).getKeyFrames());
+
 		sequence.getChildren().addAll(timelines);
 		list.clear();
+
 		return sequence;
 	}
 
@@ -73,80 +79,86 @@ public class TimelineController {
 	public KeyValue[] generateKeyValues(List<Change<Position>> changes) {
 		KeyValue[] keyValues = new KeyValue[changes.size()];
 		ImageView[][] imageViews = GUI.getBoardPane().getImageViews();
+
 		for (int i = 0; i < changes.size(); i++) {
 			Change<Position> change = changes.get(i);
 			Position from = change.getFrom();
 			Position to = change.getTo();
-			
+
 			if (from != null && to != null) { //means this comes from falldown() or swap()
-			  int xDiff = from.deltaX(to);		
-			  ImageView ivFrom = imageViews[from.getX()][from.getY()];
-			  if (xDiff == 0) {
-			    keyValues[i] = new KeyValue(ivFrom.yProperty(), to.getY() * 65, Interpolator.LINEAR);
-			  }
-			  else {
-			    keyValues[i] = new KeyValue(ivFrom.xProperty(), to.getX() * 65, Interpolator.LINEAR);
-			  }
-			  imageViews[to.getX()][to.getY()] = imageViews[from.getX()][from.getY()];
-			  imageViews[from.getX()][from.getY()] = new ImageView();
+				int xDiff = from.deltaX(to);		
+				ImageView ivFrom = imageViews[from.getX()][from.getY()];
+				if (xDiff == 0) {
+					keyValues[i] = new KeyValue(ivFrom.yProperty(), to.getY() * 65, Interpolator.LINEAR);
+				}
+				else {
+					keyValues[i] = new KeyValue(ivFrom.xProperty(), to.getX() * 65, Interpolator.LINEAR);
+				}
+				imageViews[to.getX()][to.getY()] = imageViews[from.getX()][from.getY()];
+				imageViews[from.getX()][from.getY()] = new ImageView();
 			}
-			else if (change instanceof Create<?>) { //from is out of bounds, to is in bounds, comes from fillEmptyCells()
+			else if (change instanceof Create<?>) { 
+				//from is out of bounds, to is in bounds, comes from fillEmptyCells()
 				Create<Position> create = (Create<Position>) change;
-        ImageView newImage = new ImageView(create.getGem().getImage());
-        imageViews[to.getX()][to.getY()] = newImage;
-        newImage.setX(to.getX()*65);
-        newImage.setY(-65);
-        newImage.setOnMousePressed(new EventHandler<MouseEvent>() {
-                      public void handle(MouseEvent me) {
-                              System.out.println(me.getSceneX() + ", " + (me.getSceneY() - 55));
-                              int x = (int) me.getSceneX() / 65;
-                              int y = (int) (me.getSceneY() - 55) / 65;
-                              GUI.getBoardPane().clicked(x, y, newImage);
-                      }
-              });
-        GUI.getgui().boxToFront();
-        newImage.toBack();      
-        GUI.getBoardPane().getPane().getChildren().add(newImage);
-        ImageView ivTo = imageViews[to.getX()][to.getY()];
-        keyValues[i] = new KeyValue(ivTo.yProperty(), to.getY()*65, Interpolator.LINEAR);
-      }
-			else if (change instanceof Remove<?>) { //from is in bounds, to is out of bounds, comes from removeChains().
-			  ImageView ivFrom = imageViews[from.getX()][from.getY()];
-			  keyValues[i] = new KeyValue(ivFrom.opacityProperty(), 0, Interpolator.LINEAR);
-			  imageViews[from.getX()][from.getY()] = new ImageView();
+				ImageView newImage = new ImageView(create.getGem().getImage());
+				imageViews[to.getX()][to.getY()] = newImage;
+				newImage.setX(to.getX() * 65);
+				newImage.setY(-65);
+				
+				newImage.setOnMousePressed(new EventHandler<MouseEvent>() {
+					public void handle(MouseEvent me) {
+						System.out.println(me.getSceneX() + ", " + (me.getSceneY() - 55));
+						int x = (int) me.getSceneX() / 65;
+						int y = (int) (me.getSceneY() - 55) / 65;
+						GUI.getBoardPane().clicked(x, y, newImage);
+					}
+				});
+				
+				GUI.getgui().boxToFront();
+				newImage.toBack();      
+				GUI.getBoardPane().getPane().getChildren().add(newImage);
+				ImageView ivTo = imageViews[to.getX()][to.getY()];
+				keyValues[i] = new KeyValue(ivTo.yProperty(), to.getY() * 65, Interpolator.LINEAR);
+			}
+			else if (change instanceof Remove<?>) {
+				//from is in bounds, to is out of bounds, comes from removeChains().
+				ImageView ivFrom = imageViews[from.getX()][from.getY()];
+				keyValues[i] = new KeyValue(ivFrom.opacityProperty(), 0, Interpolator.LINEAR);
+				imageViews[from.getX()][from.getY()] = new ImageView();
 			}			
 		}
 		GUI.getBoardPane().setImageViews(imageViews);
+		
 		return keyValues;
 	}
-	
+
 	public static void swap(Position one, Position two) {
-	  ImageView[][] imageViews = GUI.getBoardPane().getImageViews();
-	  SequentialTransition sequence = new SequentialTransition();
-	  Timeline t = new Timeline();
-	  KeyValue[] keyValues = new KeyValue[2];
-	  int xDiff = one.deltaX(two);
-	  ImageView ivOne = imageViews[one.getX()][one.getY()];
-	  ImageView ivTwo = imageViews[two.getX()][two.getY()];
-	  
-	  if (xDiff == 0) {
-		    keyValues[0] = new KeyValue(ivOne.yProperty(), two.getY() * 65, Interpolator.LINEAR);
-		    keyValues[1] = new KeyValue(ivTwo.yProperty(), one.getY() * 65, Interpolator.LINEAR);
-		  }
-		  else {
-		    keyValues[0] = new KeyValue(ivOne.xProperty(), two.getX() * 65, Interpolator.LINEAR);
-		    keyValues[1] = new KeyValue(ivTwo.xProperty(), one.getX() * 65, Interpolator.LINEAR);
-		  }
-	  
-	  ImageView temp = imageViews[one.getX()][one.getY()];
-	  imageViews[one.getX()][one.getY()] = imageViews[two.getX()][two.getY()];
-	  imageViews[two.getX()][two.getY()] = temp;
-	  
-	  KeyFrame keyFrame = new KeyFrame(KF_DURATION, keyValues);
-	  t.getKeyFrames().add(keyFrame);
-	  sequence.getChildren().add(t);
-	  swapList.add(t);
-	  GUI.getBoardPane().setImageViews(imageViews);
+		ImageView[][] imageViews = GUI.getBoardPane().getImageViews();
+		SequentialTransition sequence = new SequentialTransition();
+		Timeline t = new Timeline();
+		KeyValue[] keyValues = new KeyValue[2];
+		int xDiff = one.deltaX(two);
+		ImageView ivOne = imageViews[one.getX()][one.getY()];
+		ImageView ivTwo = imageViews[two.getX()][two.getY()];
+
+		if (xDiff == 0) {
+			keyValues[0] = new KeyValue(ivOne.yProperty(), two.getY() * 65, Interpolator.LINEAR);
+			keyValues[1] = new KeyValue(ivTwo.yProperty(), one.getY() * 65, Interpolator.LINEAR);
+		}
+		else {
+			keyValues[0] = new KeyValue(ivOne.xProperty(), two.getX() * 65, Interpolator.LINEAR);
+			keyValues[1] = new KeyValue(ivTwo.xProperty(), one.getX() * 65, Interpolator.LINEAR);
+		}
+
+		ImageView temp = imageViews[one.getX()][one.getY()];
+		imageViews[one.getX()][one.getY()] = imageViews[two.getX()][two.getY()];
+		imageViews[two.getX()][two.getY()] = temp;
+
+		KeyFrame keyFrame = new KeyFrame(KF_DURATION, keyValues);
+		t.getKeyFrames().add(keyFrame);
+		sequence.getChildren().add(t);
+		swapList.add(t);
+		GUI.getBoardPane().setImageViews(imageViews);
 	}
 
 	/**
@@ -156,7 +168,10 @@ public class TimelineController {
 	public static void setList(List<List<Change<Position>>> l) {
 		list = l;
 	}
-	
+
+	/**
+	 * Clears the swaplist.
+	 */
 	public static void clearSwapList() {
 		swapList = new ArrayList<Timeline>();
 	}

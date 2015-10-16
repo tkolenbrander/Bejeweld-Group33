@@ -32,6 +32,8 @@ public class GUI extends Application implements Observer {
 	private static final int WINDOW_X = 520;
 	private static final int WINDOW_Y = 620;
 	
+	private final double fontSize = 22;
+
 	private static Game game;
 	private static BoardPane boardPane;
 	private static Label scoreLabel;
@@ -40,30 +42,6 @@ public class GUI extends Application implements Observer {
 	private static HBox hbox;
 	private static BorderPane borderPane;
 
-	/**
-	 * Returns the game.
-	 * @return Game
-	 */
-	protected static Game getGame() {
-		return game;
-	}
-
-	/**
-	 * Returns the GUI.
-	 * @return gui
-	 */
-	protected static GUI getgui() {
-		return gui;
-	}
-	
-	/**
-	 * Returns the boardpane.
-	 * @return Boardpane.
-	 */
-	protected static BoardPane getBoardPane() {
-	  return boardPane;
-	}
-	
 	/**
 	 * Main class to launch the application.
 	 * 
@@ -90,14 +68,12 @@ public class GUI extends Application implements Observer {
 		loader.setLocation(GUI.class.getResource("/assets/config/gui.fxml"));
 
 		borderPane = new BorderPane();
-
 		Scene scene = new Scene(borderPane, WINDOW_X, WINDOW_Y);	
 
 		scoreLabel = new Label("Score: ");
-		scoreLabel.setFont(new Font("Arial", 22));
-
+		scoreLabel.setFont(new Font("Arial", fontSize));
 		errorLabel = new Label("");
-		errorLabel.setFont(new Font("Arial", 22));
+		errorLabel.setFont(new Font("Arial", fontSize));
 		boardPane = new BoardPane();
 		hbox = addScorePanel();
 		HBox errorPanel = addErrorPanel();
@@ -114,8 +90,11 @@ public class GUI extends Application implements Observer {
 
 		Logger.logInfo("Game succesfully initialized");
 	}
-	
-	public void boxToFront(){
+
+	/**
+	 * Sets the hbox to the front of the view.
+	 */
+	public void boxToFront() {
 		borderPane.getChildren().remove(hbox);
 		borderPane.setTop(hbox);
 	}
@@ -124,22 +103,45 @@ public class GUI extends Application implements Observer {
 	 * Adds a score panel to the top of the screen.
 	 * @return The HBox containing all that is needed for the score panel.
 	 */
-	public HBox addScorePanel() {
+	private HBox addScorePanel() {
 		HBox hbox = new HBox();
 		hbox.setPadding(new Insets(15, 12, 15, 150));
 		hbox.setSpacing(10);
 		hbox.setStyle("-fx-background-color: #C0C0C0;");
 
+		Button buttonSave = addSaveButton();
+		Button buttonLoad = addLoadButton();
+
+		setScore(0);
+		hbox.getChildren().addAll(scoreLabel, buttonSave, buttonLoad);
+
+		return hbox;  
+	}
+
+	/**
+	 * Adds a save button.
+	 */
+	private Button addSaveButton() {
 		Button buttonSave = new Button("Save Game");
 		buttonSave.setPrefSize(100, 20);
-		Button buttonLoad = new Button("Load Game");
-		buttonLoad.setPrefSize(100, 20);
 
 		buttonSave.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
 				SaveGame.save(game);
-				setError("Game saved!"); } });
+				setError("Game saved!"); 
+			} 
+		});
+
+		return buttonSave;
+	}
+
+	/**
+	 * Adds a load button.
+	 */
+	private Button addLoadButton() {
+		Button buttonLoad = new Button("Load Game");
+		buttonLoad.setPrefSize(100, 20);
 
 		buttonLoad.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
@@ -157,17 +159,14 @@ public class GUI extends Application implements Observer {
 			} 
 		});
 
-		setScore(0);
-		hbox.getChildren().addAll(scoreLabel, buttonSave, buttonLoad);
-
-		return hbox;  
+		return buttonLoad;
 	}
 
 	/**
 	 * Adds the error panel at the bottom of the screen.
 	 * @return The HBox containing all that is needed for the error panel
 	 */
-	public HBox addErrorPanel() {
+	private HBox addErrorPanel() {
 		HBox hbox = new HBox();
 		hbox.setPadding(new Insets(15, 12, 15, 150));
 		hbox.setSpacing(10);
@@ -203,9 +202,33 @@ public class GUI extends Application implements Observer {
 	 * Sets a number for the score label.
 	 * @param score number to be displayed
 	 */
-	protected static void setScore(final int score) {
+	protected void setScore(final int score) {
 		String s = "Score: " + score;
 		scoreLabel.setText(s);
+	}
+	
+	/**
+	 * Returns the game.
+	 * @return Game
+	 */
+	protected static Game getGame() {
+		return game;
+	}
+
+	/**
+	 * Returns the GUI.
+	 * @return gui
+	 */
+	protected static GUI getgui() {
+		return gui;
+	}
+
+	/**
+	 * Returns the boardpane.
+	 * @return Boardpane.
+	 */
+	protected static BoardPane getBoardPane() {
+		return boardPane;
 	}
 
 	/**

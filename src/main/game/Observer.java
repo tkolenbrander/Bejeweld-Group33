@@ -10,6 +10,5 @@ public interface Observer {
 	/**
 	 * Updates the object.
 	 */
-    void update();
-	
+	void update();
 }

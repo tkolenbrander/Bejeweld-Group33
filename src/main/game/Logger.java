@@ -16,28 +16,28 @@ import java.util.Date;
  */
 public final class Logger {
 
-  private static final Object SYNC = new Object();
+	private static final Object SYNC = new Object();
 	private static final String PATH = "logfile.txt"; //static path for now
 	private static boolean logInfo = true; //TODO: config options in GUI
 	private static boolean logWarning = true;
-	
+
 	private static PrintWriter out;
 	static {
-	  try {
-	    out = new PrintWriter(new BufferedWriter(new FileWriter(PATH, true)));
-	  }
-	  catch (IOException e) {
-	    e.printStackTrace();
-	  }
+		try {
+			out = new PrintWriter(new BufferedWriter(new FileWriter(PATH, true)));
+		}
+		catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	/**
 	 * This is a utility class, we don't want it to be instantiated.
 	 */
 	private Logger() {
-	  throw new AssertionError("Instantiating utility class...");
+		throw new AssertionError("Instantiating utility class...");
 	}
-	
+
 	/**
 	 * Sets the PrintWriter-object that this class uses to write away to the files.
 	 * This method is purely used for testing purposes.
@@ -45,9 +45,9 @@ public final class Logger {
 	 * @param print PrintWriter object.
 	 */
 	public static void setWriter(PrintWriter print) {
-	  out = print;
+		out = print;
 	}
-	
+
 	/**
 	 * Returns the PrintWriter-object that this class uses to write away to the files.
 	 * This method is also purely used for testing purposes.
@@ -55,9 +55,9 @@ public final class Logger {
 	 * @return PrintWriter object.
 	 */
 	public static PrintWriter getWriter() {
-	  return out;
+		return out;
 	}
-	
+
 	/**
 	 * Allows the level of messages to be logged to be changed.
 	 * <br><br>
@@ -70,21 +70,21 @@ public final class Logger {
 	 * 
 	 */
 	public static void setLogLevel(int level) {
-	  switch (level) {
-	  case 0:
-	    logInfo = false;
-	    logWarning = false;
-	    break;
-	  case 1:
-	    logInfo = false;
-	    logWarning = true;
-	    break;
-	  default:
-	    logInfo = true;
-	    logWarning = true;
-	  }
+		switch (level) {
+		case 0:
+			logInfo = false;
+			logWarning = false;
+			break;
+		case 1:
+			logInfo = false;
+			logWarning = true;
+			break;
+		default:
+			logInfo = true;
+			logWarning = true;
+		}
 	}
-	
+
 	/**
 	 * Logs all info and higher to a log file.
 	 * @param text The text to be written.
@@ -94,7 +94,7 @@ public final class Logger {
 			writeLog("[INFO]", text);
 		}
 	}
-	
+
 	/**
 	 * Logs all warnings and higher to a log file.
 	 * @param text The text to be written.
@@ -104,34 +104,34 @@ public final class Logger {
 			writeLog("[WARNING]", text);
 		}
 	}
-	
+
 	/**
 	 * Makes sure the desired message is written to a log file.
 	 * @param level The severity of the message.
 	 * @param text The text to be written.
 	 */
 	private static void writeLog(final String level, final String text) {
-	  synchronized (SYNC) {
-	    DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-	    out.println(level + " " + dateFormat.format(new Date()) + " " + text);
-	    out.flush();
-	  }
+		synchronized (SYNC) {
+			DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+			out.println(level + " " + dateFormat.format(new Date()) + " " + text);
+			out.flush();
+		}
 	}
-	
+
 	/**
 	 * @return If info logs are written to a file.
 	 */
 	public static boolean getLogInfo() {
 		return logInfo;
 	}
-	
+
 	/**
 	 * @return If warning logs are written to a file.
 	 */
 	public static boolean getLogWarning() {
 		return logWarning;
 	}
-	
+
 	/**
 	 * Closes the PrintWriter.
 	 */

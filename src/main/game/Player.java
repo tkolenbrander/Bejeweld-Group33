@@ -69,7 +69,7 @@ public class Player implements Score {
 		if (obj == null) { 
 			throw new NullPointerException("Null Observer");
 		}
-		
+
 		synchronized (MUTEX) {
 			if (!observers.contains(obj)) {
 				observers.add((Observer) obj);
@@ -100,17 +100,17 @@ public class Player implements Score {
 			if (!changed) {
 				return;
 			}
-			
+
 			observersLocal = new ArrayList<>(this.observers);
 			this.changed = false;
 		}
-		
+
 		for (Observer obj : observersLocal) {
 			obj.update();
 		}
 
 	}
-	
+
 	/**
 	 * Gets the updated score from the player.
 	 */

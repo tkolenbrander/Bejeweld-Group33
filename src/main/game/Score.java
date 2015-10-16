@@ -11,24 +11,24 @@ public interface Score {
 	 * Registers an observer.
 	 * @param obj The observer
 	 */
-    public void register(Observer obj);
-    
-    /**
-     * Unregisters an observer.
-     * @param obj The observer.
-     */
-    public void unregister(Observer obj);
-    
-    /**
-     * Notifies all observers.
-     */
-    public void notifyObservers();
-    
-    /**
-     * Gets updates from the observed object.
-     * @param obj The observer.
-     * @return The update.
-     */
-    public Object getUpdate(Observer obj);
-	
+	void register(Observer obj);
+
+	/**
+	 * Unregisters an observer.
+	 * @param obj The observer.
+	 */
+	void unregister(Observer obj);
+
+	/**
+	 * Notifies all observers.
+	 */
+	void notifyObservers();
+
+	/**
+	 * Gets updates from the observed object.
+	 * @param obj The observer.
+	 * @return The update.
+	 */
+	Object getUpdate(Observer obj);
+
 }

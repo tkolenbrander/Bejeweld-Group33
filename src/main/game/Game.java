@@ -32,7 +32,7 @@ public class Game {
 		board = new Board();
 		inProgress = false;
 	}
-	
+
 	/**
 	 * Creates a new game object, with the given board and player.
 	 * This constructor is used for loading the game.
@@ -45,7 +45,7 @@ public class Game {
 		board = newBoard;
 		inProgress = false;
 	}
-	
+
 	/**
 	 * Returns the player.
 	 * @return The player
@@ -96,10 +96,15 @@ public class Game {
 		board.reset();
 		//reset any timers if there are any.
 	}
-	
+
+	/**
+	 * Swaps two gems.
+	 * @param one The first gem
+	 * @param two The second gem
+	 */
 	public void swap(Position one, Position two) {
-	  board.swap(one.getX(), one.getY(), two.getX(), two.getY());
-	  TimelineController.swap(one, two);
+		board.swap(one.getX(), one.getY(), two.getX(), two.getY());
+		TimelineController.swap(one, two);
 	}
 
 	/**
@@ -112,15 +117,14 @@ public class Game {
 	 * @param one Position on the board of one selected gem
 	 * @param two Position on the board of the other selected gem
 	 * @throws MoveNotValidException When the move is not allowed, because the cells 
-	 * are not adjacent or because the move does not create a chain.
-	 * @return A list, containing several lists of changes, in order of how they should
+	 * 		are not adjacent or because the move does not create a chain.
 	 * be executed. 
 	 */
 	public void makeMove(Position one, Position two) 
-	    throws MoveNotValidException {
-	  List<List<Change<Position>>> changes = new ArrayList<List<Change<Position>>>();
-	  TimelineController.clearSwapList();
-	  if (moveAllowed(one, two)) {
+			throws MoveNotValidException {
+		List<List<Change<Position>>> changes = new ArrayList<List<Change<Position>>>();
+		TimelineController.clearSwapList();
+		if (moveAllowed(one, two)) {
 			swap(one, two);
 			if (board.hasChain()) { // check if the board has any chains
 				int bonus = 0;
@@ -139,46 +143,46 @@ public class Game {
 				TimelineController.setList(changes);
 				throw new MoveNotValidException("Move doesn't make a chain");
 			}
-			
+
 			isGameOver();
 		}
 		TimelineController.setList(changes);
 	}
-	
+
 	/**
-   * Checks if the move you want to make is allowed, i.e. 
-   * if the game is in progress and if the two cells are indeed adjacent.
-   * 
+	 * Checks if the move you want to make is allowed, i.e. 
+	 * if the game is in progress and if the two cells are indeed adjacent.
+	 * 
 	 * @param one Position on the board of one selected gem
-   * @param two Position on the board of the other selected gem
+	 * @param two Position on the board of the other selected gem
 	 * @return if the move is allowed
 	 * @throws MoveNotValidException When the move is not allowed, because the cells 
-   * are not adjacent.
+	 * are not adjacent.
 	 */
 	public boolean moveAllowed(Position one, Position two) throws MoveNotValidException {
-	  if (inProgress) {
-      Logger.logInfo("Attempting to swap gem at (" + one.getX() + "," + one.getY() + ") "
-          + "with (" + two.getX() + "," + two.getY() + ")");
-      if (one.isAdjacentTo(two)) {
-        return true;
-      }
-      else {
-        throw new MoveNotValidException("Cells not adjacent");
-      }
-	  }
-	  return false;
+		if (inProgress) {
+			Logger.logInfo("Attempting to swap gem at (" + one.getX() + "," + one.getY() + ") "
+					+ "with (" + two.getX() + "," + two.getY() + ")");
+			if (one.isAdjacentTo(two)) {
+				return true;
+			}
+			else {
+				throw new MoveNotValidException("Cells not adjacent");
+			}
+		}
+		return false;
 	}
-	
+
 	/**
 	 * Checks if the game is over. A game is over when there are no more moves left.
 	 * @return if the game is over.
 	 */
 	public boolean isGameOver() {
-	  if (!(board.checkMoves())) {
-      Logger.logInfo("Game over! Score was " + player.getScore());
-      stop();
-      return true;
-    }
-	  return false;
+		if (!(board.checkMoves())) {
+			Logger.logInfo("Game over! Score was " + player.getScore());
+			stop();
+			return true;
+		}
+		return false;
 	}
 }

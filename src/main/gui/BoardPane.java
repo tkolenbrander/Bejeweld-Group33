@@ -1,13 +1,6 @@
 package main.gui;
 
-import java.util.ArrayList;
-
-import javafx.animation.KeyFrame;
-import javafx.animation.KeyValue;
 import javafx.animation.SequentialTransition;
-import javafx.animation.Timeline;
-import javafx.animation.Animation.Status;
-
 import main.exceptions.MoveNotValidException;
 import main.game.Logger;
 import main.board.Board;
@@ -17,12 +10,9 @@ import main.board.Position;
 
 import javafx.event.EventHandler;
 import javafx.event.ActionEvent;
-import javafx.scene.Node;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
 import javafx.scene.input.MouseEvent;
-import javafx.util.Duration;
 
 /**
  * Class that creates the board and passes it to the GUI.
@@ -60,22 +50,22 @@ public class BoardPane {
 	 * True if a gem is selected.
 	 */
 	private boolean selected = false;
-	
+
 	/**
 	 * Contains the animations.
 	 */
 	private TimelineController controller;
-	
+
 	/**
 	 * Width and height of a pixel.
 	 */
 	private static final int SPRITE_SIZE = 65;
-	
+
 	/**
 	 * True if an animation is playing, otherwise false.
 	 */
 	private boolean animating = false;
-	
+
 	/**
 	 * Creates a new BoardPane.
 	 */
@@ -85,13 +75,13 @@ public class BoardPane {
 		controller = new TimelineController();
 		initBoard();		
 	}
-	
+
 	/**
 	 * Returns borderPane.
 	 * @return borderPane from the BoardPane.
 	 */
 	public BorderPane getPane() {
-	  return borderPane;
+		return borderPane;
 	}
 
 	/**
@@ -115,7 +105,7 @@ public class BoardPane {
 						int x = (int) me.getSceneX() / SPRITE_SIZE;
 						int y = (int) (me.getSceneY() - 55) / SPRITE_SIZE;
 						if (!animating) {
-						  clicked(x, y, image);
+							clicked(x, y, image);
 						}
 					}
 				});
@@ -131,17 +121,21 @@ public class BoardPane {
 	public BorderPane getBoardPane() {
 		return borderPane;
 	}
-	
+
 	/**
 	 * Returns the imageviews.
 	 * @return the imageviews.
 	 */
 	public ImageView[][] getImageViews() {
-	  return imageviews;
+		return imageviews;
 	}
-	
+
+	/**
+	 * Sets the imageviews.
+	 * @param views The views
+	 */
 	public void setImageViews(ImageView[][] views) {
-	  imageviews = views;
+		imageviews = views;
 	}
 
 	/**
@@ -151,6 +145,8 @@ public class BoardPane {
 	 *            The x coordinate of the gem.
 	 * @param y
 	 *            The y coordinate of the gem.
+	 * @param view
+	 * 			  The imageview
 	 */
 	public void clicked(int x, int y, ImageView view) {
 		Board board = GUI.getGame().getBoard();
@@ -164,10 +160,10 @@ public class BoardPane {
 			makeMove(new Position(x, y), selectedPosition);
 			SequentialTransition t = controller.getTimeline();
 			t.setOnFinished(new EventHandler<ActionEvent>() {
-			  @Override
-			  public void handle(ActionEvent e) {
-			    animating = false;
-			  }
+				@Override
+				public void handle(ActionEvent e) {
+					animating = false;
+				}
 			});
 			animating = true;
 			t.play();
@@ -218,23 +214,27 @@ public class BoardPane {
 	public boolean makeMove(Position p1, Position p2) {
 		boolean result = false;
 		try {
-		  GUI.getGame().makeMove(p1, p2);			
-		  result = true;
-		  GUI.getgui().setError("");
-		  GUI.getgui().setScore(GUI.getGame().getPlayer().getScore());
+			GUI.getGame().makeMove(p1, p2);			
+			result = true;
+			GUI.getgui().setError("");
+			GUI.getgui().setScore(GUI.getGame().getPlayer().getScore());
 		} catch (MoveNotValidException e) {
-		    GUI.getgui().setError(e.getMessage());
+			GUI.getgui().setError(e.getMessage());
 		}
 		if (!GUI.getGame().inProgress()) {
-		  // TODO: Game over
-		  GUI.getgui().setError("Game over!");
-		  Logger.close();
+			// TODO: Game over
+			GUI.getgui().setError("Game over!");
+			Logger.close();
 		}
 		return result;
 	}
-	
+
+	/**
+	 * Plays the swap animation.
+	 * @param swapAnim The animation
+	 */
 	public void playSwapAnim(SequentialTransition swapAnim) {
-	  swapAnim.play();
+		swapAnim.play();
 	}
 
 	/**
