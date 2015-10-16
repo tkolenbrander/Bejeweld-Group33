@@ -165,6 +165,7 @@ public class BoardPane {
 					animating = false;
 				}
 			});
+			
 			animating = true;
 			t.play();
 			displayNormal(selectedView, selectedGem);

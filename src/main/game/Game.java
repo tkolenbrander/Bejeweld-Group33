@@ -79,7 +79,6 @@ public class Game {
 	}
 
 	/**
-	 * Returns true if the game is in progress.
 	 * @return True if the game is in progress.
 	 */
 	public boolean inProgress() {
