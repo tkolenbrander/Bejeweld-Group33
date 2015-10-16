@@ -11,7 +11,14 @@ import javafx.scene.image.Image;
  */
 public abstract class Gem {
 	
+	/**
+	 * The GemType of the gem.
+	 */
 	protected GemType type;
+	
+	/**
+	 * The current DestroyBehaviour of the gem.
+	 */
 	protected DestroyBehaviour onDestroy;
 	
 	/**

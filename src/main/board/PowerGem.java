@@ -9,6 +9,10 @@ import javafx.scene.image.Image;
  */
 public class PowerGem extends Gem{
 
+	/**
+	 * Creates a PowerGem object with GemType t.
+	 * @param t The GemType of this PowerGem object.
+	 */
 	public PowerGem(GemType t) {
 		super(t);
 		onDestroy = new PowerDestroyBehaviour();

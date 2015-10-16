@@ -15,9 +15,20 @@ public enum Direction {
   SOUTH (0, 1), 
   WEST (-1, 0);
   
+  /**
+   * List of all directions.
+   */
   public static final List<Direction> DIRECTIONS = 
       Collections.unmodifiableList(Arrays.asList(values()));
+  
+  /**
+   * Delta X for the direction.
+   */
   private final int dx;
+  
+  /**
+   * Delta Y for the direction.
+   */
   private final int dy;
   
   /**

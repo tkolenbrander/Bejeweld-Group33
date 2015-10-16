@@ -11,7 +11,14 @@ import java.util.List;
  */
 public class Position {
 	
+	/**
+	 * X coordinate of the position.
+	 */
 	private int x;
+	
+	/**
+	 * Y coordinate of the position.
+	 */
 	private int y;
 	
 	/**

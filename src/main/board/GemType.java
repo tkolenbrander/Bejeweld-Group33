@@ -23,10 +23,21 @@ public enum GemType {
 	PURPLE,
 	ORANGE;
 	
+	/**
+	 * List of all GemTypes.
+	 */
 	private static final List<GemType> GEMTYPES = 
 	    Collections.unmodifiableList(Arrays.asList(values()));
+	
+	/**
+	 * Amount of different GemTypes.
+	 */
 	private static final int SIZE = GEMTYPES.size();
-	private static Random random = new Random(); //TODO: allow for seed.
+	
+	/**
+	 * A random number to decide what type to select.
+	 */
+	private static Random random = new Random();
 	
 	/**
 	 * Chooses a random gem type and returns it.
