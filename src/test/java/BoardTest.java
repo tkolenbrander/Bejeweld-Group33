@@ -98,32 +98,7 @@ public class BoardTest {
 		assertTrue(cell.equals(board.getCells()[0][0]));
 	}
 
-	/**
-	 * tests the isAdjacent method with a true outcome.
-	 */
-	@Test
-	public void isAdjacentTest_True() {
-		assertTrue(board.isAdjacent(0, 0, 0, 1));
 
-	}
-
-	/**
-	 * tests the isAdjacent method with a false outcome, where the points are on the same height.
-	 */
-	@Test
-	public void isAdjacentTest_False_SameHeight() {
-		assertFalse(board.isAdjacent(0, 0, 0, 2));
-
-	}
-
-	/**
-	 * tests the isAdjacent method with a false outcome, where the points are diagonally positioned.
-	 */
-	@Test
-	public void isAdjacentTest_False_Diagonal() {
-		assertFalse(board.isAdjacent(0, 0, 1, 1));
-
-	}
 	
 	/**
 	 * Tests the isTripletAt method with a false outcome.

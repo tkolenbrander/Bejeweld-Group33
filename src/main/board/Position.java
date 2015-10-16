@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Class to represent a position on a board.
+ * Class to represent a position in a 2D grid.
  * 
  * @author Ruben
  *
@@ -33,6 +33,19 @@ public class Position {
 	}
 	
 	/**
+	 * Returns the difference in x-value of two Positions.
+	 * Can be positive or negative.
+	 * 
+	 * Usage: from.deltaX(to);
+	 * 
+	 * @param to Position
+	 * @return difference in x-value between this and to.
+	 */
+	public int deltaX(Position to) {
+	  return to.x - this.x;
+	}
+	
+	/**
 	 * Returns y-coordinate of this Position.
 	 * @return y-coordinate of this Position.
 	 */
@@ -41,29 +54,18 @@ public class Position {
 	}
 	
 	/**
-	 * Gets the surrounding 8 positions of this position.
-	 * Positions off-board and this position itself are excluded.
-	 * The positions are ordered as follows:
-	 * (x-1, y-1), (x-1, y), (x-1, y+1),
-	 * (x, y-1), (x, y+1),
-	 * (x+1, y-1), (x+1, y), (x+1, y+1)
-	 * @return A list of the 8 positions surrounding this position.
-	 */
-	public List<Position> getSurrounding(){
-		ArrayList<Position> positions = new ArrayList<Position>();
-		for (int x = -1; x <= 1; x++){
-			for (int y = -1; y <= 1; y++){
-				if ((x != 0 || y != 0) &&
-						this.x+x >= 0 && this.x+x < Board.BOARDSIZE &&
-						this.y+y >= 0 && this.y+y < Board.BOARDSIZE){
-					Position pos = new Position(this.x+x, this.y+y);
-					positions.add(pos);
-				}
-			}
-		}
-		return positions;
-	}
-	
+   * Returns the difference in y-value of two Positions.
+   * Can be positive or negative.
+   * 
+   * Usage: from.deltaY(to);
+   * 
+   * @param to Position
+   * @return difference in y-value between this and to.
+   */
+  public int deltaY(Position to) {
+    return to.y - this.y;
+  }
+  
 	/**
 	 * Checks if two Positions are equal.
 	 * @returns true iff they are.
@@ -76,14 +78,56 @@ public class Position {
 		}
 		return false;
 	}
-
-	/**
-	 * Returns a String representing this position in the format used for saving the game.
-	 * @return a String with the x and y coordinate, separated with a single space.
-	 */
-	@Override
-	public String toString(){
-		return this.x + " " + this.y;
-	}
 	
+	 /**
+   * Checks if two Positions, are adjacent.
+   * @param other The position to be checked against.
+   * @return returns true iff the two Positions are adjacent
+   */
+  public boolean isAdjacentTo(Position other) {
+    if ((this.x - other.x == 1 || this.x - other.x == -1) && this.y == other.y) {
+      return true;
+    }
+    if ((this.y - other.y == 1 || this.y - other.y == -1) && this.x == other.x) {
+      return true;
+    }
+    return false;
+  }
+  
+  public boolean isInBoard() {
+    return this.x >= 0 && this.x < Board.BOARDSIZE && this.y >= 0 && this.y < Board.BOARDSIZE;
+  }
+  
+  /**
+   * Gets the surrounding 8 positions of this position.
+   * Positions off-board and this position itself are excluded.
+   * The positions are ordered as follows:
+   * (x-1, y-1), (x-1, y), (x-1, y+1),
+   * (x, y-1), (x, y+1),
+   * (x+1, y-1), (x+1, y), (x+1, y+1)
+   * @return A list of the 8 positions surrounding this position.
+   */
+  public List<Position> getSurrounding() {
+    ArrayList<Position> positions = new ArrayList<Position>();
+    for (int x = -1; x <= 1; x++) {
+      for (int y = -1; y <= 1; y++) {
+        if ((x != 0 || y != 0) &&
+            this.x + x >= 0 && this.x + x < Board.BOARDSIZE &&
+            this.y + y >= 0 && this.y + y < Board.BOARDSIZE) {
+          Position pos = new Position(this.x + x, this.y + y);
+          positions.add(pos);
+        }
+      }
+    }
+    return positions;
+  }
+	
+  /**
+   * Returns a String representing this position in the format used for saving the game.
+   * @return a String with the x and y coordinate, separated with a single space.
+   */
+  @Override
+  public String toString(){
+    return this.x + " " + this.y;
+  }
 }

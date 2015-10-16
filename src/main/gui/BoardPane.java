@@ -1,19 +1,28 @@
 package main.gui;
 
+import java.util.ArrayList;
+
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.SequentialTransition;
+import javafx.animation.Timeline;
+import javafx.animation.Animation.Status;
+
 import main.exceptions.MoveNotValidException;
-
 import main.game.Logger;
-
 import main.board.Board;
 import main.board.Cell;
 import main.board.Gem;
 import main.board.Position;
 
 import javafx.event.EventHandler;
+import javafx.event.ActionEvent;
 import javafx.scene.Node;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.input.MouseEvent;
+import javafx.util.Duration;
 
 /**
  * Class that creates the board and passes it to the GUI.
@@ -25,7 +34,7 @@ public class BoardPane {
 	/**
 	 * The main pane of this class.
 	 */
-	private GridPane gridPane;
+	private BorderPane borderPane;
 
 	/**
 	 * Contains all the imageviews of the sprites.
@@ -53,12 +62,36 @@ public class BoardPane {
 	private boolean selected = false;
 	
 	/**
+	 * Contains the animations.
+	 */
+	private TimelineController controller;
+	
+	/**
+	 * Width and height of a pixel.
+	 */
+	private static final int SPRITE_SIZE = 65;
+	
+	/**
+	 * True if an animation is playing, otherwise false.
+	 */
+	private boolean animating = false;
+	
+	/**
 	 * Creates a new BoardPane.
 	 */
 	public BoardPane() {
-		gridPane = new GridPane();
+		borderPane = new BorderPane();
 		imageviews = new ImageView[Board.BOARDSIZE][Board.BOARDSIZE];
+		controller = new TimelineController();
 		initBoard();		
+	}
+	
+	/**
+	 * Returns borderPane.
+	 * @return borderPane from the BoardPane.
+	 */
+	public BorderPane getPane() {
+	  return borderPane;
 	}
 
 	/**
@@ -74,16 +107,20 @@ public class BoardPane {
 
 				ImageView image = new ImageView();
 				displayNormal(image, gem);
-
+				image.setX(x * SPRITE_SIZE);
+				image.setY(y * SPRITE_SIZE);
 				image.setOnMousePressed(new EventHandler<MouseEvent>() {
 					public void handle(MouseEvent me) {
-						int y = GridPane.getRowIndex((Node) me.getSource());
-						int x = GridPane.getColumnIndex((Node) me.getSource());
-						clicked(x, y);
+						System.out.println(me.getSceneX() + ", " + (me.getSceneY() - 55));
+						int x = (int) me.getSceneX() / SPRITE_SIZE;
+						int y = (int) (me.getSceneY() - 55) / SPRITE_SIZE;
+						if (!animating) {
+						  clicked(x, y, image);
+						}
 					}
 				});
 				imageviews[x][y] = image;
-				gridPane.add(image, x, y);
+				borderPane.getChildren().add(image);
 			}
 		}
 	}
@@ -91,8 +128,20 @@ public class BoardPane {
 	/**
 	 * @return The boardPane
 	 */
-	public GridPane getBoardPane() {
-		return gridPane;
+	public BorderPane getBoardPane() {
+		return borderPane;
+	}
+	
+	/**
+	 * Returns the imageviews.
+	 * @return the imageviews.
+	 */
+	public ImageView[][] getImageViews() {
+	  return imageviews;
+	}
+	
+	public void setImageViews(ImageView[][] views) {
+	  imageviews = views;
 	}
 
 	/**
@@ -103,16 +152,25 @@ public class BoardPane {
 	 * @param y
 	 *            The y coordinate of the gem.
 	 */
-	public void clicked(int x, int y) {
+	public void clicked(int x, int y, ImageView view) {
 		Board board = GUI.getGame().getBoard();
 		Cell[][] cells = board.getCells();
 		Gem gem = cells[y][x].getGem();
 
-		ImageView view = imageviews[x][y];
+		//ImageView view = imageviews[x][y];
 		System.out.println("Selected: " + gem.getType());
 
 		if (selected) {			
 			makeMove(new Position(x, y), selectedPosition);
+			SequentialTransition t = controller.getTimeline();
+			t.setOnFinished(new EventHandler<ActionEvent>() {
+			  @Override
+			  public void handle(ActionEvent e) {
+			    animating = false;
+			  }
+			});
+			animating = true;
+			t.play();
 			displayNormal(selectedView, selectedGem);
 			selected = false;			
 		} else {
@@ -149,7 +207,7 @@ public class BoardPane {
 	}
 
 	/**
-	 * Tries to make a move between two positions. True if succesful.
+	 * Tries to make a move between two positions. True if successful.
 	 * 
 	 * @param p1
 	 *            The first position.
@@ -159,28 +217,32 @@ public class BoardPane {
 	 */
 	public boolean makeMove(Position p1, Position p2) {
 		boolean result = false;
-		
 		try {
-			GUI.getGame().makeMove(p1.getX(), p1.getY(), p2.getX(), p2.getY());			
-			result = true;
-			GUI.getgui().setError("");
-			refresh();
+		  GUI.getGame().makeMove(p1, p2);			
+		  result = true;
+		  GUI.getgui().setError("");
+		  GUI.getgui().setScore(GUI.getGame().getPlayer().getScore());
 		} catch (MoveNotValidException e) {
-			GUI.getgui().setError(e.getMessage());
+		    GUI.getgui().setError(e.getMessage());
 		}
 		if (!GUI.getGame().inProgress()) {
-			// TODO: Game over
+		  // TODO: Game over
 		  GUI.getgui().setError("Game over!");
-			Logger.close();
+		  Logger.close();
 		}
 		return result;
+	}
+	
+	public void playSwapAnim(SequentialTransition swapAnim) {
+	  swapAnim.play();
 	}
 
 	/**
 	 * Updates the displayed board with the current board.
 	 */
 	public void refresh() {
-		gridPane.getChildren().removeAll(gridPane.getChildren());
+		borderPane.getChildren().removeAll(borderPane.getChildren());
+		GUI.getgui().setScore(GUI.getGame().getPlayer().getScore());
 		initBoard();
 	}
 }

@@ -31,29 +31,39 @@ public class GUI extends Application implements Observer {
 	 */
 	private static final int WINDOW_X = 520;
 	private static final int WINDOW_Y = 620;
-
-	private BoardPane boardPane;
+	
 	private static Game game;
+	private static BoardPane boardPane;
 	private static Label scoreLabel;
 	private static Label errorLabel;
 	private static GUI gui;
+	private static HBox hbox;
+	private static BorderPane borderPane;
 
 	/**
-	 * returns the game.
-	 * @return game
+	 * Returns the game.
+	 * @return Game
 	 */
 	protected static Game getGame() {
 		return game;
 	}
 
 	/**
-	 * returns the gui.
+	 * Returns the GUI.
 	 * @return gui
 	 */
 	protected static GUI getgui() {
 		return gui;
 	}
-
+	
+	/**
+	 * Returns the boardpane.
+	 * @return Boardpane.
+	 */
+	protected static BoardPane getBoardPane() {
+	  return boardPane;
+	}
+	
 	/**
 	 * Main class to launch the application.
 	 * 
@@ -79,7 +89,8 @@ public class GUI extends Application implements Observer {
 		FXMLLoader loader = new FXMLLoader();
 		loader.setLocation(GUI.class.getResource("/assets/config/gui.fxml"));
 
-		BorderPane borderPane = new BorderPane();
+		borderPane = new BorderPane();
+
 		Scene scene = new Scene(borderPane, WINDOW_X, WINDOW_Y);	
 
 		scoreLabel = new Label("Score: ");
@@ -88,7 +99,7 @@ public class GUI extends Application implements Observer {
 		errorLabel = new Label("");
 		errorLabel.setFont(new Font("Arial", 22));
 		boardPane = new BoardPane();
-		HBox hbox = addScorePanel();
+		hbox = addScorePanel();
 		HBox errorPanel = addErrorPanel();
 		borderPane.setTop(hbox);
 		borderPane.setCenter(boardPane.getBoardPane());		
@@ -102,6 +113,11 @@ public class GUI extends Application implements Observer {
 		stage.show();
 
 		Logger.logInfo("Game succesfully initialized");
+	}
+	
+	public void boxToFront(){
+		borderPane.getChildren().remove(hbox);
+		borderPane.setTop(hbox);
 	}
 
 	/**
@@ -187,7 +203,7 @@ public class GUI extends Application implements Observer {
 	 * Sets a number for the score label.
 	 * @param score number to be displayed
 	 */
-	private static void setScore(final int score) {
+	protected static void setScore(final int score) {
 		String s = "Score: " + score;
 		scoreLabel.setText(s);
 	}
