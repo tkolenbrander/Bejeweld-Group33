@@ -99,7 +99,9 @@ public class BoardPane {
 						System.out.println(me.getSceneX() + ", " + (me.getSceneY() - 55));
 						int x = (int) me.getSceneX() / 65;
 						int y = (int) (me.getSceneY() - 55) / 65;
-						clicked(x, y, image);
+						if (!animating) {
+						  clicked(x, y, image);
+						}
 					}
 				});
 				imageviews[x][y] = image;
@@ -145,9 +147,14 @@ public class BoardPane {
 
 		if (selected) {			
 			makeMove(new Position(x, y), selectedPosition);
-			//Timeline t = controller.getTimeline();
-			//t.play();
 			SequentialTransition t = controller.getTimeline();
+			t.setOnFinished(new EventHandler<ActionEvent>() {
+			  @Override
+			  public void handle(ActionEvent e) {
+			    animating = false;
+			  }
+			});
+			animating = true;
 			t.play();
 			displayNormal(selectedView, selectedGem);
 			selected = false;			
@@ -195,20 +202,19 @@ public class BoardPane {
 	 */
 	public boolean makeMove(Position p1, Position p2) {
 		boolean result = false;
-		
 		try {
-			GUI.getGame().makeMove(p1, p2);			
-			result = true;
-			GUI.getgui().setError("");
-			GUI.getgui().setScore(GUI.getGame().getPlayer().getScore());
-			//refresh();
+		  GUI.getGame().makeMove(p1, p2);			
+		  result = true;
+		  GUI.getgui().setError("");
+		  GUI.getgui().setScore(GUI.getGame().getPlayer().getScore());
+		  //refresh();
 		} catch (MoveNotValidException e) {
-			GUI.getgui().setError(e.getMessage());
+		  GUI.getgui().setError(e.getMessage());
 		}
 		if (!GUI.getGame().inProgress()) {
-			// TODO: Game over
+		  // TODO: Game over
 		  GUI.getgui().setError("Game over!");
-			Logger.close();
+		  Logger.close();
 		}
 		return result;
 	}
