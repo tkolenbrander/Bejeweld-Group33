@@ -14,6 +14,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.util.Duration;
 import board.Cell;
 import board.Change;
+import board.Create;
 import board.Position;
 
 public class TimelineController {
@@ -72,12 +73,11 @@ public class TimelineController {
 		KeyValue[] keyValues = new KeyValue[changes.size()];
 		ImageView[][] imageViews = GUI.getBoardPane().getImageViews();
 		for (int i = 0; i < changes.size(); i++) {
-			Position from =  changes.get(i).getFrom();
+			Position from = changes.get(i).getFrom();
 			Position to = changes.get(i).getTo();
-			int xDiff = from.deltaX(to);
-			int yDiff = from.deltaY(to);			
 			
-			if (from.isInBoard() && to.isInBoard()) { //means this comes from falldown() or swap()
+			if (from != null && to.isInBoard()) { //means this comes from falldown() or swap()
+			  int xDiff = from.deltaX(to);		
 			  ImageView ivFrom = imageViews[from.getX()][from.getY()];
 			  if (xDiff == 0) {
 			    keyValues[i] = new KeyValue(ivFrom.yProperty(), to.getY() * 65, Interpolator.LINEAR);
@@ -88,8 +88,9 @@ public class TimelineController {
 			  imageViews[to.getX()][to.getY()] = imageViews[from.getX()][from.getY()];
 			  imageViews[from.getX()][from.getY()] = new ImageView();
 			}
-			else if (!from.isInBoard()) { //from is out of bounds, to is in bounds, comes from fillEmptyCells()
-        ImageView newImage = new ImageView(GUI.getGame().getBoard().getCells()[to.getY()][to.getX()].getGem().getImage());
+			else if (changes.get(i) instanceof Create<?>) { //from is out of bounds, to is in bounds, comes from fillEmptyCells()
+				Create<Position> create = (Create<Position>) changes.get(i);
+        ImageView newImage = new ImageView(create.getGem().getImage());
         imageViews[to.getX()][to.getY()] = newImage;
         newImage.setX(to.getX()*65);
         newImage.setY(-65);

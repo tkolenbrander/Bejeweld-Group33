@@ -227,8 +227,9 @@ public class Board {
 		for (int y = 0; y < BOARDSIZE; y++) {
 			for (int x = 0; x < BOARDSIZE; x++) {
 				if (board[y][x] == null) {
-					board[y][x] = new Cell(new Gem(GemType.randomGem()));
-					changes.add(new Change<Position>(newPos, new Position(x, y)));
+					Gem g = new Gem(GemType.randomGem());
+					board[y][x] = new Cell(g);
+					changes.add(new Create<Position>(new Position(x, y), g));
 				}
 			}
 		}
