@@ -56,7 +56,7 @@ public class TimelineController {
 
 		return sequence;
 	}
-	
+
 	/**
 	 * Generates Timelines from the changes.
 	 * @return The different Timelines with animations.
@@ -64,7 +64,7 @@ public class TimelineController {
 	public Timeline[] generateTimelines() {
 		Timeline[] timelines = new Timeline[list.size()];
 		KeyFrame[] keyFrames = new KeyFrame[list.size()];
-		
+
 		for (int i = 0; i < list.size(); i++) {
 			List<Change<Position>> changes = list.get(i);
 			KeyValue[] keyValues = generateKeyValues(changes);
@@ -74,7 +74,7 @@ public class TimelineController {
 			t.getKeyFrames().add(keyFrame);
 			timelines[i] = t;
 		}
-		
+
 		return timelines;
 	}
 
@@ -102,17 +102,24 @@ public class TimelineController {
 				keyValues[i] = removeGem(imageViews, change);				
 			}			
 		}
-		
+
 		return keyValues;
 	}
-	
+
+	/**
+	 * Animation for removing a gem.
+	 * @param imageViews The imageviews
+	 * @param change The position of the change
+	 * @return The keyvalue for the animation
+	 */
 	public KeyValue removeGem(ImageView[][] imageViews, Change<Position> change) {
 		Position from = change.getFrom();
 		ImageView ivFrom = imageViews[from.getX()][from.getY()];
 		imageViews[from.getX()][from.getY()] = new ImageView();
+
 		return new KeyValue(ivFrom.opacityProperty(), 0, Interpolator.LINEAR);
 	}
-	
+
 	/**
 	 * Handles the animation when a gem should fall down.
 	 * @param imageViews All imageviews of the board
@@ -122,7 +129,7 @@ public class TimelineController {
 	public KeyValue fallDownGem(ImageView[][] imageViews, Change<Position> change) {
 		Position from = change.getFrom();
 		Position to = change.getTo();
-		
+
 		int xDiff = from.deltaX(to);		
 		ImageView ivFrom = imageViews[from.getX()][from.getY()];
 		imageViews[to.getX()][to.getY()] = imageViews[from.getX()][from.getY()];
@@ -134,7 +141,7 @@ public class TimelineController {
 			return new KeyValue(ivFrom.xProperty(), to.getX() * 65, Interpolator.LINEAR);
 		}		
 	}
-	
+
 	/**
 	 * This method generates a new gem and its animation.
 	 * @param imageViews All imageviews of the board
@@ -144,22 +151,22 @@ public class TimelineController {
 	public KeyValue generateGem(ImageView[][] imageViews, Change<Position> change) {
 		Position from = change.getFrom();
 		Position to = change.getTo();
-		
+
 		Create<Position> create = (Create<Position>) change;
 		ImageView newImage = new ImageView(create.getGem().getImage());
 		imageViews[to.getX()][to.getY()] = newImage;
 		newImage.setX(to.getX() * 65);
 		newImage.setY(-65);
 		addMousePressed(newImage);		
-		
+
 		GUI.getgui().boxToFront();
 		newImage.toBack();      
 		GUI.getBoardPane().getPane().getChildren().add(newImage);
 		ImageView ivTo = imageViews[to.getX()][to.getY()];
-		
+
 		return new KeyValue(ivTo.yProperty(), to.getY() * 65, Interpolator.LINEAR);
 	}
-	
+
 	/**
 	 * Adds an EventHandler to an ImageView.
 	 * @param newImage The ImageView to add the EventHandler to.
@@ -189,12 +196,12 @@ public class TimelineController {
 		t.getKeyFrames().add(keyFrame);
 		sequence.getChildren().add(t);
 		swapList.add(t);
-		
+
 		ImageView temp = imageViews[one.getX()][one.getY()];
 		imageViews[one.getX()][one.getY()] = imageViews[two.getX()][two.getY()];
 		imageViews[two.getX()][two.getY()] = temp;
 	}
-	
+
 	/**
 	 * Generates the keyvalues of a swap animation.
 	 * @param imageViews All imageviews of the board
@@ -204,7 +211,7 @@ public class TimelineController {
 	 */
 	public static KeyValue[] swapKeyValues(ImageView[][] imageViews, Position one, Position two) {
 		KeyValue[] keyValues = new KeyValue[2];
-		
+
 		int xDiff = one.deltaX(two);
 		ImageView ivOne = imageViews[one.getX()][one.getY()];
 		ImageView ivTwo = imageViews[two.getX()][two.getY()];
@@ -217,7 +224,7 @@ public class TimelineController {
 			keyValues[0] = new KeyValue(ivOne.xProperty(), two.getX() * 65, Interpolator.LINEAR);
 			keyValues[1] = new KeyValue(ivTwo.xProperty(), one.getX() * 65, Interpolator.LINEAR);
 		}
-		
+
 		return keyValues;
 	}
 
