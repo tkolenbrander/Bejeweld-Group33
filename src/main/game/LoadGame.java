@@ -15,8 +15,8 @@ import main.board.RegularGem;
 
 /**
  * Utility class for loading the game from a saved game.
+ * 
  * @author Ruben
- *
  */
 public final class LoadGame {
 
@@ -39,11 +39,13 @@ public final class LoadGame {
 		synchronized (SYNC) {
 			Cell[][] cells = new Cell[Board.BOARDSIZE][Board.BOARDSIZE];
 			Scanner in = null;
+			
 			try {
 				in = new Scanner(new FileReader(PATH));
 				Player player = new Player(in.nextInt());
 				int numOfPowerGems = in.nextInt();
 				List<Position> powerPos = new ArrayList<Position>();
+				
 				for (int i = 0; i < numOfPowerGems; i++) {
 					powerPos.add(new Position(in.nextInt(), in.nextInt()));
 				}
@@ -52,6 +54,7 @@ public final class LoadGame {
 					for (int x = 0; x < Board.BOARDSIZE; x++) {
 						GemType type = GemType.valueOf(in.next());
 						Position currPos = new Position(x, y);
+						
 						if (powerPos.contains(currPos)) {
 							cells[y][x] = new Cell(new PowerGem(type));
 						} else {
@@ -61,6 +64,7 @@ public final class LoadGame {
 				}
 				return new Game(new Board(cells), player);
 			}
+			
 			finally {
 				in.close();
 			}
