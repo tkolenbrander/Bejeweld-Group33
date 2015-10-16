@@ -64,24 +64,6 @@ public class Board {
 	}
 
 	/**
-	 * Checks if two cells, at locations (x1, y1) and (x2, y2), are adjacent.
-	 * @param x1 x-coordinate of cell 1
-	 * @param y1 y-coordinate of cell 1
-	 * @param x2 x-coordinate of cell 2
-	 * @param y2 y-coordinate of cell 2
-	 * @return returns true iff two cells are adjacent
-	 */
-	public boolean isAdjacent(int x1, int y1, int x2, int y2) {
-		if ((x1 - x2 == 1 || x1 - x2 == -1) && y1 == y2) {
-			return true;
-		}
-		if ((y1 - y2 == 1 || y1 - y2 == -1) && x1 == x2) {
-			return true;
-		}
-		return false;
-	}
-
-	/**
 	 * Sets a cell at location (x, y).
 	 * @param cell cell to be set
 	 * @param x x-coordinate of the cell
@@ -186,60 +168,85 @@ public class Board {
 	}
 
 	/**
-	 * Destroys all the gems that are in a chain.
+	 * Destroys all the gems that are in a chain and returns a list of the cells changed.
 	 * Creates a PowerGem when a chain of 4 or more is destroyed
+	 * 
+	 * @return A list of removed Positions
 	 */
-	public void removeChains() {
+	public List<Change<Position>> removeChains() {
 		List<List<Position>> chains = chainedCells();
+		List<Change<Position>> changes = new ArrayList<Change<Position>>();
 		for (List<Position> chain : chains) {
 			GemType type = null;
 			for (Position pos : chain) {
 				Cell cell = board[pos.getY()][pos.getX()];
 				if (cell != null){
 					type = cell.getGem().getType();
-					cell.getGem().destroy(board, pos);
+					List<Position> removed = cell.getGem().destroy(board, pos); // <--------------------------------------------------------------------------------- Gotta check this shit man
+					for (Position destroyed : removed) {
+					  changes.add(new Remove<Position>(destroyed));
+					}
+					changes.add(new Remove<Position>(pos));
 				}
 			}
-			if (chain.size() >= 4){
-				Position powerPos = chain.get((int)Math.random() * chain.size());
-				board[powerPos.getY()][powerPos.getX()] = new Cell(new PowerGem(type));
+			if (chain.size() >= 4) {
+				Position powerPos = chain.get((int) Math.random() * chain.size());
+				Gem powerGem = new PowerGem(type);
+				board[powerPos.getY()][powerPos.getX()] = new Cell(powerGem); //<--------------------------------------------------------------- This too
+				changes.add(new Create<Position>(powerPos, powerGem));
 			}
 		}
+		return changes;
 	}
 
 	/**
-	 * When an empty cell is detected, the rows above them will fall down into the empty cell.
+	 * When an empty cell is detected, the cells above them will fall down into the empty cell.
+	 * 
+	 * @return a list of Change-objects, where the From object is the first filled cell
+	 * above the empty cell.
 	 */
-	public void falldown() {
+	public List<Change<Position>> falldown() {
+	  List<Change<Position>> changes = new ArrayList<Change<Position>>();
 		for (int y = BOARDSIZE - 1; y >= 0; y--) {
 			for (int x = BOARDSIZE - 1; x >= 0; x--) {
 				if (board[y][x] == null) {
 					for (int d = 1; d <= y; d++) {
-						if (y != 0) {
-							if (board[y - d][x] != null) {
-								board[y][x] = board[y - d][x];
-								board[y - d][x] = null;
-								break;
-							}
+						if (y != 0 && board[y - d][x] != null) {
+							board[y][x] = board[y - d][x];
+							board[y - d][x] = null;
+							changes.add(
+							    new Change<Position>(new Position(x, y - d), new Position(x, y)));
+							break;
 						}
 					}
 				}  
 			}
 		}
+		return changes;
 	}
 
 	/**
 	 * Fills empty cells with new gems.
+	 * 
+	 * A new gem is represented in the returned list as a Change-object with the
+	 * From-position being (-1, -1)
+	 * 
+	 * @return a list of Change-objects where the From position is (-1, -1).
 	 */
-	public void fillEmptyCells() {
+	public List<Change<Position>> fillEmptyCells() {
+	  List<Change<Position>> changes = new ArrayList<Change<Position>>();
 		for (int y = 0; y < BOARDSIZE; y++) {
 			for (int x = 0; x < BOARDSIZE; x++) {
 				if (board[y][x] == null) {
-					board[y][x] = new Cell(new RegularGem(GemType.randomGem()));
+					Gem g = new RegularGem(GemType.randomGem());
+					board[y][x] = new Cell(g);
+					changes.add(new Create<Position>(new Position(x, y), g));
 				}
 			}
 		}
+		return changes;
 	}
+	
 	/**
 	 * Checks if the current board has any chains.
 	 * @return true iff the current board has at least one chain.
@@ -347,9 +354,12 @@ public class Board {
 	 * @param y2 y-coordinate of cell 2
 	 */
 	public void swap(int x1, int y1, int x2, int y2) {
+		List<Change<Position>> changes = new ArrayList<Change<Position>>();
 		Cell temp = board[y1][x1];
 		board[y1][x1] = board[y2][x2];
 		board[y2][x2] = temp;
+		changes.add(new Change<Position>(new Position(x2, y2), new Position(x1, y1)));
+		changes.add(new Change<Position>(new Position(x1, y1), new Position(x2, y2)));
 	}
 	
 	/**
