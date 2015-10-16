@@ -2,10 +2,9 @@ package tests;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import main.board.Position;
 
 import org.junit.Test;
-
-import board.Position;
 
 public class PositionTest {
 
