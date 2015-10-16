@@ -80,10 +80,10 @@ public class TimelineController {
 			if (from.isInBoard() && to.isInBoard()) { //means this comes from falldown() or swap()
 			  ImageView ivFrom = imageViews[from.getX()][from.getY()];
 			  if (xDiff == 0) {
-			    keyValues[i] = new KeyValue(ivFrom.yProperty(), yDiff * 65, Interpolator.LINEAR);
+			    keyValues[i] = new KeyValue(ivFrom.yProperty(), to.getY() * 65, Interpolator.LINEAR);
 			  }
 			  else {
-			    keyValues[i] = new KeyValue(ivFrom.xProperty(), xDiff * 65, Interpolator.LINEAR);
+			    keyValues[i] = new KeyValue(ivFrom.xProperty(), to.getX() * 65, Interpolator.LINEAR);
 			  }
 			  imageViews[to.getX()][to.getY()] = imageViews[from.getX()][from.getY()];
 			  imageViews[from.getX()][from.getY()] = new ImageView();
@@ -91,8 +91,8 @@ public class TimelineController {
 			else if (!from.isInBoard()) { //from is out of bounds, to is in bounds, comes from fillEmptyCells()
         ImageView newImage = new ImageView(GUI.getGame().getBoard().getCells()[to.getY()][to.getX()].getGem().getImage());
         imageViews[to.getX()][to.getY()] = newImage;
-        newImage.setLayoutX(to.getX()*65);
-        newImage.setLayoutY(-65);     
+        newImage.setX(to.getX()*65);
+        newImage.setY(-65);
         newImage.setOnMousePressed(new EventHandler<MouseEvent>() {
                       public void handle(MouseEvent me) {
                               System.out.println(me.getSceneX() + ", " + (me.getSceneY() - 55));
@@ -105,7 +105,7 @@ public class TimelineController {
         newImage.toBack();      
         GUI.getBoardPane().borderPane.getChildren().add(newImage);
         ImageView ivTo = imageViews[to.getX()][to.getY()];
-        keyValues[i] = new KeyValue(ivTo.yProperty(), (to.getY()+1)*65, Interpolator.LINEAR);
+        keyValues[i] = new KeyValue(ivTo.yProperty(), to.getY()*65, Interpolator.LINEAR);
       }
 			else { //from is in bounds, to is out of bounds, comes from removeChains().
 			  ImageView ivFrom = imageViews[from.getX()][from.getY()];
@@ -127,27 +127,14 @@ public class TimelineController {
 	  ImageView ivOne = imageViews[one.getX()][one.getY()];
 	  ImageView ivTwo = imageViews[two.getX()][two.getY()];
 	  
-	  // When the size of swaplist is 0 this is the first swap animation.
-	  if(swapList.size() == 0) {
-		  if (xDiff == 0) {
-		    keyValues[0] = new KeyValue(ivOne.yProperty(), yDiff * 65, Interpolator.LINEAR);
-		    keyValues[1] = new KeyValue(ivTwo.yProperty(), -yDiff * 65, Interpolator.LINEAR);
+	  if (xDiff == 0) {
+		    keyValues[0] = new KeyValue(ivOne.yProperty(), two.getY() * 65, Interpolator.LINEAR);
+		    keyValues[1] = new KeyValue(ivTwo.yProperty(), one.getY() * 65, Interpolator.LINEAR);
 		  }
 		  else {
-		    keyValues[0] = new KeyValue(ivOne.xProperty(), xDiff * 65, Interpolator.LINEAR);
-		    keyValues[1] = new KeyValue(ivTwo.xProperty(), -xDiff * 65, Interpolator.LINEAR);
+		    keyValues[0] = new KeyValue(ivOne.xProperty(), two.getX() * 65, Interpolator.LINEAR);
+		    keyValues[1] = new KeyValue(ivTwo.xProperty(), one.getX() * 65, Interpolator.LINEAR);
 		  }
-	  } else {
-		  if (xDiff == 0) {
-			    keyValues[0] = new KeyValue(ivOne.yProperty(), yDiff * 65, Interpolator.LINEAR);
-			    keyValues[1] = new KeyValue(ivTwo.yProperty(), -yDiff * 65, Interpolator.LINEAR);
-			  }
-			  else {
-				  System.out.println(xDiff);
-			    keyValues[0] = new KeyValue(ivOne.xProperty(), xDiff * 65, Interpolator.LINEAR);
-			    keyValues[1] = new KeyValue(ivTwo.xProperty(), -xDiff * 65, Interpolator.LINEAR);
-			  }
-	  }
 	  
 	  ImageView temp = imageViews[one.getX()][one.getY()];
 	  imageViews[one.getX()][one.getY()] = imageViews[two.getX()][two.getY()];

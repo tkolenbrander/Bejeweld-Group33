@@ -92,8 +92,8 @@ public class BoardPane {
 
 				ImageView image = new ImageView();
 				displayNormal(image, gem);
-				image.setLayoutX(x * 65);
-				image.setLayoutY(y * 65);				
+				image.setX(x * 65);
+				image.setY(y * 65);
 				image.setOnMousePressed(new EventHandler<MouseEvent>() {
 					public void handle(MouseEvent me) {
 						System.out.println(me.getSceneX() + ", " + (me.getSceneY() - 55));
