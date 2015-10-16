@@ -49,11 +49,22 @@ public class TimelineController {
 	 * @return The timeline with animations.
 	 */
 	public SequentialTransition getTimeline() {
-		Timeline[] timelines = new Timeline[list.size()];
 		SequentialTransition sequence = new SequentialTransition();	
 		sequence.getChildren().addAll(swapList);
-		KeyFrame[] keyFrames = new KeyFrame[list.size()];
+		sequence.getChildren().addAll(generateTimelines());
+		list.clear();
 
+		return sequence;
+	}
+	
+	/**
+	 * Generates Timelines from the changes.
+	 * @return The different Timelines with animations.
+	 */
+	public Timeline[] generateTimelines() {
+		Timeline[] timelines = new Timeline[list.size()];
+		KeyFrame[] keyFrames = new KeyFrame[list.size()];
+		
 		for (int i = 0; i < list.size(); i++) {
 			List<Change<Position>> changes = list.get(i);
 			KeyValue[] keyValues = generateKeyValues(changes);
@@ -62,13 +73,9 @@ public class TimelineController {
 			Timeline t = new Timeline();
 			t.getKeyFrames().add(keyFrame);
 			timelines[i] = t;
-			System.out.println(t.getKeyFrames());
 		}
-
-		sequence.getChildren().addAll(timelines);
-		list.clear();
-
-		return sequence;
+		
+		return timelines;
 	}
 
 	/**
@@ -85,58 +92,119 @@ public class TimelineController {
 			Position from = change.getFrom();
 			Position to = change.getTo();
 
-			if (from != null && to != null) { //means this comes from falldown() or swap()
-				int xDiff = from.deltaX(to);		
-				ImageView ivFrom = imageViews[from.getX()][from.getY()];
-				if (xDiff == 0) {
-					keyValues[i] = new KeyValue(ivFrom.yProperty(), to.getY() * 65, Interpolator.LINEAR);
-				}
-				else {
-					keyValues[i] = new KeyValue(ivFrom.xProperty(), to.getX() * 65, Interpolator.LINEAR);
-				}
-				imageViews[to.getX()][to.getY()] = imageViews[from.getX()][from.getY()];
-				imageViews[from.getX()][from.getY()] = new ImageView();
+			if (from != null && to != null) { 
+				keyValues[i] = fallDownGem(imageViews, change);
 			}
-			else if (change instanceof Create<?>) { 
-				//from is out of bounds, to is in bounds, comes from fillEmptyCells()
-				Create<Position> create = (Create<Position>) change;
-				ImageView newImage = new ImageView(create.getGem().getImage());
-				imageViews[to.getX()][to.getY()] = newImage;
-				newImage.setX(to.getX() * 65);
-				newImage.setY(-65);
-				
-				newImage.setOnMousePressed(new EventHandler<MouseEvent>() {
-					public void handle(MouseEvent me) {
-						System.out.println(me.getSceneX() + ", " + (me.getSceneY() - 55));
-						int x = (int) me.getSceneX() / 65;
-						int y = (int) (me.getSceneY() - 55) / 65;
-						GUI.getBoardPane().clicked(x, y, newImage);
-					}
-				});
-				
-				GUI.getgui().boxToFront();
-				newImage.toBack();      
-				GUI.getBoardPane().getPane().getChildren().add(newImage);
-				ImageView ivTo = imageViews[to.getX()][to.getY()];
-				keyValues[i] = new KeyValue(ivTo.yProperty(), to.getY() * 65, Interpolator.LINEAR);
+			else if (change instanceof Create<?>) { 			
+				keyValues[i] = generateGem(imageViews, change);
 			}
-			else if (change instanceof Remove<?>) {
-				//from is in bounds, to is out of bounds, comes from removeChains().
-				ImageView ivFrom = imageViews[from.getX()][from.getY()];
-				keyValues[i] = new KeyValue(ivFrom.opacityProperty(), 0, Interpolator.LINEAR);
-				imageViews[from.getX()][from.getY()] = new ImageView();
+			else if (change instanceof Remove<?>) {				
+				keyValues[i] = removeGem(imageViews, change);				
 			}			
 		}
-		GUI.getBoardPane().setImageViews(imageViews);
 		
 		return keyValues;
 	}
+	
+	public KeyValue removeGem(ImageView[][] imageViews, Change<Position> change) {
+		Position from = change.getFrom();
+		ImageView ivFrom = imageViews[from.getX()][from.getY()];
+		imageViews[from.getX()][from.getY()] = new ImageView();
+		return new KeyValue(ivFrom.opacityProperty(), 0, Interpolator.LINEAR);
+	}
+	
+	/**
+	 * Handles the animation when a gem should fall down.
+	 * @param imageViews All imageviews of the board
+	 * @param change The change that has to be made to the new gem.
+	 * @return The keyvalue corresponding to the animation of a gem falling down.
+	 */
+	public KeyValue fallDownGem(ImageView[][] imageViews, Change<Position> change) {
+		Position from = change.getFrom();
+		Position to = change.getTo();
+		
+		int xDiff = from.deltaX(to);		
+		ImageView ivFrom = imageViews[from.getX()][from.getY()];
+		imageViews[to.getX()][to.getY()] = imageViews[from.getX()][from.getY()];
+		imageViews[from.getX()][from.getY()] = new ImageView();
+		if (xDiff == 0) {
+			return new KeyValue(ivFrom.yProperty(), to.getY() * 65, Interpolator.LINEAR);
+		}
+		else {
+			return new KeyValue(ivFrom.xProperty(), to.getX() * 65, Interpolator.LINEAR);
+		}		
+	}
+	
+	/**
+	 * This method generates a new gem and its animation.
+	 * @param imageViews All imageviews of the board
+	 * @param change The change that has to be made to the new gem.
+	 * @return The keyvalue corresponding to the animation of a new gem appearing.
+	 */
+	public KeyValue generateGem(ImageView[][] imageViews, Change<Position> change) {
+		Position from = change.getFrom();
+		Position to = change.getTo();
+		
+		Create<Position> create = (Create<Position>) change;
+		ImageView newImage = new ImageView(create.getGem().getImage());
+		imageViews[to.getX()][to.getY()] = newImage;
+		newImage.setX(to.getX() * 65);
+		newImage.setY(-65);
+		addMousePressed(newImage);		
+		
+		GUI.getgui().boxToFront();
+		newImage.toBack();      
+		GUI.getBoardPane().getPane().getChildren().add(newImage);
+		ImageView ivTo = imageViews[to.getX()][to.getY()];
+		
+		return new KeyValue(ivTo.yProperty(), to.getY() * 65, Interpolator.LINEAR);
+	}
+	
+	/**
+	 * Adds an EventHandler to an ImageView.
+	 * @param newImage The ImageView to add the EventHandler to.
+	 */
+	public void addMousePressed(ImageView newImage) {
+		newImage.setOnMousePressed(new EventHandler<MouseEvent>() {
+			public void handle(MouseEvent me) {
+				System.out.println(me.getSceneX() + ", " + (me.getSceneY() - 55));
+				int x = (int) me.getSceneX() / 65;
+				int y = (int) (me.getSceneY() - 55) / 65;
+				GUI.getBoardPane().clicked(x, y, newImage);
+			}
+		});
+	}
 
+	/**
+	 * Generates the animation of a swap action.
+	 * @param one The position of the first cell to swap.
+	 * @param two The position of the second cell to swap with.
+	 */
 	public static void swap(Position one, Position two) {
 		ImageView[][] imageViews = GUI.getBoardPane().getImageViews();
 		SequentialTransition sequence = new SequentialTransition();
-		Timeline t = new Timeline();
+		Timeline t = new Timeline();		
+
+		KeyFrame keyFrame = new KeyFrame(KF_DURATION, swapKeyValues(imageViews, one, two));
+		t.getKeyFrames().add(keyFrame);
+		sequence.getChildren().add(t);
+		swapList.add(t);
+		
+		ImageView temp = imageViews[one.getX()][one.getY()];
+		imageViews[one.getX()][one.getY()] = imageViews[two.getX()][two.getY()];
+		imageViews[two.getX()][two.getY()] = temp;
+	}
+	
+	/**
+	 * Generates the keyvalues of a swap animation.
+	 * @param imageViews All imageviews of the board
+	 * @param one The position of the first cell to swap.
+	 * @param two The position of the second cell to swap with.
+	 * @return The keyvalues corresponding with a swap animation.
+	 */
+	public static KeyValue[] swapKeyValues(ImageView[][] imageViews, Position one, Position two) {
 		KeyValue[] keyValues = new KeyValue[2];
+		
 		int xDiff = one.deltaX(two);
 		ImageView ivOne = imageViews[one.getX()][one.getY()];
 		ImageView ivTwo = imageViews[two.getX()][two.getY()];
@@ -149,16 +217,8 @@ public class TimelineController {
 			keyValues[0] = new KeyValue(ivOne.xProperty(), two.getX() * 65, Interpolator.LINEAR);
 			keyValues[1] = new KeyValue(ivTwo.xProperty(), one.getX() * 65, Interpolator.LINEAR);
 		}
-
-		ImageView temp = imageViews[one.getX()][one.getY()];
-		imageViews[one.getX()][one.getY()] = imageViews[two.getX()][two.getY()];
-		imageViews[two.getX()][two.getY()] = temp;
-
-		KeyFrame keyFrame = new KeyFrame(KF_DURATION, keyValues);
-		t.getKeyFrames().add(keyFrame);
-		sequence.getChildren().add(t);
-		swapList.add(t);
-		GUI.getBoardPane().setImageViews(imageViews);
+		
+		return keyValues;
 	}
 
 	/**
