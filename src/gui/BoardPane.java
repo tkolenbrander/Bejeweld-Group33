@@ -32,7 +32,7 @@ public class BoardPane {
 	/**
 	 * The main pane of this class.
 	 */
-	protected BorderPane borderPane;
+	private BorderPane borderPane;
 
 	/**
 	 * Contains all the imageviews of the sprites.
@@ -65,6 +65,11 @@ public class BoardPane {
 	private TimelineController controller;
 	
 	/**
+	 * Width and height of a pixel.
+	 */
+	private static final int SPRITE_SIZE = 65;
+	
+	/**
 	 * True if an animation is playing, otherwise false.
 	 */
 	private boolean animating = false;
@@ -77,6 +82,14 @@ public class BoardPane {
 		imageviews = new ImageView[Board.BOARDSIZE][Board.BOARDSIZE];
 		controller = new TimelineController();
 		initBoard();		
+	}
+	
+	/**
+	 * Returns borderPane.
+	 * @return borderPane from the BoardPane.
+	 */
+	public BorderPane getPane() {
+	  return borderPane;
 	}
 
 	/**
@@ -92,13 +105,13 @@ public class BoardPane {
 
 				ImageView image = new ImageView();
 				displayNormal(image, gem);
-				image.setX(x * 65);
-				image.setY(y * 65);
+				image.setX(x * SPRITE_SIZE);
+				image.setY(y * SPRITE_SIZE);
 				image.setOnMousePressed(new EventHandler<MouseEvent>() {
 					public void handle(MouseEvent me) {
 						System.out.println(me.getSceneX() + ", " + (me.getSceneY() - 55));
-						int x = (int) me.getSceneX() / 65;
-						int y = (int) (me.getSceneY() - 55) / 65;
+						int x = (int) me.getSceneX() / SPRITE_SIZE;
+						int y = (int) (me.getSceneY() - 55) / SPRITE_SIZE;
 						if (!animating) {
 						  clicked(x, y, image);
 						}

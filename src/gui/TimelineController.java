@@ -30,7 +30,7 @@ public class TimelineController {
 	 */
 	private static List<Timeline> swapList;
 	
-	private static final Duration KF_DURATION = Duration.millis(1000);
+	private static final Duration KF_DURATION = Duration.millis(300);
 
 	/**
 	 * Simple constructor.
@@ -62,6 +62,7 @@ public class TimelineController {
 		//System.out.println(swapList.get(0).getKeyFrames());
 		//System.out.println(swapList.get(1).getKeyFrames());
 		sequence.getChildren().addAll(timelines);
+		list.clear();
 		return sequence;
 	}
 
@@ -106,7 +107,7 @@ public class TimelineController {
               });
         GUI.getgui().boxToFront();
         newImage.toBack();      
-        GUI.getBoardPane().borderPane.getChildren().add(newImage);
+        GUI.getBoardPane().getPane().getChildren().add(newImage);
         ImageView ivTo = imageViews[to.getX()][to.getY()];
         keyValues[i] = new KeyValue(ivTo.yProperty(), to.getY()*65, Interpolator.LINEAR);
       }
