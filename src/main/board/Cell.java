@@ -7,6 +7,9 @@ package main.board;
  */
 public class Cell {
 	
+	/**
+	 * The gem that inhabits this cell.
+	 */
 	private Gem occupant;
 	
 	/**

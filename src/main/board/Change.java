@@ -9,7 +9,14 @@ package main.board;
  */
 public class Change<K> {
 
+	/**
+	 * Begin state of the change.
+	 */
   private K from;
+  
+  /**
+   * End state of the change.
+   */
   private K to;
   
   /**

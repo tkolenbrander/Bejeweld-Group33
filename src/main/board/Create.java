@@ -9,6 +9,9 @@ package main.board;
  */
 public class Create<K> extends Change<K> {
 	
+	/**
+	 * The gem to create.
+	 */
 	private Gem g;
 
 	/**

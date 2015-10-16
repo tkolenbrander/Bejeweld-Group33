@@ -13,7 +13,14 @@ import java.util.Random;
  */
 public class Board {
 
+	/**
+	 * Height and width of the board
+	 */
 	public static final int BOARDSIZE = 8;
+	
+	/**
+	 * Contains all the cells of the board.
+	 */
 	private Cell[][] board;
 
 	/**
@@ -182,7 +189,7 @@ public class Board {
 				Cell cell = board[pos.getY()][pos.getX()];
 				if (cell != null){
 					type = cell.getGem().getType();
-					List<Position> removed = cell.getGem().destroy(board, pos); // <--------------------------------------------------------------------------------- Gotta check this shit man
+					List<Position> removed = cell.getGem().destroy(board, pos);
 					for (Position destroyed : removed) {
 					  changes.add(new Remove<Position>(destroyed));
 					}
@@ -192,7 +199,7 @@ public class Board {
 			if (chain.size() >= 4) {
 				Position powerPos = chain.get((int) Math.random() * chain.size());
 				Gem powerGem = new PowerGem(type);
-				board[powerPos.getY()][powerPos.getX()] = new Cell(powerGem); //<--------------------------------------------------------------- This too
+				board[powerPos.getY()][powerPos.getX()] = new Cell(powerGem);
 				changes.add(new Create<Position>(powerPos, powerGem));
 			}
 		}
