@@ -139,13 +139,12 @@ public class TimelineController {
 		  }
 	  } else {
 		  if (xDiff == 0) {
-			    keyValues[0] = new KeyValue(ivOne.yProperty(), yDiff * 65, Interpolator.LINEAR);
-			    keyValues[1] = new KeyValue(ivTwo.yProperty(), -yDiff * 65, Interpolator.LINEAR);
+			    keyValues[0] = new KeyValue(ivOne.yProperty(), 0, Interpolator.LINEAR);
+			    keyValues[1] = new KeyValue(ivTwo.yProperty(), 0, Interpolator.LINEAR);
 			  }
 			  else {
-				  System.out.println(xDiff);
-			    keyValues[0] = new KeyValue(ivOne.xProperty(), xDiff * 65, Interpolator.LINEAR);
-			    keyValues[1] = new KeyValue(ivTwo.xProperty(), -xDiff * 65, Interpolator.LINEAR);
+			    keyValues[0] = new KeyValue(ivOne.xProperty(), 0, Interpolator.LINEAR);
+			    keyValues[1] = new KeyValue(ivTwo.xProperty(), 0, Interpolator.LINEAR);
 			  }
 	  }
 	  
