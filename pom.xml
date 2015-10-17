@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>nl.tudelft.sembejeweled33</groupId>
   <artifactId>SEM_Bejeweled</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
+  <version>0.6.9-STABLE</version>
   <name>SEM Bejeweled</name>
   <description>Bejeweled for the course Software Engineering Methods</description>
   <dependencies>
