@@ -17,7 +17,7 @@ import main.board.Position;
  * @author Bart van Oort
  *
  */
-public class Game {
+public abstract class Game {
 
 	private Player player;
 	private Board board;
@@ -37,6 +37,7 @@ public class Game {
 	 * Creates a new game object, with the given board and player.
 	 * This constructor is used for loading the game.
 	 * The game is paused at the start.
+	 * 
 	 * @param newBoard Board to be loaded into the game.
 	 * @param newPlayer Player to be loaded into the game.
 	 */
@@ -61,41 +62,33 @@ public class Game {
 	public Board getBoard() {
 		return board;
 	}
-
-	/**
-	 * Starts the game.
-	 */
-	public void start() {
-		inProgress = true;
-		//start any timers if there are any
-	}
-
-	/**
-	 * Pauses the game.
-	 */
-	public void stop() {
-		inProgress = false;
-		//stop any timers if there are any.
-	}
-
+	
 	/**
 	 * @return True if the game is in progress.
 	 */
 	public boolean inProgress() {
 		return inProgress;
 	}
+	
+	public void setInProgress(boolean inPro) {
+	  inProgress = inPro;
+	}
+	
+	/**
+	 * Starts the game.
+	 */
+	public abstract void start();
+
+	/**
+	 * Pauses the game.
+	 */
+	public abstract void stop();
 
 	/**
 	 * Resets the game to how it was when it was just initialised.
-	 * Ahhh, I remember it like it was yesterday. He was just such a cute little game.
-	 * Wait, it was yesterday...
 	 */
-	public void reset() {
-		player.reset();
-		board.reset();
-		//reset any timers if there are any.
-	}
-
+	public abstract void reset();
+	
 	/**
 	 * Swaps two gems.
 	 * @param one The first gem
@@ -149,8 +142,7 @@ public class Game {
 	}
 
 	/**
-	 * Checks if the move you want to make is allowed, i.e. 
-	 * if the game is in progress and if the two cells are indeed adjacent.
+	 * Checks if the move you want to make is allowed.
 	 * 
 	 * @param one Position on the board of one selected gem
 	 * @param two Position on the board of the other selected gem
@@ -158,30 +150,11 @@ public class Game {
 	 * @throws MoveNotValidException When the move is not allowed, because the cells 
 	 * are not adjacent.
 	 */
-	public boolean moveAllowed(Position one, Position two) throws MoveNotValidException {
-		if (inProgress) {
-			Logger.logInfo("Attempting to swap gem at (" + one.getX() + "," + one.getY() + ") "
-					+ "with (" + two.getX() + "," + two.getY() + ")");
-			if (one.isAdjacentTo(two)) {
-				return true;
-			}
-			else {
-				throw new MoveNotValidException("Cells not adjacent");
-			}
-		}
-		return false;
-	}
+	public abstract boolean moveAllowed(Position one, Position two) throws MoveNotValidException;
 
 	/**
-	 * Checks if the game is over. A game is over when there are no more moves left.
+	 * Checks if the game is over.
 	 * @return if the game is over.
 	 */
-	public boolean isGameOver() {
-		if (!(board.checkMoves())) {
-			Logger.logInfo("Game over! Score was " + player.getScore());
-			stop();
-			return true;
-		}
-		return false;
-	}
+	public abstract boolean isGameOver();
 }

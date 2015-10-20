@@ -62,7 +62,7 @@ public final class LoadGame {
 						}
 					}
 				}
-				return new Game(new Board(cells), player);
+				return new ClassicGame(new Board(cells), player);
 			}
 			
 			finally {

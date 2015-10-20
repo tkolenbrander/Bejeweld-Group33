@@ -1,11 +1,11 @@
 package main.gui;
 
+import main.game.ClassicGame;
 import main.game.Game;
 import main.game.LoadGame;
 import main.game.Logger;
 import main.game.SaveGame;
 import main.game.Observer;
-
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -48,7 +48,7 @@ public class GUI extends Application implements Observer {
 	 * @param args Launch arguments.
 	 */
 	public static void main(String[] args) {
-		game = new Game();
+		game = new ClassicGame(); //Classic Game until GUI gets update
 		game.start();
 		gui = new GUI();
 
