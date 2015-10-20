@@ -5,9 +5,8 @@ import main.exceptions.MoveNotValidException;
 import main.game.Logger;
 import main.board.Board;
 import main.board.Cell;
-import main.board.Gem;
 import main.board.Position;
-
+import main.board.gems.Gem;
 import javafx.event.EventHandler;
 import javafx.event.ActionEvent;
 import javafx.scene.image.ImageView;

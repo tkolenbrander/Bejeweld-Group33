@@ -1,4 +1,4 @@
-package main.board;
+package main.board.gems;
 
 import java.util.Arrays;
 import java.util.Collections;

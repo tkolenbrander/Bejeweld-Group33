@@ -1,4 +1,4 @@
-package main.board;
+package main.board.gems;
 
 import javafx.scene.image.Image;
 
@@ -7,7 +7,7 @@ import javafx.scene.image.Image;
  * @author Ruben
  *
  */
-public class RegularGem extends Gem{
+public class RegularGem extends Gem {
 
 	/**
 	 * Creates a RegularGem object with GemType t.

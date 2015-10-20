@@ -5,8 +5,8 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 
 import main.board.Cell;
-import main.board.GemType;
-import main.board.RegularGem;
+import main.board.gems.GemType;
+import main.board.gems.RegularGem;
 
 /**
  * Tests the Cell class. Not really much to test there though...

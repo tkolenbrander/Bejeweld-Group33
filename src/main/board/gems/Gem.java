@@ -1,7 +1,9 @@
-package main.board;
+package main.board.gems;
 
 import java.util.List;
 
+import main.board.Cell;
+import main.board.Position;
 import javafx.scene.image.Image;
 
 /**
@@ -51,12 +53,15 @@ public abstract class Gem {
 	
 	/**
 	 * Destroys this gem.
-	 * Gives a list of the positions of all the other gems that got destroyed when this gem got destroyed.
+	 * Gives a list of the positions of all the other gems that got destroyed 
+	 * when this gem got destroyed.
+	 * 
 	 * @param cells	Array of the cells containing all the gems
 	 * @param pos	The position of this gem on the board
-	 * @return		A list of the positions of all the other gems that got destroyed when this gem gets destroyed.
+	 * @return		A list of the positions of all the other gems that got 
+	 * destroyed when this gem gets destroyed.
 	 */
-	public List<Position> destroy(Cell[][] cells, Position pos){
+	public List<Position> destroy(Cell[][] cells, Position pos) {
 		return onDestroy.destroy(cells, pos);
 	};
 	

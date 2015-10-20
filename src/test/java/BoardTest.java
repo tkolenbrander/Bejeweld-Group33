@@ -9,6 +9,9 @@ import java.util.Arrays;
 import java.util.List;
 
 import main.board.*;
+import main.board.gems.Gem;
+import main.board.gems.GemType;
+import main.board.gems.RegularGem;
 
 import org.junit.Before;
 import org.junit.Test;

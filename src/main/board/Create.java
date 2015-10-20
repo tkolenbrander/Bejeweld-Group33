@@ -1,5 +1,7 @@
 package main.board;
 
+import main.board.gems.Gem;
+
 
 /**
  * Represents the creation of a new Gem

@@ -5,9 +5,9 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-import main.board.Gem;
-import main.board.GemType;
-import main.board.RegularGem;
+import main.board.gems.Gem;
+import main.board.gems.GemType;
+import main.board.gems.RegularGem;
 
 /**
  * Tests the Gem class.

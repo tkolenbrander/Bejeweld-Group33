@@ -70,7 +70,15 @@ public abstract class Game {
 		return inProgress;
 	}
 	
-	public void setInProgress(boolean inPro) {
+	/**
+	 * Sets if a game is in progress.
+	 * 
+	 * Not to be used for starting and stopping the game.
+	 * Use {@link Game#start} and {@link Game#stop} for this instead.
+	 * 
+	 * @param inPro inProgress.
+	 */
+	protected void setInProgress(boolean inPro) {
 	  inProgress = inPro;
 	}
 	
