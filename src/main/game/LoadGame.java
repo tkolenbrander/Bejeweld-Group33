@@ -8,10 +8,10 @@ import java.util.Scanner;
 
 import main.board.Board;
 import main.board.Cell;
-import main.board.GemType;
 import main.board.Position;
-import main.board.PowerGem;
-import main.board.RegularGem;
+import main.board.gems.GemType;
+import main.board.gems.PowerGem;
+import main.board.gems.RegularGem;
 
 /**
  * Utility class for loading the game from a saved game.
@@ -62,7 +62,7 @@ public final class LoadGame {
 						}
 					}
 				}
-				return new Game(new Board(cells), player);
+				return new ClassicGame(new Board(cells), player);
 			}
 			
 			finally {
