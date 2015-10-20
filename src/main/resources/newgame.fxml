@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="620.0" prefWidth="520.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Button fx:id="newnormal" layoutX="210.0" layoutY="263.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="100.0" text="Normal Game" />
+      <Button fx:id="newback" layoutX="210.0" layoutY="333.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="100.0" text="Back" />
+      <Button fx:id="newtimetrial" disable="true" layoutX="210.0" layoutY="298.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="100.0" text="Time Trial" />
+      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="160.0" layoutY="86.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@menuLogo.png" />
+         </image>
+      </ImageView>
+   </children>
+</AnchorPane>

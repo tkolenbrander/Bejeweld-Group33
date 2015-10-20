@@ -1,18 +1,14 @@
 package main.gui;
 
 import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
-
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
 import main.SwekJeweled;
 
-public class MenuViewController implements Initializable {
+public class MenuViewController {
 
 	private static final String fileName = "main.fxml";
 	
@@ -20,10 +16,21 @@ public class MenuViewController implements Initializable {
 	@FXML private Button loadGameButton;
 	@FXML private Button settingsButton;
 	
-	@Override
-	public void initialize(URL location, ResourceBundle resources) {
-		// TODO Set button action
+	@FXML
+	private void initialize() {
+		System.out.println("Menu initialized");
 		
+		newGameButton.setOnAction((event) -> {
+			NewGameViewController.show();
+		});
+		
+		loadGameButton.setOnAction((event) -> {
+			NewGameViewController.show();
+		});
+		
+		settingsButton.setOnAction((event) -> {
+			NewGameViewController.show();
+		});
 	}
 	
 	/**
@@ -40,5 +47,4 @@ public class MenuViewController implements Initializable {
 			e.printStackTrace();
 		}
 	}
-
 }
