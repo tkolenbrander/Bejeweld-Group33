@@ -23,6 +23,7 @@ import javafx.stage.Stage;
  * Base class of the GUI.
  * 
  * @author Steven Meijer & Thomas Kolenbrander
+ * @deprecated
  */
 public class GUI extends Application implements Observer {
 
