@@ -11,35 +11,34 @@ import main.SwekJeweled;
 public class MenuViewController {
 
 	private static final String fileName = "main.fxml";
-	
+
 	@FXML private Button newGameButton;
 	@FXML private Button loadGameButton;
 	@FXML private Button settingsButton;
-	
+
 	@FXML
 	private void initialize() {
-		System.out.println("Menu initialized");
-		
+
 		newGameButton.setOnAction((event) -> {
 			NewGameViewController.show();
 		});
-		
+
 		loadGameButton.setOnAction((event) -> {
-			NewGameViewController.show();
+			//
 		});
-		
+
 		settingsButton.setOnAction((event) -> {
-			NewGameViewController.show();
+			//
 		});
 	}
-	
+
 	/**
 	 * Show this view.
 	 */
 	public static void show() {
 		FXMLLoader l = new FXMLLoader();
 		l.setLocation(SwekJeweled.class.getClassLoader().getResource(fileName));
-		
+
 		try {
 			AnchorPane menu = l.load();
 			SwekJeweled.getStage().setScene(new Scene(menu));
