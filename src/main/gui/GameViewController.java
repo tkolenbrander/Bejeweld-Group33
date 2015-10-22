@@ -54,12 +54,11 @@ public class GameViewController implements Observer {
 
 		boardPane = new BoardPane();
 		borderPane.setCenter(boardPane.getBoardPane());
+		borderPane.getCenter().setStyle("-fx-background-image: url(\"/gemback.png\");");
 
-		topPane.setStyle("-fx-background-color: #C0C0C0;");
+		//Make sure the top pane is over the falling gems
 		borderPane.getChildren().remove(topPane);
 		borderPane.setTop(topPane);
-		bottomPane.setStyle("-fx-background-color: #C0C0C0;");
-
 		scoreLabel.setText("Score: 0");
 
 		initializeButtons();
@@ -146,8 +145,9 @@ public class GameViewController implements Observer {
 
 	/**
 	 * Show this view.
+	 * @param type The type of game. Either Classic or Time Trial.
 	 */
-	public static void show() {
+	public static void show(Game type) {
 		FXMLLoader l = new FXMLLoader();
 		l.setLocation(SwekJeweled.class.getClassLoader().getResource(FILENAME));
 
