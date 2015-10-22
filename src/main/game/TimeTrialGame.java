@@ -7,12 +7,19 @@ import main.board.Board;
 import main.board.Position;
 import main.exceptions.MoveNotValidException;
 
+/**
+ * Implementation of a Time Trial game. In this game mode, the player gets a
+ * certain amount of time to get a score as high as possible. 
+ * 
+ * @author Bart van Oort
+ * @version 23-10-2015
+ */
 public class TimeTrialGame extends Game {
   
   /**
    * Time limit in seconds.
    */
-  private static int timelimit = 10;
+  private static final int TIMELIMIT = 10;
   
   /**
    * Timer to keep track of the time.
@@ -24,18 +31,33 @@ public class TimeTrialGame extends Game {
    */
   private int remainingTime;
   
+  /**
+   * Creates a new game object, with a freshly initialised player and a new board.
+   * Initialises the timer to the time limit specified in the field TIMELIMIT.
+   * The game is paused at the start.
+   */
   public TimeTrialGame() {
     super();
     timer = new Timer();
-    remainingTime = timelimit;
+    remainingTime = TIMELIMIT;
   }
   
+  /**
+   * Creates a new game object, with the given board and player.
+   * This constructor is used for loading the game.
+   * Initialises the timer to the time limit specified in the field TIMELIMIT.
+   * The game is paused at the start.
+   * 
+   * @param newBoard Board to be loaded into the game.
+   * @param newPlayer Player to be loaded into the game.
+   */
   public TimeTrialGame(Board newBoard, Player newPlayer) {
     super(newBoard, newPlayer);
     timer = new Timer();
-    remainingTime = timelimit;
+    remainingTime = TIMELIMIT;
   }
 
+  @SuppressWarnings("magicnumber")
   @Override
   public void start() {
     setInProgress(true);
@@ -64,6 +86,18 @@ public class TimeTrialGame extends Game {
     timer.cancel();
   }
 
+  /**
+   * Checks if the move you want to make is allowed.
+   * 
+   * In this game, a move is allowed when the game is in progress and there still
+   * is time remaining.
+   * 
+   * @param one Position on the board of one selected gem
+   * @param two Position on the board of the other selected gem
+   * @return if the move is allowed
+   * @throws MoveNotValidException When the move is not allowed, because the cells 
+   * are not adjacent.
+   */
   @Override
   public boolean moveAllowed(Position one, Position two) throws MoveNotValidException {
     if (inProgress() && remainingTime > 0) {
@@ -79,14 +113,30 @@ public class TimeTrialGame extends Game {
     return false;
   }
 
+  /**
+   * Checks if the game is over. Also regenerates the board if there are no more moves left.
+   * 
+   * In this game, the game is over when there is no more time left.
+   * @return if the game is over.
+   */
   @Override
   public boolean isGameOver() {
-    if (remainingTime == 0 || !(getBoard().checkMoves())) {
+    boardNeedsReset();
+    if (remainingTime == 0) {
       Logger.logInfo("Game over! Score was " + getPlayer().getScore());
       stop();
       return true;
     }
     return false;
+  }
+  
+  /**
+   * Checks if the board has any moves left and if not, resets the board.
+   */
+  private void boardNeedsReset() {
+    if (!getBoard().checkMoves()) {
+      getBoard().reset();
+    }
   }
 
 }
