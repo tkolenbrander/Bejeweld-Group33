@@ -87,7 +87,7 @@ public class BoardPane {
 	 * Initializes the board.
 	 */
 	public void initBoard() {
-		Board board = GUI.getGame().getBoard();
+		Board board = GameViewController.getGame().getBoard();
 		Cell[][] cells = board.getCells();
 
 		for (int y = 0; y < cells.length; y++) {
@@ -148,7 +148,7 @@ public class BoardPane {
 	 * 			  The imageview
 	 */
 	public void clicked(int x, int y, ImageView view) {
-		Board board = GUI.getGame().getBoard();
+		Board board = GameViewController.getGame().getBoard();
 		Cell[][] cells = board.getCells();
 		Gem gem = cells[y][x].getGem();
 
@@ -213,17 +213,17 @@ public class BoardPane {
 	 */
 	public boolean makeMove(Position p1, Position p2) {
 		boolean result = false;
+		
 		try {
-			GUI.getGame().makeMove(p1, p2);			
+			GameViewController.getGame().makeMove(p1, p2);			
 			result = true;
-			GUI.getgui().setError("");
-			GUI.getgui().setScore(GUI.getGame().getPlayer().getScore());
 		} catch (MoveNotValidException e) {
-			GUI.getgui().setError(e.getMessage());
+			//GameViewController.getGameViewController().setError(e.getMessage());
+			Logger.logInfo("Move failed with exception: " + e);
 		}
-		if (!GUI.getGame().inProgress()) {
+		if (!GameViewController.getGame().inProgress()) {
 			// TODO: Game over
-			GUI.getgui().setError("Game over!");
+			//GameViewController.getGameViewController().setError("Game over!");
 			Logger.close();
 		}
 		return result;
@@ -242,7 +242,7 @@ public class BoardPane {
 	 */
 	public void refresh() {
 		borderPane.getChildren().removeAll(borderPane.getChildren());
-		GUI.getgui().setScore(GUI.getGame().getPlayer().getScore());
+		//GameViewController.getGameViewController().setScore(GameViewController.getGame().getPlayer().getScore());
 		initBoard();
 	}
 }
