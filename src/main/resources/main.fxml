@@ -13,7 +13,7 @@
       <Button fx:id="newGameButton" alignment="CENTER" contentDisplay="CENTER" layoutX="210.0" layoutY="263.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="100.0" text="New Game" />
       <Button fx:id="loadGameButton" alignment="CENTER" contentDisplay="CENTER" disable="true" layoutX="210.0" layoutY="298.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="100.0" text="Load Game" />
       <Button fx:id="settingsButton" alignment="CENTER" contentDisplay="CENTER" disable="true" layoutX="210.0" layoutY="333.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="100.0" text="Settings" />
-      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="160.0" layoutY="70.0" pickOnBounds="true" preserveRatio="true" AnchorPane.topAnchor="70.0">
+      <ImageView fitHeight="191.0" fitWidth="333.0" layoutX="95.0" layoutY="48.0" pickOnBounds="true" preserveRatio="true" AnchorPane.topAnchor="48.0">
          <image>
             <Image url="@MenuLogo.png" />
          </image>
