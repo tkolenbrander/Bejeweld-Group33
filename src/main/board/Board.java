@@ -26,7 +26,7 @@ public class Board {
 	/**
 	 * Contains all the cells of the board.
 	 */
-	private static Cell[][] board;
+	private Cell[][] board;
 
 	/**
 	 * Constructor for a board. Also generates and places all cells and their content.
@@ -88,7 +88,7 @@ public class Board {
 	 * @return true iff the origin cell, at location (x, y), is part of a chain of
 	 *         three of the same gems in the given direction.
 	 */
-	public static boolean isTripletInDir(int x, int y, Direction dir) {
+	public boolean isTripletInDir(int x, int y, Direction dir) {
 		GemType currGemType = board[y][x].getGem().getType();
 		Cell neighbour = getNeighbourAt(x, y, dir);
 		if (neighbour != null && currGemType == neighbour.getGem().getType()) {
@@ -306,7 +306,7 @@ public class Board {
 	 * @return neighbouring cell in the direction dir from the origin cell at (x,y) or 
 	 *       null iff the origin cell does not have a neighbour in that direction.
 	 */
-	public static Cell getNeighbourAt(int x, int y, Direction dir) {
+	public Cell getNeighbourAt(int x, int y, Direction dir) {
 		int newX = x + dir.getDX();
 		int newY = y + dir.getDY();
 		if (newX >= 0 && newX < BOARDSIZE && newY >= 0 && newY < BOARDSIZE) {

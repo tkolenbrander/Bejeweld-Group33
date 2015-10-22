@@ -8,6 +8,9 @@ public class BoardFactory {
 	private int BOARDSIZE;
 	private Cell[][] board;
 
+	/**
+	 * Creates a new BoardFactory.
+	 */
 	public BoardFactory() {
 		BOARDSIZE = Board.BOARDSIZE;
 		board = new Cell[BOARDSIZE][BOARDSIZE];
@@ -23,7 +26,7 @@ public class BoardFactory {
 			for (int x = 0; x < BOARDSIZE; x++) {
 				board[y][x] = new Cell(new RegularGem(GemType.randomGem()));
 				boardObject.setCells(board);
-				while (isTripletAt(x, y)) {
+				while (isTripletAt(x, y, boardObject)) {
 					board[y][x] = new Cell(new RegularGem(GemType.randomGem()));
 				}				
 			}
@@ -48,14 +51,15 @@ public class BoardFactory {
 	 * of the same gems.
 	 * @param x x-coordinate of the origin cell
 	 * @param y y-coordinate of the origin cell
+	 * @param board the board to check this on
 	 * @return true iff the origin cell, at location (x, y), is part of a chain of
 	 *         three of the same gems.
 	 */
 	@SuppressWarnings("magicnumber") //4 is the amount of directions there are.
-	public boolean isTripletAt(int x, int y) {
+	public boolean isTripletAt(int x, int y, Board board) {
 		for (int i = 0; i < 4; i++) {
 			Direction dir = Direction.DIRECTIONS.get(i);
-			if (Board.isTripletInDir(x, y, dir)) {
+			if (board.isTripletInDir(x, y, dir)) {
 				return true;
 			}
 		}
