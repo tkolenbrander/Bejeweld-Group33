@@ -10,6 +10,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
+
 import main.SwekJeweled;
 import main.game.ClassicGame;
 import main.game.Game;
@@ -31,24 +32,28 @@ public class GameViewController implements Observer {
 
 	private static Game game;
 	private static BoardPane boardPane;
+	
+	public static boolean isGameOver;
 
 	@FXML private BorderPane borderPane;
+	@FXML private AnchorPane gameOverPane;
+	@FXML private Pane topPane;
+	@FXML private Pane bottomPane;
 
 	@FXML private Button saveGameButton;
 	@FXML private Button loadGameButton;
 	@FXML private Button restartGameButton;
 	@FXML private Button exitGameButton;
+	@FXML private Button gameOverRestartButton;
+	@FXML private Button gameOverMenuButton;
+	@FXML private Button gameOverQuitButton;
 
 	@FXML private Label scoreLabel;
 	@FXML private Label errorLabel;
 
-	@FXML private Pane topPane;
-	@FXML private Pane bottomPane;
-
 	@FXML
 	private void initialize() {
 
-		game = new ClassicGame();
 		game.start();
 		game.getPlayer().register(this);
 
@@ -59,6 +64,7 @@ public class GameViewController implements Observer {
 		//Make sure the top pane is over the falling gems
 		borderPane.getChildren().remove(topPane);
 		borderPane.setTop(topPane);
+		
 		scoreLabel.setText("Score: 0");
 
 		initializeButtons();
@@ -102,10 +108,60 @@ public class GameViewController implements Observer {
 			game.getPlayer().unregister(this);
 			MenuViewController.show();
 		});
+		
+		gameOverRestartButton.setOnAction((event) -> {
+			GameViewController.show(new ClassicGame());
+		});
+
+		gameOverMenuButton.setOnAction((event) -> {
+			MenuViewController.show();
+		});
+
+		gameOverQuitButton.setOnAction((event) -> {
+			Logger.logInfo("Exiting...");
+			Logger.close();
+			System.exit(0);
+		});
+	}
+
+	/**
+	 * Show this view.
+	 * 
+	 * @param type The type of game. Either Classic or Time Trial.
+	 */
+	public static void show(Game type) {
+		GameViewController.game = type;
+
+		FXMLLoader l = new FXMLLoader();
+		l.setLocation(SwekJeweled.class.getClassLoader().getResource(FILENAME));
+
+		try {
+			AnchorPane game = l.load();
+			SwekJeweled.getStage().setScene(new Scene(game));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * Enables the game over screen.
+	 */
+	protected void setGameOver() {
+		gameOverPane.setVisible(true);
+	}
+
+	/**
+	 * Update method for observer.
+	 */
+	@Override
+	public void update() {
+		int newScore = (int) game.getPlayer().getUpdate(this);
+		setScore(newScore);
 	}
 
 	/**
 	 * Sets a message for the error label.
+	 * 
 	 * @param s the message to be displayed
 	 */
 	protected void setError(String s) {
@@ -114,6 +170,7 @@ public class GameViewController implements Observer {
 
 	/**
 	 * Sets a number for the score label.
+	 * 
 	 * @param score number to be displayed
 	 */
 	protected void setScore(int score) {
@@ -129,43 +186,17 @@ public class GameViewController implements Observer {
 	}
 
 	/**
-	 * @return The GameViewController.
-	 */
-	//	protected static GameViewController getGameViewController() {
-	//		return this;
-	//		TODO Alternative that works
-	//	}
-
-	/**
 	 * @return The boardpane.
 	 */
 	protected static BoardPane getBoardPane() {
 		return boardPane;
 	}
-
+	
 	/**
-	 * Show this view.
-	 * @param type The type of game. Either Classic or Time Trial.
+	 * @return The GameViewController.
 	 */
-	public static void show(Game type) {
-		FXMLLoader l = new FXMLLoader();
-		l.setLocation(SwekJeweled.class.getClassLoader().getResource(FILENAME));
-
-		try {
-			AnchorPane game = l.load();
-			SwekJeweled.getStage().setScene(new Scene(game));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+	protected static GameViewController getGVC() {
+		//TODO Get this working to fix all ui bugs
+		return null;
 	}
-
-	/**
-	 * Update method for observer.
-	 */
-	@Override
-	public void update() {
-		int newScore = (int) game.getPlayer().getUpdate(this);
-		setScore(newScore);
-	}
-
 }

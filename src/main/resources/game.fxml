@@ -11,7 +11,7 @@
    <children>
       <BorderPane fx:id="borderPane" layoutX="160.0" layoutY="197.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <top>
-            <Pane id="pane" fx:id="topPane" prefHeight="50.0" prefWidth="520.0" styleClass="style.css" BorderPane.alignment="CENTER">
+            <Pane id="pane" fx:id="topPane" prefHeight="50.0" prefWidth="520.0" BorderPane.alignment="CENTER">
                <children>
                   <Label fx:id="scoreLabel" layoutX="189.0" layoutY="8.0" text="Score: " textFill="WHITE">
                      <font>
@@ -24,7 +24,7 @@
             </Pane>
          </top>
          <bottom>
-            <Pane id="pane" fx:id="bottomPane" prefHeight="61.0" prefWidth="520.0" styleClass="style.css" BorderPane.alignment="CENTER">
+            <Pane id="pane" fx:id="bottomPane" prefHeight="61.0" prefWidth="520.0" BorderPane.alignment="CENTER">
                <children>
                   <Label fx:id="errorLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="19.0" layoutY="7.0" prefHeight="17.0" prefWidth="481.0" textAlignment="CENTER" textFill="RED">
                      <font>
@@ -39,5 +39,25 @@
             </Pane>
          </bottom>
       </BorderPane>
+      <AnchorPane id="gameover" fx:id="gameOverPane" prefHeight="650.0" prefWidth="520.0" visible="false">
+         <children>
+            <BorderPane prefHeight="650.0" prefWidth="520.0">
+               <center>
+                  <Pane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                     <children>
+                        <Label layoutX="188.0" layoutY="209.0" text="GAME OVER" textFill="RED">
+                           <font>
+                              <Font name="System Bold" size="25.0" />
+                           </font>
+                        </Label>
+                        <Button id="button" fx:id="gameOverMenuButton" layoutX="185.0" layoutY="325.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="150.0" text="Main Menu" />
+                        <Button id="button" fx:id="gameOverQuitButton" layoutX="185.0" layoutY="364.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="150.0" text="Quit Game" />
+                        <Button id="button" fx:id="gameOverRestartButton" layoutX="185.0" layoutY="287.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="151.0" text="Restart" />
+                     </children>
+                  </Pane>
+               </center>
+            </BorderPane>
+         </children>
+      </AnchorPane>
    </children>
 </AnchorPane>
