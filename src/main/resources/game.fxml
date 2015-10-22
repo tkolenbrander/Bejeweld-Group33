@@ -25,7 +25,7 @@
          <bottom>
             <Pane fx:id="bottomPane" prefHeight="61.0" prefWidth="520.0" BorderPane.alignment="CENTER">
                <children>
-                  <Label fx:id="errorLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="19.0" layoutY="7.0" prefHeight="17.0" prefWidth="481.0" text="Label" textAlignment="CENTER" textFill="RED">
+                  <Label fx:id="errorLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="19.0" layoutY="7.0" prefHeight="17.0" prefWidth="481.0" textAlignment="CENTER" textFill="RED">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font>

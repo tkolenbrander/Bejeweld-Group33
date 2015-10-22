@@ -8,9 +8,14 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
 import main.SwekJeweled;
 
+/**
+ * Controller class for the New Game selection screen.
+ * 
+ * @author Steven Meijer
+ */
 public class NewGameViewController {
 
-	private static final String fileName = "newgame.fxml";
+	private static final String FILENAME = "newgame.fxml";
 
 	@FXML private Button newNormalButton;
 	@FXML private Button newTimeTrialButton;
@@ -24,7 +29,7 @@ public class NewGameViewController {
 		});
 
 		newTimeTrialButton.setOnAction((event) -> {
-			//
+			//TODO Add Time Trial game to menu
 		});
 
 		newBackButton.setOnAction((event) -> {
@@ -38,7 +43,7 @@ public class NewGameViewController {
 	 */
 	public static void show() {
 		FXMLLoader l = new FXMLLoader();
-		l.setLocation(SwekJeweled.class.getClassLoader().getResource(fileName));
+		l.setLocation(SwekJeweled.class.getClassLoader().getResource(FILENAME));
 
 		try {
 			AnchorPane newgame = l.load();

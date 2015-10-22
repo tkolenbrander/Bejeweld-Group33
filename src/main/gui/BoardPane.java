@@ -220,6 +220,7 @@ public class BoardPane {
 			result = true;
 		} catch (MoveNotValidException e) {
 			//GameViewController.getGameViewController().setError(e.getMessage());
+			Logger.logInfo("Move failed with exception: " + e);
 		}
 		if (!GameViewController.getGame().inProgress()) {
 			// TODO: Game over

@@ -8,12 +8,15 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
 import main.SwekJeweled;
-import main.game.Game;
-import main.game.LoadGame;
 
+/**
+ * Controller class fot the main menu.
+ * 
+ * @author Steven Meijer
+ */
 public class MenuViewController {
 
-	private static final String fileName = "main.fxml";
+	private static final String FILENAME = "main.fxml";
 
 	@FXML private Button newGameButton;
 	@FXML private Button loadGameButton;
@@ -27,11 +30,11 @@ public class MenuViewController {
 		});
 
 		loadGameButton.setOnAction((event) -> {
-			//
+			//TODO Ability to load game from main menu
 		});
 
 		settingsButton.setOnAction((event) -> {
-			//
+			//TODO Settings menu
 		});
 	}
 
@@ -40,7 +43,7 @@ public class MenuViewController {
 	 */
 	public static void show() {
 		FXMLLoader l = new FXMLLoader();
-		l.setLocation(SwekJeweled.class.getClassLoader().getResource(fileName));
+		l.setLocation(SwekJeweled.class.getClassLoader().getResource(FILENAME));
 
 		try {
 			AnchorPane menu = l.load();

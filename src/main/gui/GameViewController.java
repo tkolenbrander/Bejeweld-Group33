@@ -14,12 +14,20 @@ import javafx.scene.layout.Pane;
 import main.SwekJeweled;
 import main.game.Game;
 import main.game.LoadGame;
+import main.game.Logger;
 import main.game.Observer;
 import main.game.SaveGame;
 
+/**
+ * Controller class for the game.
+ * This class takes care of correctly displaying the game and 
+ * 	the elements that belong in the in-game view.
+ * 
+ * @author Steven Meijer
+ */
 public class GameViewController implements Observer {
 
-	private static final String fileName = "game.fxml";
+	private static final String FILENAME = "game.fxml";
 
 	private static Game game;
 	private static BoardPane boardPane;
@@ -38,15 +46,14 @@ public class GameViewController implements Observer {
 	@FXML private Pane bottomPane;
 
 	@FXML
-	public void initialize() {
+	private void initialize() {
 
 		game = new Game();
 		game.start();
-		
+		game.getPlayer().register(this);
+
 		boardPane = new BoardPane();
 		borderPane.setCenter(boardPane.getBoardPane());
-
-		game.getPlayer().register(this);
 
 		topPane.setStyle("-fx-background-color: #C0C0C0;");
 		borderPane.getChildren().remove(topPane);
@@ -54,11 +61,20 @@ public class GameViewController implements Observer {
 		bottomPane.setStyle("-fx-background-color: #C0C0C0;");
 
 		scoreLabel.setText("Score: 0");
-		errorLabel.setVisible(false);
 
+		initializeButtons();
+
+		Logger.logInfo("New Normal game started");
+	}
+
+	/**
+	 * Initializes the on-screen buttons.
+	 */
+	private void initializeButtons() {
 		saveGameButton.setOnAction((event) -> {
 			SaveGame.save(game);
 			setError("Game saved!");
+			Logger.logInfo("Game saved");
 		});
 
 		loadGameButton.setOnAction((event) -> {
@@ -68,9 +84,11 @@ public class GameViewController implements Observer {
 				boardPane.refresh();
 				setScore(GameViewController.game.getPlayer().getScore());
 				game.getPlayer().register(this);
-				setError("Game loaded!"); 
+				setError("Game loaded!");
+				Logger.logInfo("Loaded game from file");
 			} catch (Exception e) {
-				setError("Cannot load game!"); 
+				setError("Cannot load game!");
+				Logger.logWarning("Failed to load game from file with error: " + e);
 			} 
 		});
 
@@ -114,9 +132,10 @@ public class GameViewController implements Observer {
 	/**
 	 * @return The GameViewController.
 	 */
-//	protected static GameViewController getGameViewController() {
-//		return this;
-//	}
+	//	protected static GameViewController getGameViewController() {
+	//		return this;
+	//		TODO Alternative that works
+	//	}
 
 	/**
 	 * @return The boardpane.
@@ -130,7 +149,7 @@ public class GameViewController implements Observer {
 	 */
 	public static void show() {
 		FXMLLoader l = new FXMLLoader();
-		l.setLocation(SwekJeweled.class.getClassLoader().getResource(fileName));
+		l.setLocation(SwekJeweled.class.getClassLoader().getResource(FILENAME));
 
 		try {
 			AnchorPane game = l.load();
