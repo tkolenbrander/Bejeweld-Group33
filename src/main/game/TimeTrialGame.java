@@ -12,14 +12,16 @@ import main.exceptions.MoveNotValidException;
  * certain amount of time to get a score as high as possible. 
  * 
  * @author Bart van Oort
- * @version 23-10-2015
+ * @version 23/10/2015
  */
 public class TimeTrialGame extends Game {
   
   /**
    * Time limit in seconds.
    */
-  private static final int TIMELIMIT = 10;
+  private static final int TIMELIMIT = 120;
+  
+  private static final int TIME_PER_POWERGEM = 30;
   
   /**
    * Timer to keep track of the time.
@@ -30,6 +32,8 @@ public class TimeTrialGame extends Game {
    * Time remaining.
    */
   private int remainingTime;
+  
+  private int powerGems;
   
   /**
    * Creates a new game object, with a freshly initialised player and a new board.
@@ -44,7 +48,7 @@ public class TimeTrialGame extends Game {
   
   /**
    * Creates a new game object, with the given board and player.
-   * This constructor is used for loading the game.
+   * 
    * Initialises the timer to the time limit specified in the field TIMELIMIT.
    * The game is paused at the start.
    * 
@@ -84,6 +88,13 @@ public class TimeTrialGame extends Game {
     getPlayer().reset();
     getBoard().reset();
     timer.cancel();
+  }
+  
+  @Override
+  public void makeMove(Position one, Position two) throws MoveNotValidException {
+    getBoard().resetNewPowerGems();
+    super.makeMove(one, two);
+    remainingTime += getBoard().getNewPowerGems() * TIME_PER_POWERGEM;
   }
 
   /**
@@ -138,5 +149,4 @@ public class TimeTrialGame extends Game {
       getBoard().reset();
     }
   }
-
 }
