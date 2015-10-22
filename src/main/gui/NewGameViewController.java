@@ -20,7 +20,7 @@ public class NewGameViewController {
 	private void initialize() {
 
 		newNormalButton.setOnAction((event) -> {
-			//
+			GameViewController.show();
 		});
 
 		newTimeTrialButton.setOnAction((event) -> {

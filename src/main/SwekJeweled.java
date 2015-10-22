@@ -20,7 +20,7 @@ public class SwekJeweled extends Application {
 	 * X and Y dimensions of the board.
 	 */
 	private static final int WINDOW_X = 520;
-	private static final int WINDOW_Y = 620;
+	private static final int WINDOW_Y = 660;
 
 	private static Stage stage;
 

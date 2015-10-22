@@ -11,7 +11,7 @@
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="620.0" prefWidth="520.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.gui.MenuViewController">
    <children>
       <Button fx:id="newGameButton" alignment="CENTER" contentDisplay="CENTER" layoutX="210.0" layoutY="263.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="100.0" text="New Game" />
-      <Button fx:id="loadGameButton" alignment="CENTER" contentDisplay="CENTER" layoutX="210.0" layoutY="298.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="100.0" text="Load Game" />
+      <Button fx:id="loadGameButton" alignment="CENTER" contentDisplay="CENTER" disable="true" layoutX="210.0" layoutY="298.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="100.0" text="Load Game" />
       <Button fx:id="settingsButton" alignment="CENTER" contentDisplay="CENTER" disable="true" layoutX="210.0" layoutY="333.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="100.0" text="Settings" />
       <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="160.0" layoutY="70.0" pickOnBounds="true" preserveRatio="true" AnchorPane.topAnchor="70.0">
          <image>

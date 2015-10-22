@@ -1,12 +1,15 @@
 package main.gui;
 
 import java.io.IOException;
+
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
 import main.SwekJeweled;
+import main.game.Game;
+import main.game.LoadGame;
 
 public class MenuViewController {
 

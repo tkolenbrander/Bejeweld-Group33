@@ -190,7 +190,7 @@ public class GUI extends Application implements Observer {
 
 		return hbox;
 	}
-
+////////////////////////////////////////////////////////////////////
 	/**
 	 * Sets a message for the error label.
 	 * @param s the message to be displayed
@@ -207,6 +207,8 @@ public class GUI extends Application implements Observer {
 		String s = "Score: " + score;
 		scoreLabel.setText(s);
 	}
+	
+	////////////////////////////////////////////////////////////////////////////
 	
 	/**
 	 * Returns the game.
