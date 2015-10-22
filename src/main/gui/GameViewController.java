@@ -70,7 +70,6 @@ public class GameViewController implements Observer {
 		//Make sure the top pane is over the falling gems
 		borderPane.getChildren().remove(topPane);
 		borderPane.setTop(topPane);
-
 		scoreLabel.setText("Score: 0");
 
 		//TODO Make this work
@@ -206,7 +205,7 @@ public class GameViewController implements Observer {
 	}
 
 	/**
-	 * @return The GameViewController.
+	 * Update method for observer.
 	 */
 	protected static GameViewController getGVC() {
 		return gameViewController;
