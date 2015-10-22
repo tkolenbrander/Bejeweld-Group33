@@ -55,7 +55,7 @@ public class ClassicGame extends Game {
    */
   public void reset() {
     getPlayer().reset();
-    getBoard().reset();
+    resetBoard();
   }
   
   /**

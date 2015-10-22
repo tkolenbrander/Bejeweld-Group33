@@ -25,6 +25,7 @@ public class BoardTest {
 
 	private Board board;
 	private Board board2;
+	private BoardFactory boardFactory;
 	private Cell[][] cells;
 	private Cell[][] cells2;
 	private Cell b;
@@ -38,6 +39,7 @@ public class BoardTest {
 	 */
 	@Before
 	public void setUp() {
+		boardFactory = new BoardFactory();
 		Gem bl = new RegularGem(GemType.BLUE);
 		Gem wh = new RegularGem(GemType.WHITE);
 		Gem gr = new RegularGem(GemType.GREEN);
@@ -51,11 +53,11 @@ public class BoardTest {
 		cells = new Cell[][] {{b, w, b, w, b, w, b, w}, {g, p, g, p, g, p, g, p},
 				{b, w, b, w, b, w, b, w}, {g, p, g, p, g, p, g, p}, {b, w, b, w, b, w, b, w},
 				{g, p, g, p, g, p, g, p}, {b, w, b, w, b, w, b, o}, {g, p, g, p, g, p, g, o}};
-		board = new Board(cells);
+		board = boardFactory.generateBoard(cells);
 		cells2 = new Cell[][] {{b, w, b, w, b, w, b, w}, {g, p, g, p, g, p, g, p},
 				{b, w, b, w, b, w, b, w}, {g, p, g, p, g, p, g, p}, {b, w, b, w, b, w, b, w},
 				{g, p, g, p, g, p, g, p}, {b, w, b, w, b, w, b, o}, {g, p, g, p, g, p, g, o}};
-		board2 = new Board(cells2);
+		board2 = boardFactory.generateBoard(cells2);
 	}
 	
 	@Test
@@ -68,7 +70,7 @@ public class BoardTest {
 		cells = new Cell[][] {{o, w, b, w, b, w, b, w}, {g, p, g, p, g, p, g, p},
 				{b, w, b, w, b, w, b, w}, {g, p, g, p, g, p, g, p}, {b, w, b, w, b, w, b, w},
 				{g, p, g, p, g, p, g, p}, {b, w, b, w, b, w, b, o}, {g, p, g, p, g, p, g, o}};
-		board = new Board(cells);
+		board = boardFactory.generateBoard(cells);
 		assertFalse(board.equals(board2));
 	}
 
@@ -79,15 +81,6 @@ public class BoardTest {
 	public void getCellsTest()  {
 		Cell[][] cells2 = board.getCells();
 		assertTrue(Arrays.deepEquals(cells, cells2)); 
-	}
-
-	/**
-	 * tests the reset method.
-	 */
-	@Test
-	public void resetTest() {
-		board2.reset();
-		assertFalse(board.equals(board2));
 	}
 
 	/**
@@ -102,38 +95,38 @@ public class BoardTest {
 	}
 
 
-	
-	/**
-	 * Tests the isTripletAt method with a false outcome.
-	 */
-	@Test
-	public void isTripletAtTest_False() {
-		assertFalse(board.isTripletAt(0, 0));
-	}
-	
-	/**
-	 * Tests the isTripletAt method with a true outcome horizontally.
-	 */
-	@Test
-	public void isTripletAtTest_True_Horizontal() {
-		Cell[][] cells = new Cell[][] {{b, b, b, w, b, w, b, w}, {g, p, g, p, g, p, g, p},
-				{b, w, b, w, b, w, b, w}, {g, p, g, p, g, p, g, p}, {b, w, b, w, b, w, b, w},
-				{g, p, g, p, g, p, g, p}, {b, w, b, w, b, w, b, o}, {g, p, g, p, g, p, g, null}};
-		Board board = new Board(cells);
-		assertTrue(board.isTripletAt(0, 0));
-	}
-	
-	/**
-	 * Tests the isTripletAt method with a true outcome vertically.
-	 */
-	@Test
-	public void isTripletAtTest_True_Vertical() {
-		Cell[][] cells = new Cell[][] {{b, w, b, w, b, w, b, w}, {b, p, g, p, g, p, g, p},
-				{b, w, b, w, b, w, b, w}, {g, p, g, p, g, p, g, p}, {b, w, b, w, b, w, b, w},
-				{g, p, g, p, g, p, g, p}, {b, w, b, w, b, w, b, o}, {g, p, g, p, g, p, g, null}};
-		Board board = new Board(cells);
-		assertTrue(board.isTripletAt(0, 0));
-	}
+// Tests not relevant anymore	
+//	/**
+//	 * Tests the isTripletAt method with a false outcome.
+//	 */
+//	@Test
+//	public void isTripletAtTest_False() {
+//		assertFalse(board.isTripletAt(0, 0));
+//	}
+//	
+//	/**
+//	 * Tests the isTripletAt method with a true outcome horizontally.
+//	 */
+//	@Test
+//	public void isTripletAtTest_True_Horizontal() {
+//		Cell[][] cells = new Cell[][] {{b, b, b, w, b, w, b, w}, {g, p, g, p, g, p, g, p},
+//				{b, w, b, w, b, w, b, w}, {g, p, g, p, g, p, g, p}, {b, w, b, w, b, w, b, w},
+//				{g, p, g, p, g, p, g, p}, {b, w, b, w, b, w, b, o}, {g, p, g, p, g, p, g, null}};
+//		Board board = new Board(cells);
+//		assertTrue(board.isTripletAt(0, 0));
+//	}
+//	
+//	/**
+//	 * Tests the isTripletAt method with a true outcome vertically.
+//	 */
+//	@Test
+//	public void isTripletAtTest_True_Vertical() {
+//		Cell[][] cells = new Cell[][] {{b, w, b, w, b, w, b, w}, {b, p, g, p, g, p, g, p},
+//				{b, w, b, w, b, w, b, w}, {g, p, g, p, g, p, g, p}, {b, w, b, w, b, w, b, w},
+//				{g, p, g, p, g, p, g, p}, {b, w, b, w, b, w, b, o}, {g, p, g, p, g, p, g, null}};
+//		Board board = new Board(cells);
+//		assertTrue(board.isTripletAt(0, 0));
+//	}
 	
 	/**
 	 * tests the isTripletInDir method with a true outcome horizontally.
@@ -143,7 +136,7 @@ public class BoardTest {
 		Cell[][] cells = new Cell[][] {{b, b, b, w, b, w, b, w}, {g, p, g, p, g, p, g, p},
 				{b, w, b, w, b, w, b, w}, {g, p, g, p, g, p, g, p}, {b, w, b, w, b, w, b, w},
 				{g, p, g, p, g, p, g, p}, {b, w, b, w, b, w, b, o}, {g, p, g, p, g, p, g, null}};
-		Board board = new Board(cells);
+		Board board = boardFactory.generateBoard(cells);
 		assertTrue(board.isTripletInDir(0, 0, Direction.EAST));
 	}
 	
@@ -155,7 +148,7 @@ public class BoardTest {
 		Cell[][] cells = new Cell[][] {{b, w, b, w, b, w, b, w}, {b, p, g, p, g, p, g, p},
 				{b, w, b, w, b, w, b, w}, {g, p, g, p, g, p, g, p}, {b, w, b, w, b, w, b, w},
 				{g, p, g, p, g, p, g, p}, {b, w, b, w, b, w, b, o}, {g, p, g, p, g, p, g, null}};
-		Board board = new Board(cells);
+		Board board = boardFactory.generateBoard(cells);
 		assertTrue(board.isTripletInDir(0, 0, Direction.SOUTH));
 	}
 	
@@ -183,7 +176,7 @@ public class BoardTest {
 		Cell[][] cells = new Cell[][] {{b, b, b, w, b, w, b, w}, {g, p, g, p, g, p, g, p},
 				{b, w, b, w, b, w, b, w}, {g, p, g, p, g, p, g, p}, {b, w, b, w, b, w, b, w},
 				{g, p, g, p, g, p, g, p}, {b, w, b, w, b, w, b, o}, {g, p, g, p, g, p, g, null}};
-		Board board = new Board(cells);
+		Board board = boardFactory.generateBoard(cells);
 		List<Position> list = board.getChainAt(0, 0, Direction.EAST);
 		List<Position> list2 = new ArrayList<Position>();
 		Position pos1 = new Position(0, 0);
@@ -213,7 +206,7 @@ public class BoardTest {
 		Cell[][] cells = new Cell[][] {{b, b, b, b, o, w, b, w}, {g, p, g, p, g, p, g, p},
 				{b, w, b, w, b, w, b, w}, {g, p, g, p, g, p, g, p}, {b, w, b, w, b, w, b, w},
 				{g, p, g, p, g, p, g, p}, {b, w, b, w, b, w, b, o}, {g, p, g, p, g, p, g, null}};
-		Board board = new Board(cells);
+		Board board = boardFactory.generateBoard(cells);
 		List<Position> list = board.getChainAt(0, 0, Direction.EAST);
 		List<Position> list2 = new ArrayList<Position>();
 		list2.add(new Position(0, 0));
@@ -231,7 +224,7 @@ public class BoardTest {
 		Cell[][] cells = new Cell[][] {{b, b, b, b, b, w, b, w}, {g, p, g, p, g, p, g, p},
 				{b, w, b, w, b, w, b, w}, {g, p, g, p, g, p, g, p}, {b, w, b, w, b, w, b, w},
 				{g, p, g, p, g, p, g, p}, {b, w, b, w, b, w, b, o}, {g, p, g, p, g, p, g, null}};
-		Board board = new Board(cells);
+		Board board = boardFactory.generateBoard(cells);
 		List<Position> list = board.getChainAt(0, 0, Direction.EAST);
 		List<Position> list2 = new ArrayList<Position>();
 		list2.add(new Position(0, 0));
@@ -250,7 +243,7 @@ public class BoardTest {
 		Cell[][] cells = new Cell[][] {{b, b, b, w, b, w, b, w}, {g, p, g, p, g, p, g, p},
 				{g, w, b, w, b, w, b, w}, {g, p, g, p, g, p, g, p}, {b, w, b, w, b, w, b, w},
 				{g, p, g, p, g, p, g, p}, {b, w, b, w, b, w, b, o}, {g, p, g, p, g, p, g, p}};
-		Board board = new Board(cells);
+		Board board = boardFactory.generateBoard(cells);
 		List<List<Position>> chains = board.chainedCells();
 		List<List<Position>> chains2 = new ArrayList<List<Position>>();
 		chains2.add(board.getChainAt(0, 0, Direction.EAST));
@@ -276,13 +269,13 @@ public class BoardTest {
 		Cell[][] cells = new Cell[][] {{b, b, b, w, b, w, b, w}, {g, g, g, p, g, p, g, p},
 				{b, w, b, w, b, w, b, w}, {g, p, g, p, g, p, g, p}, {b, w, b, w, b, w, b, w},
 				{g, p, g, p, g, p, g, p}, {b, w, b, w, b, w, b, o}, {g, p, g, p, g, p, g, p}};
-		Board board = new Board(cells);
+		Board board = boardFactory.generateBoard(cells);
 		board.removeChains();
 		Cell[][] cells2 = new Cell[][] {{null, null, null, w, b, w, b, w}, 
 				{null, null, null, p, g, p, g, p}, {b, w, b, w, b, w, b, w}, 
 				{g, p, g, p, g, p, g, p}, {b, w, b, w, b, w, b, w},
 				{g, p, g, p, g, p, g, p}, {b, w, b, w, b, w, b, o}, {g, p, g, p, g, p, g, p}};
-		Board board2 = new Board(cells2);
+		Board board2 = boardFactory.generateBoard(cells2);
 		assertEquals(board2, board);
 	}
 	
@@ -294,7 +287,7 @@ public class BoardTest {
 		Cell[][] cells = new Cell[][] {{null, w, b, w, b, w, b, w}, {g, p, g, p, g, p, g, p},
 				{b, w, b, w, b, w, b, w}, {g, p, g, p, g, p, g, p}, {b, w, b, w, b, w, b, w},
 				{g, p, g, p, g, p, g, p}, {b, w, b, w, b, w, b, o}, {g, p, g, p, g, p, g, p}};
-		Board board = new Board(cells);
+		Board board = boardFactory.generateBoard(cells);
 		board.fillEmptyCells();
 		assertFalse(board.getCells()[0][0] == null);
 	}
@@ -307,7 +300,7 @@ public class BoardTest {
 		Cell[][] cells = new Cell[][] {{b, b, b, w, b, w, b, w}, {g, p, g, p, g, p, g, p},
 				{b, w, b, w, b, w, b, w}, {g, p, g, p, g, p, g, p}, {b, w, b, w, b, w, b, w},
 				{g, p, g, p, g, p, g, p}, {b, w, b, w, b, w, b, o}, {g, p, g, p, g, p, g, p}};
-		Board board = new Board(cells);
+		Board board = boardFactory.generateBoard(cells);
 		assertTrue(board.hasChain());
 	}
 	
@@ -327,7 +320,7 @@ public class BoardTest {
 		Cell[][] cells = new Cell[][] {{b, w, b, w, b, w, b, w}, {g, b, g, p, g, p, g, p},
 				{b, w, b, w, b, w, b, w}, {g, p, g, p, g, p, g, p}, {b, w, b, w, b, w, b, w},
 				{g, p, g, p, g, p, g, p}, {b, w, b, w, b, w, b, o}, {g, p, g, p, g, p, g, p}};
-		Board board = new Board(cells);
+		Board board = boardFactory.generateBoard(cells);
 		assertTrue(board.checkMoves());
 	}
 	
@@ -365,7 +358,7 @@ public class BoardTest {
 		Cell[][] cells = new Cell[][] {{b, w, b, w, b, w, b, w}, {g, p, g, p, g, p, g, p},
 				{b, w, b, w, b, w, b, w}, {g, p, g, p, g, p, g, p}, {b, w, b, w, b, w, b, w},
 				{g, p, g, p, g, p, g, p}, {b, w, b, w, b, w, b, o}, {g, p, g, p, g, p, g, p}};
-		Board board = new Board(cells);
+		Board board = boardFactory.generateBoard(cells);
 		List<Cell> cell = board.getNeighboursOf(1, 1);
 		List<Cell> cell2 = new ArrayList<Cell>();
 		cell2.add(board.getNeighbourAt(1, 1, Direction.NORTH));
@@ -384,7 +377,7 @@ public class BoardTest {
 		Cell[][] cells2 = new Cell[][] {{w, b, b, w, b, w, b, w}, {g, p, g, p, g, p, g, p},
 				{b, w, b, w, b, w, b, w}, {g, p, g, p, g, p, g, p}, {b, w, b, w, b, w, b, w},
 				{g, p, g, p, g, p, g, p}, {b, w, b, w, b, w, b, o}, {g, p, g, p, g, p, g, o}};
-		Board board2 = new Board(cells2);
+		Board board2 = boardFactory.generateBoard(cells2);
 		assertEquals(board2, board);
 	}
 	
@@ -397,7 +390,7 @@ public class BoardTest {
 		Cell[][] cells = new Cell[][] {{b, b, b, w, b, w, b, w}, {g, b, g, p, g, p, g, p},
 				{b, w, b, w, b, w, b, w}, {g, p, g, p, g, p, g, p}, {b, w, b, w, b, w, b, w},
 				{g, p, g, p, g, p, g, p}, {b, w, b, w, b, w, b, o}, {g, p, g, p, g, p, g, p}};
-		Board board = new Board(cells);
+		Board board = boardFactory.generateBoard(cells);
 		assertEquals(50, board.calculateScore(0));
 	}
 	
@@ -410,7 +403,7 @@ public class BoardTest {
 		Cell[][] cells = new Cell[][] {{b, b, b, b, o, w, b, w}, {g, b, g, p, g, p, g, p},
 				{b, w, b, w, b, w, b, w}, {g, p, g, p, g, p, g, p}, {b, w, b, w, b, w, b, w},
 				{g, p, g, p, g, p, g, p}, {b, w, b, w, b, w, b, o}, {g, p, g, p, g, p, g, p}};
-		Board board = new Board(cells);
+		Board board = boardFactory.generateBoard(cells);
 		assertEquals(100, board.calculateScore(0));
 	}
 	
@@ -423,7 +416,7 @@ public class BoardTest {
 		Cell[][] cells = new Cell[][] {{b, b, b, b, b, w, b, w}, {g, b, g, p, g, p, g, p},
 				{b, w, b, w, b, w, b, w}, {g, p, g, p, g, p, g, p}, {b, w, b, w, b, w, b, w},
 				{g, p, g, p, g, p, g, p}, {b, w, b, w, b, w, b, o}, {g, p, g, p, g, p, g, p}};
-		Board board = new Board(cells);
+		Board board = boardFactory.generateBoard(cells);
 		assertEquals(500, board.calculateScore(0));
 	}
 	
@@ -436,7 +429,7 @@ public class BoardTest {
 		Cell[][] cells = new Cell[][] {{b, b, b, w, b, w, b, w}, {g, b, g, p, g, p, g, p},
 				{b, w, b, w, b, w, b, w}, {g, p, g, p, g, p, g, p}, {b, w, b, w, b, w, b, w},
 				{g, p, g, p, g, p, g, p}, {b, w, b, w, b, w, b, o}, {g, p, g, p, g, p, g, p}};
-		Board board = new Board(cells);
+		Board board = boardFactory.generateBoard(cells);
 		assertEquals(100, board.calculateScore(1));
 	}
 	
@@ -449,7 +442,7 @@ public class BoardTest {
 		Cell[][] cells = new Cell[][] {{b, b, b, w, b, w, b, w}, {g, g, g, p, g, p, g, p},
 				{b, w, b, w, b, w, b, w}, {g, p, g, p, g, p, g, p}, {b, w, b, w, b, w, b, w},
 				{g, p, g, p, g, p, g, p}, {b, w, b, w, b, w, b, o}, {g, p, g, p, g, p, g, p}};
-		Board board = new Board(cells);
+		Board board = boardFactory.generateBoard(cells);
 		assertEquals(100, board.calculateScore(0));
 	}
 	
@@ -471,12 +464,12 @@ public class BoardTest {
 		Cell[][] cells = new Cell[][] {{b, w, b, w, b, w, b, w}, {g, p, g, p, g, p, g, p},
 				{b, w, b, w, b, w, b, w}, {g, p, g, p, g, p, g, p}, {b, w, b, w, b, w, b, w},
 				{g, p, g, p, g, p, g, p}, {b, w, b, w, b, w, b, o}, {g, p, g, p, g, p, g, null}};
-		Board board = new Board(cells);
+		Board board = boardFactory.generateBoard(cells);
 		board.falldown();
 		Cell[][] cells2 = new Cell[][] {{b, w, b, w, b, w, b, null}, {g, p, g, p, g, p, g, w},
 				{b, w, b, w, b, w, b, p}, {g, p, g, p, g, p, g, w}, {b, w, b, w, b, w, b, p},
 				{g, p, g, p, g, p, g, w}, {b, w, b, w, b, w, b, p}, {g, p, g, p, g, p, g, o}};
-		Board board2 = new Board(cells2);
+		Board board2 = boardFactory.generateBoard(cells2);
 		assertEquals(board2, board);
 	}
 
@@ -490,12 +483,12 @@ public class BoardTest {
 				{b, w, b, w, b, w, b, w}, {g, p, g, p, g, p, g, p}, {b, w, b, w, b, w, b, w},
 				{g, p, g, p, g, p, g, null}, {b, w, b, w, b, w, b, null},
 				{g, p, g, p, g, p, g, null}};
-		Board board = new Board(cells);
+		Board board = boardFactory.generateBoard(cells);
 		board.falldown();
 		Cell[][] cells2 = new Cell[][] {{b, w, b, w, b, w, b, null}, {g, p, g, p, g, p, g, null},
 				{b, w, b, w, b, w, b, null}, {g, p, g, p, g, p, g, w}, {b, w, b, w, b, w, b, p},
 				{g, p, g, p, g, p, g, w}, {b, w, b, w, b, w, b, p}, {g, p, g, p, g, p, g, w}};
-		Board board2 = new Board(cells2);
+		Board board2 = boardFactory.generateBoard(cells2);
 		assertEquals(board2, board);
 	}
 }

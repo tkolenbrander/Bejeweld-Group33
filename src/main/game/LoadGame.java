@@ -39,7 +39,7 @@ public final class LoadGame {
 		synchronized (SYNC) {
 			Cell[][] cells = new Cell[Board.BOARDSIZE][Board.BOARDSIZE];
 			Scanner in = null;
-			
+			ClassicGame game = new ClassicGame();
 			try {
 				in = new Scanner(new FileReader(PATH));
 				Player player = new Player(in.nextInt());
@@ -62,7 +62,8 @@ public final class LoadGame {
 						}
 					}
 				}
-				return new ClassicGame(new Board(cells), player);
+				game = new ClassicGame(game.getBoardFactory().generateBoard(cells), player);
+				return game;
 			}
 			
 			finally {

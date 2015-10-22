@@ -6,6 +6,7 @@ import java.util.List;
 import main.exceptions.MoveNotValidException;
 import main.gui.TimelineController;
 import main.board.Board;
+import main.board.BoardFactory;
 import main.board.Change;
 import main.board.Position;
 
@@ -21,6 +22,7 @@ public abstract class Game {
 
 	private Player player;
 	private Board board;
+	private static BoardFactory boardFactory;
 	private boolean inProgress;
 
 	/**
@@ -29,7 +31,8 @@ public abstract class Game {
 	 */
 	public Game() {
 		player = new Player();
-		board = new Board();
+		boardFactory = new BoardFactory();
+		board = boardFactory.generateBoard();
 		inProgress = false;
 	}
 
@@ -64,10 +67,25 @@ public abstract class Game {
 	}
 	
 	/**
+	 * Resets the board of game.
+	 */
+	public void resetBoard() {
+		board = boardFactory.generateBoard();
+	}
+	
+	/**
 	 * @return True if the game is in progress.
 	 */
 	public boolean inProgress() {
 		return inProgress;
+	}
+	
+	/**
+	 * Returns the boardFactory that is used.
+	 * @return The boardFactory that is used.
+	 */	
+	public BoardFactory getBoardFactory() {
+		return boardFactory;
 	}
 	
 	/**
