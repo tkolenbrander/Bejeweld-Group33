@@ -26,3 +26,8 @@
 #pane {
 	-fx-background-color: #053565;
 }
+
+#gameover {
+	-fx-background-color: #444;
+	/* Blur effect would be cool */
+}
