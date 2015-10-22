@@ -13,7 +13,7 @@
          <top>
             <Pane fx:id="topPane" prefHeight="50.0" prefWidth="520.0" BorderPane.alignment="CENTER">
                <children>
-                  <Label fx:id="scoreLabel" layoutX="150.0" layoutY="8.0" text="Score: ">
+                  <Label fx:id="scoreLabel" layoutX="189.0" layoutY="8.0" text="Score: ">
                      <font>
                         <Font size="24.0" />
                      </font>
