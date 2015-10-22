@@ -7,6 +7,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
 import main.SwekJeweled;
+import main.game.ClassicGame;
 
 /**
  * Controller class for the New Game selection screen.
@@ -25,7 +26,7 @@ public class NewGameViewController {
 	private void initialize() {
 
 		newNormalButton.setOnAction((event) -> {
-			GameViewController.show();
+			GameViewController.show(new ClassicGame());
 		});
 
 		newTimeTrialButton.setOnAction((event) -> {
