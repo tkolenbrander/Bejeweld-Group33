@@ -1,13 +1,13 @@
-package main.board;
+package main.board.gems;
 
 import javafx.scene.image.Image;
 
 /**
- * A class to represent a special Power Gem
+ * A class to represent a special Power Gem.
  * @author Ruben
  *
  */
-public class PowerGem extends Gem{
+public class PowerGem extends Gem {
 
 	/**
 	 * Creates a PowerGem object with GemType t.

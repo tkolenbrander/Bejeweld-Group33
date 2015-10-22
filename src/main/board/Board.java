@@ -5,6 +5,11 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
+import main.board.gems.Gem;
+import main.board.gems.GemType;
+import main.board.gems.PowerGem;
+import main.board.gems.RegularGem;
+
 /**
  * Class to represent a Board.
  * 

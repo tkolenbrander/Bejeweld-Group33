@@ -10,8 +10,8 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
-
 import main.SwekJeweled;
+import main.game.ClassicGame;
 import main.game.Game;
 import main.game.LoadGame;
 import main.game.Logger;
@@ -48,7 +48,7 @@ public class GameViewController implements Observer {
 	@FXML
 	private void initialize() {
 
-		game = new Game();
+		game = new ClassicGame();
 		game.start();
 		game.getPlayer().register(this);
 

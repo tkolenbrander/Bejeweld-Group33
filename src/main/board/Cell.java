@@ -1,5 +1,7 @@
 package main.board;
 
+import main.board.gems.Gem;
+
 /**
  * Creates a cell object.
  * @author Bart van Oort
