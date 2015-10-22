@@ -11,7 +11,7 @@
    <children>
       <BorderPane fx:id="borderPane" layoutX="160.0" layoutY="197.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <top>
-            <Pane id="pane" fx:id="topPane" prefHeight="50.0" prefWidth="520.0" styleClass="style.css" BorderPane.alignment="CENTER">
+            <Pane id="pane" fx:id="topPane" prefHeight="50.0" prefWidth="520.0" BorderPane.alignment="CENTER">
                <children>
                   <Label fx:id="scoreLabel" layoutX="189.0" layoutY="8.0" text="Score: " textFill="WHITE">
                      <font>
@@ -24,7 +24,7 @@
             </Pane>
          </top>
          <bottom>
-            <Pane id="pane" fx:id="bottomPane" prefHeight="61.0" prefWidth="520.0" styleClass="style.css" BorderPane.alignment="CENTER">
+            <Pane id="pane" fx:id="bottomPane" prefHeight="61.0" prefWidth="520.0" BorderPane.alignment="CENTER">
                <children>
                   <Label fx:id="errorLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="19.0" layoutY="7.0" prefHeight="17.0" prefWidth="481.0" textAlignment="CENTER" textFill="RED">
                      <font>
