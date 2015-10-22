@@ -20,5 +20,9 @@
         #000000,
         linear-gradient(#7ebcea, #2f4b8f),
         linear-gradient(#426ab7, #263e75),
-        linear-gradient(#555dab, #374570);
+        linear-gradient(#395c77, #223733);
+}
+
+#pane {
+	-fx-background-color: #053565;
 }
