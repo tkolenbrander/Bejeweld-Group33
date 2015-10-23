@@ -147,7 +147,7 @@ public class BoardPane {
 	 * @param view
 	 * 			  The imageview
 	 */
-	public void clicked(int x, int y, ImageView view) {
+	public synchronized void clicked(int x, int y, ImageView view) {
 		Board board = GameViewController.getGame().getBoard();
 		Cell[][] cells = board.getCells();
 		Gem gem = cells[y][x].getGem();
