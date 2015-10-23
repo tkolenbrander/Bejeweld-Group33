@@ -28,7 +28,7 @@ public final class SaveGame {
 	 * Saves the game to the save game.
 	 * @param game Game to be saved.
 	 */
-	public static void save(Game game) {
+	public static void save(GameState game) {
 		synchronized (SYNC) {
 			PrintWriter out = null;
 			try {

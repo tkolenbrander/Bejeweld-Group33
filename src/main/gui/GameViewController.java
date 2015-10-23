@@ -19,6 +19,8 @@ import javafx.util.Duration;
 import main.SwekJeweled;
 import main.game.ClassicGame;
 import main.game.Game;
+import main.game.GameOver;
+import main.game.GameState;
 import main.game.LoadGame;
 import main.game.Logger;
 import main.game.Observer;
@@ -38,7 +40,7 @@ public class GameViewController implements Observer {
 
 	private static GameViewController gameViewController;
 
-	private static Game game;
+	private static GameState game;
 	private static BoardPane boardPane;
 
 	@FXML private BorderPane borderPane;
@@ -164,11 +166,7 @@ public class GameViewController implements Observer {
 	 */
 	private void initGORestartButton() {
 		gameOverRestartButton.setOnAction((event) -> {
-			if (game instanceof TimeTrialGame) {
-				GameViewController.show(new TimeTrialGame());
-			} else {
-				GameViewController.show(new ClassicGame());
-			}
+			game.reset();
 		});
 	}
 
@@ -187,7 +185,7 @@ public class GameViewController implements Observer {
 	 * @param type The type of game. Either Classic or Time Trial.
 	 */
 	public static void show(Game type) {
-		GameViewController.game = type;
+		game = type;
 
 		FXMLLoader l = new FXMLLoader();
 		l.setLocation(SwekJeweled.class.getClassLoader().getResource(FILENAME));
@@ -216,6 +214,7 @@ public class GameViewController implements Observer {
 	public void setGameOver() {
 		scoreLabelGO.setText(scoreLabel.getText());
 		gameOverPane.setVisible(true);
+		game = new GameOver(game);
 	}
 
 	/**
@@ -271,7 +270,7 @@ public class GameViewController implements Observer {
 	/**
 	 * @return The game.
 	 */
-	protected static Game getGame() {
+	protected static GameState getGame() {
 		return game;
 	}
 
