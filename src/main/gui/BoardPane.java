@@ -100,7 +100,6 @@ public class BoardPane {
 				image.setY(y * SPRITE_SIZE);
 				image.setOnMousePressed(new EventHandler<MouseEvent>() {
 					public void handle(MouseEvent me) {
-						System.out.println(me.getSceneX() + ", " + (me.getSceneY() - 55));
 						int x = (int) me.getSceneX() / SPRITE_SIZE;
 						int y = (int) (me.getSceneY() - 55) / SPRITE_SIZE;
 						if (!animating) {
@@ -152,9 +151,6 @@ public class BoardPane {
 		Cell[][] cells = board.getCells();
 		Gem gem = cells[y][x].getGem();
 
-		//ImageView view = imageviews[x][y];
-		System.out.println("Selected: " + gem.getType());
-
 		if (selected) {			
 			makeMove(new Position(x, y), selectedPosition);
 			SequentialTransition t = controller.getTimeline();
@@ -189,7 +185,7 @@ public class BoardPane {
 	 * @param gem
 	 *            The gem whose 'clicked' sprite shall be added.
 	 */
-	public void displayClicked(ImageView view, Gem gem) {
+	public synchronized void displayClicked(ImageView view, Gem gem) {
 		view.setImage(gem.getImageClicked());
 	}
 
@@ -201,7 +197,7 @@ public class BoardPane {
 	 * @param gem
 	 *            The gem whose sprite shall be added.
 	 */
-	public void displayNormal(ImageView view, Gem gem) {
+	public synchronized void displayNormal(ImageView view, Gem gem) {
 		view.setImage(gem.getImage());
 	}
 

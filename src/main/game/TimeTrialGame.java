@@ -161,6 +161,7 @@ public class TimeTrialGame extends Game {
 	private void boardNeedsReset() {
 		if (!getBoard().checkMoves()) {
 			getBoard().reset();
+			GameViewController.getGVC().refreshBoard("No more moves left, Board refreshed!");
 		}
 	}
 }

@@ -287,4 +287,13 @@ public class GameViewController implements Observer {
 	public static GameViewController getGVC() {
 		return gameViewController;
 	}
+	
+	/**
+	 * Refreshes the current board and posts a message to the user with it.
+	 * @param message the message to be posted.
+	 */
+	public void refreshBoard(String message) {
+	  boardPane.initBoard();
+	  setError(message);
+	}
 }
