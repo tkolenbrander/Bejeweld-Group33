@@ -7,6 +7,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.effect.BoxBlur;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
@@ -30,15 +31,19 @@ public class GameViewController implements Observer {
 
 	private static final String FILENAME = "game.fxml";
 
+	private static GameViewController gameViewController;
+
 	private static Game game;
 	private static BoardPane boardPane;
-	
+
 	public static boolean isGameOver;
 
 	@FXML private BorderPane borderPane;
 	@FXML private AnchorPane gameOverPane;
 	@FXML private Pane topPane;
 	@FXML private Pane bottomPane;
+	@FXML private Pane topMidPane;
+	@FXML private Pane bottomMidPane;
 
 	@FXML private Button saveGameButton;
 	@FXML private Button loadGameButton;
@@ -50,6 +55,7 @@ public class GameViewController implements Observer {
 
 	@FXML private Label scoreLabel;
 	@FXML private Label errorLabel;
+	@FXML private Label scoreLabelGO;
 
 	@FXML
 	private void initialize() {
@@ -64,8 +70,13 @@ public class GameViewController implements Observer {
 		//Make sure the top pane is over the falling gems
 		borderPane.getChildren().remove(topPane);
 		borderPane.setTop(topPane);
-		
+
 		scoreLabel.setText("Score: 0");
+
+		//TODO Make this work
+		BoxBlur boxBlur = new BoxBlur(10,30,3);
+		topMidPane.setEffect(boxBlur);
+		bottomMidPane.setEffect(boxBlur);
 
 		initializeButtons();
 
@@ -108,7 +119,7 @@ public class GameViewController implements Observer {
 			game.getPlayer().unregister(this);
 			MenuViewController.show();
 		});
-		
+
 		gameOverRestartButton.setOnAction((event) -> {
 			GameViewController.show(new ClassicGame());
 		});
@@ -137,16 +148,18 @@ public class GameViewController implements Observer {
 
 		try {
 			AnchorPane game = l.load();
+			GameViewController.gameViewController = l.getController();
 			SwekJeweled.getStage().setScene(new Scene(game));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	/**
 	 * Enables the game over screen.
 	 */
 	protected void setGameOver() {
+		scoreLabelGO.setText(scoreLabel.getText());
 		gameOverPane.setVisible(true);
 	}
 
@@ -191,12 +204,11 @@ public class GameViewController implements Observer {
 	protected static BoardPane getBoardPane() {
 		return boardPane;
 	}
-	
+
 	/**
 	 * @return The GameViewController.
 	 */
 	protected static GameViewController getGVC() {
-		//TODO Get this working to fix all ui bugs
-		return null;
+		return gameViewController;
 	}
 }
