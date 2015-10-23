@@ -293,6 +293,7 @@ public class GameViewController implements Observer {
 	 * @param message the message to be posted.
 	 */
 	public void refreshBoard(String message) {
+	  boardPane.getBoardPane().getChildren().clear();
 	  boardPane.initBoard();
 	  setError(message);
 	}
