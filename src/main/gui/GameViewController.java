@@ -76,6 +76,7 @@ public class GameViewController implements Observer {
 		scoreLabel.setText("Score: 0");
 
 		//TODO Make this work
+		//Boxblur cannot be applied to a pane, Gaben pls fix
 		BoxBlur boxBlur = new BoxBlur(10, 30, 3);
 		topMidPane.setEffect(boxBlur);
 		bottomMidPane.setEffect(boxBlur);
@@ -153,7 +154,7 @@ public class GameViewController implements Observer {
 	private void initExitGameButton() {
 		exitGameButton.setOnAction((event) -> {
 			game.getPlayer().unregister(this);
-			game.stop(); //TODO Change to to be implemented close method
+			game.close();
 			MenuViewController.show();
 		});
 	}
