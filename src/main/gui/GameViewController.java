@@ -7,9 +7,11 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.effect.BoxBlur;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
+
 import main.SwekJeweled;
 import main.game.ClassicGame;
 import main.game.Game;
@@ -17,6 +19,7 @@ import main.game.LoadGame;
 import main.game.Logger;
 import main.game.Observer;
 import main.game.SaveGame;
+import main.game.TimeTrialGame;
 
 /**
  * Controller class for the game.
@@ -29,54 +32,89 @@ public class GameViewController implements Observer {
 
 	private static final String FILENAME = "game.fxml";
 
+	private static GameViewController gameViewController;
+
 	private static Game game;
 	private static BoardPane boardPane;
 
 	@FXML private BorderPane borderPane;
+	@FXML private AnchorPane gameOverPane;
+	@FXML private Pane topPane;
+	@FXML private Pane bottomPane;
+	@FXML private Pane topMidPane;
+	@FXML private Pane bottomMidPane;
 
 	@FXML private Button saveGameButton;
 	@FXML private Button loadGameButton;
 	@FXML private Button restartGameButton;
 	@FXML private Button exitGameButton;
+	@FXML private Button gameOverRestartButton;
+	@FXML private Button gameOverMenuButton;
 
 	@FXML private Label scoreLabel;
 	@FXML private Label errorLabel;
-
-	@FXML private Pane topPane;
-	@FXML private Pane bottomPane;
+	@FXML private Label remainingTime;
+	@FXML private Label scoreLabelGO;
 
 	@FXML
 	private void initialize() {
 
-		game = new ClassicGame();
 		game.start();
 		game.getPlayer().register(this);
 
 		boardPane = new BoardPane();
 		borderPane.setCenter(boardPane.getBoardPane());
+		borderPane.getCenter().setStyle("-fx-background-image: url(\"/gemback.png\");");
 
-		topPane.setStyle("-fx-background-color: #C0C0C0;");
+		//Make sure the top pane is over the falling gems
 		borderPane.getChildren().remove(topPane);
 		borderPane.setTop(topPane);
-		bottomPane.setStyle("-fx-background-color: #C0C0C0;");
-
 		scoreLabel.setText("Score: 0");
 
-		initializeButtons();
+		//TODO Make this work
+		BoxBlur boxBlur = new BoxBlur(10, 30, 3);
+		topMidPane.setEffect(boxBlur);
+		bottomMidPane.setEffect(boxBlur);
 
-		Logger.logInfo("New Normal game started");
+		initializeButtons();
+		
+		if (game instanceof TimeTrialGame) {
+			saveGameButton.setVisible(false);
+			loadGameButton.setVisible(false);
+			remainingTime.setVisible(true);
+			Logger.logInfo("New Time Trial game started");
+		} else {
+			Logger.logInfo("New Normal game started");
+		}
 	}
 
 	/**
 	 * Initializes the on-screen buttons.
 	 */
 	private void initializeButtons() {
+		initSaveGameButton();
+		initLoadGameButton();
+		initRestartGameButton();
+		initExitGameButton();
+		initGORestartButton();
+		initGOMenuButton();
+	}
+	
+	/**
+	 * Initialize the save game button.
+	 */
+	private void initSaveGameButton() {
 		saveGameButton.setOnAction((event) -> {
 			SaveGame.save(game);
 			setError("Game saved!");
 			Logger.logInfo("Game saved");
 		});
-
+	}
+	
+	/**
+	 * Initialize the load game button.
+	 */
+	private void initLoadGameButton() {
 		loadGameButton.setOnAction((event) -> {
 			try {
 				game = LoadGame.load();
@@ -91,68 +129,67 @@ public class GameViewController implements Observer {
 				Logger.logWarning("Failed to load game from file with error: " + e);
 			} 
 		});
-
+	}
+	
+	/**
+	 * Initialize the restart game button.
+	 */
+	private void initRestartGameButton() {
 		restartGameButton.setOnAction((event) -> {
 			game.reset();
 			game.start();
 			setScore(0);
 			boardPane.refresh();
 		});
-
+	}
+	
+	/**
+	 * Initialize the exit game button.
+	 */
+	private void initExitGameButton() {
 		exitGameButton.setOnAction((event) -> {
 			game.getPlayer().unregister(this);
+			game.stop(); //TODO Change to to be implemented close method
+			MenuViewController.show();
+		});
+	}
+	
+	/**
+	 * Initialize the restart game button on the game over screen.
+	 */
+	private void initGORestartButton() {
+		gameOverRestartButton.setOnAction((event) -> {
+			if (game instanceof TimeTrialGame) {
+				GameViewController.show(new TimeTrialGame());
+			} else {
+				GameViewController.show(new ClassicGame());
+			}
+		});
+	}
+	
+	/**
+	 * Initialize the menu button on the game over screen.
+	 */
+	private void initGOMenuButton() {
+		gameOverMenuButton.setOnAction((event) -> {
 			MenuViewController.show();
 		});
 	}
 
 	/**
-	 * Sets a message for the error label.
-	 * @param s the message to be displayed
-	 */
-	protected void setError(String s) {
-		errorLabel.setText(s);
-	}
-
-	/**
-	 * Sets a number for the score label.
-	 * @param score number to be displayed
-	 */
-	protected void setScore(int score) {
-		String s = "Score: " + score;
-		scoreLabel.setText(s);
-	}
-
-	/**
-	 * @return The game.
-	 */
-	protected static Game getGame() {
-		return game;
-	}
-
-	/**
-	 * @return The GameViewController.
-	 */
-	//	protected static GameViewController getGameViewController() {
-	//		return this;
-	//		TODO Alternative that works
-	//	}
-
-	/**
-	 * @return The boardpane.
-	 */
-	protected static BoardPane getBoardPane() {
-		return boardPane;
-	}
-
-	/**
 	 * Show this view.
+	 * 
+	 * @param type The type of game. Either Classic or Time Trial.
 	 */
-	public static void show() {
+	public static void show(Game type) {
+		GameViewController.game = type;
+
 		FXMLLoader l = new FXMLLoader();
 		l.setLocation(SwekJeweled.class.getClassLoader().getResource(FILENAME));
 
 		try {
 			AnchorPane game = l.load();
+			GameViewController.gameViewController = l.getController();
 			SwekJeweled.getStage().setScene(new Scene(game));
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -167,5 +204,62 @@ public class GameViewController implements Observer {
 		int newScore = (int) game.getPlayer().getUpdate(this);
 		setScore(newScore);
 	}
+	
+	/**
+	 * Enables the game over screen.
+	 */
+	public void setGameOver() {
+		scoreLabelGO.setText(scoreLabel.getText());
+		gameOverPane.setVisible(true);
+	}
 
+	/**
+	 * Sets a message for the error label.
+	 * 
+	 * @param s the message to be displayed
+	 */
+	protected void setError(String s) {
+		errorLabel.setText(s);
+	}
+
+	/**
+	 * Sets a number for the score label.
+	 * 
+	 * @param score number to be displayed
+	 */
+	protected void setScore(int score) {
+		String s = "Score: " + score;
+		scoreLabel.setText(s);
+	}
+	
+	/**
+	 * Sets the timer.
+	 * 
+	 * @param timer number to be displayed
+	 */
+	public void setTimer(int timer) {
+		String s = "Time: " + timer;
+		remainingTime.setText(s);
+	}
+
+	/**
+	 * @return The game.
+	 */
+	protected static Game getGame() {
+		return game;
+	}
+
+	/**
+	 * @return The boardpane.
+	 */
+	protected static BoardPane getBoardPane() {
+		return boardPane;
+	}
+
+	/**
+	 * @return The GameViewController.
+	 */
+	public static GameViewController getGVC() {
+		return gameViewController;
+	}
 }
