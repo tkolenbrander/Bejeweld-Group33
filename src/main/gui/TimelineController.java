@@ -85,7 +85,7 @@ public class TimelineController {
 	 */
 	public KeyValue[] generateKeyValues(List<Change<Position>> changes) {
 		KeyValue[] keyValues = new KeyValue[changes.size()];
-		ImageView[][] imageViews = GUI.getBoardPane().getImageViews();
+		ImageView[][] imageViews = GameViewController.getBoardPane().getImageViews();
 
 		for (int i = 0; i < changes.size(); i++) {
 			Change<Position> change = changes.get(i);
@@ -159,9 +159,9 @@ public class TimelineController {
 		newImage.setY(-65);
 		addMousePressed(newImage);		
 
-		GUI.getgui().boxToFront();
+		//GUI.getgui().boxToFront();
 		newImage.toBack();      
-		GUI.getBoardPane().getPane().getChildren().add(newImage);
+		GameViewController.getBoardPane().getPane().getChildren().add(newImage);
 		ImageView ivTo = imageViews[to.getX()][to.getY()];
 
 		return new KeyValue(ivTo.yProperty(), to.getY() * 65, Interpolator.LINEAR);
@@ -177,7 +177,7 @@ public class TimelineController {
 				System.out.println(me.getSceneX() + ", " + (me.getSceneY() - 55));
 				int x = (int) me.getSceneX() / 65;
 				int y = (int) (me.getSceneY() - 55) / 65;
-				GUI.getBoardPane().clicked(x, y, newImage);
+				GameViewController.getBoardPane().clicked(x, y, newImage);
 			}
 		});
 	}
@@ -188,7 +188,7 @@ public class TimelineController {
 	 * @param two The position of the second cell to swap with.
 	 */
 	public static void swap(Position one, Position two) {
-		ImageView[][] imageViews = GUI.getBoardPane().getImageViews();
+		ImageView[][] imageViews = GameViewController.getBoardPane().getImageViews();
 		SequentialTransition sequence = new SequentialTransition();
 		Timeline t = new Timeline();		
 

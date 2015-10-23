@@ -35,20 +35,6 @@ public class ClassicGame extends Game {
   }
   
   /**
-   * Starts the game.
-   */
-  public void start() {
-    setInProgress(true);
-  }
-
-  /**
-   * Pauses the game.
-   */
-  public void stop() {
-    setInProgress(false);
-  }
-  
-  /**
    * Resets the game to how it was when it was just initialised.
    * Ahhh, I remember it like it was yesterday. He was just such a cute little game.
    * Wait, it was yesterday...
@@ -69,7 +55,6 @@ public class ClassicGame extends Game {
    * are not adjacent.
    */
   public boolean moveAllowed(Position one, Position two) throws MoveNotValidException {
-    if (inProgress()) {
       Logger.logInfo("Attempting to swap gem at (" + one.getX() + "," + one.getY() + ") "
           + "with (" + two.getX() + "," + two.getY() + ")");
       if (one.isAdjacentTo(two)) {
@@ -78,20 +63,14 @@ public class ClassicGame extends Game {
       else {
         throw new MoveNotValidException("Cells not adjacent");
       }
-    }
-    return false;
   }
   
   /**
    * Checks if the game is over. A game is over when there are no more moves left.
-   * @return if the game is over.
    */
-  public boolean isGameOver() {
+  public void checkGameOver() {
     if (!(getBoard().checkMoves())) {
-      Logger.logInfo("Game over! Score was " + getPlayer().getScore());
       stop();
-      return true;
     }
-    return false;
   }
 }

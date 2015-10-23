@@ -27,6 +27,11 @@ public class Board {
 	 * Contains all the cells of the board.
 	 */
 	private Cell[][] board;
+	
+	/**
+	 * Amount of newly generated power gems in the last move.
+	 */
+	private int newPowerGems;
 
 	/**
 	 * Constructor for a board.
@@ -42,6 +47,7 @@ public class Board {
 	 */
 	public Board(Cell[][] cells) {
 		board = cells;
+		newPowerGems = 0;
 	}
 
 	/**
@@ -52,6 +58,22 @@ public class Board {
 		return board;
 	}
 	
+	/**
+	 * Returns the amount of newly generated power gems in the last move.
+	 * @return the amount of newly generated power gems in the last move.
+	 */
+	public int getNewPowerGems() {
+	  return newPowerGems;
+	}
+	
+	/**
+	 * Called before a move is made. Resets the number to keep track of the 
+	 * amount of newly generated power gems.
+	 */
+	public void resetNewPowerGems() {
+	  newPowerGems = 0;
+	}
+
 	/**
 	 * Set the cells of the board
 	 * @param cells The matrix of cells to set as the board.
@@ -173,6 +195,7 @@ public class Board {
 				Gem powerGem = new PowerGem(type);
 				board[powerPos.getY()][powerPos.getX()] = new Cell(powerGem);
 				changes.add(new Create<Position>(powerPos, powerGem));
+				newPowerGems++;
 			}
 		}
 		return changes;

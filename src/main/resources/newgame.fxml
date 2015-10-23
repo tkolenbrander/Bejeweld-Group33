@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="620.0" prefWidth="520.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.gui.NewGameViewController">
+   <children>
+      <Button id="button" fx:id="newNormalButton" layoutX="190.0" layoutY="310.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="140.0" styleClass="style.css" text="Normal Game" AnchorPane.topAnchor="310.0" />
+      <Button id="button" fx:id="newBackButton" layoutX="190.0" layoutY="380.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="140.0" styleClass="style.css" text="Back" AnchorPane.topAnchor="380.0" />
+      <Button id="button" fx:id="newTimeTrialButton" layoutX="190.0" layoutY="345.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="140.0" styleClass="style.css" text="Time Trial" AnchorPane.topAnchor="345.0" />
+      <ImageView fitHeight="191.0" fitWidth="333.0" layoutX="95.0" layoutY="58.0" pickOnBounds="true" preserveRatio="true" AnchorPane.topAnchor="48.0">
+         <image>
+            <Image url="@menuLogo.png" />
+         </image>
+      </ImageView>
+      <Label layoutX="2.0" layoutY="612.0" text="© 2015 - The SwekJeweled SEM team | Group-33" />
+   </children>
+</AnchorPane>
