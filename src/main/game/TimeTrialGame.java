@@ -77,6 +77,7 @@ public class TimeTrialGame extends Game {
 					public void run() {
 						remainingTime--;
 						if (remainingTime == 0) {
+							GameViewController.getGVC().setGameOver();
 							stop();
 						}
 						GameViewController.getGVC().setTimer(remainingTime);
@@ -145,7 +146,6 @@ public class TimeTrialGame extends Game {
 	public boolean isGameOver() {
 		boardNeedsReset();
 		if (remainingTime == 0) {
-			GameViewController.getGVC().setGameOver();
 			Logger.logInfo("Game over! Score was " + getPlayer().getScore());
 			stop();
 			return true;
