@@ -69,19 +69,20 @@ public class TimeTrialGame extends Game {
 	public void start() {
 		setInProgress(true);
 		timer.scheduleAtFixedRate(new TimerTask() {
+			
 			@Override
 			public void run() {
-			  Platform.runLater(new Runnable() {
-			    @Override
-			    public void run() {
-			      remainingTime--;
-			      if (remainingTime == 0) {
-			        stop();
-			      }
-			      GameViewController.getGVC().setTimer(remainingTime);
-			      System.out.println(remainingTime);
-			    }
-			  });
+				Platform.runLater(new Runnable() {
+					@Override
+					public void run() {
+						remainingTime--;
+						if (remainingTime == 0) {
+							GameViewController.getGVC().setGameOver();
+							stop();
+						}
+						GameViewController.getGVC().setTimer(remainingTime);
+					}
+				});
 			}
 		}, 1000, 1000);
 	}
@@ -147,7 +148,6 @@ public class TimeTrialGame extends Game {
 		if (remainingTime == 0) {
 			Logger.logInfo("Game over! Score was " + getPlayer().getScore());
 			stop();
-			GameViewController.getGVC().setGameOver();
 			return true;
 		}
 		return false;
