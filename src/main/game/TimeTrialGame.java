@@ -3,6 +3,7 @@ package main.game;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import javafx.application.Platform;
 import main.board.Board;
 import main.board.Position;
 import main.exceptions.MoveNotValidException;
@@ -70,14 +71,19 @@ public class TimeTrialGame extends Game {
 		timer.scheduleAtFixedRate(new TimerTask() {
 			@Override
 			public void run() {
-				remainingTime--;
-				if (remainingTime == 0) {
-					stop();
-				}
-				GameViewController.getGVC().setTimer(remainingTime);
-				System.out.println(remainingTime);
+			  Platform.runLater(new Runnable() {
+			    @Override
+			    public void run() {
+			      remainingTime--;
+			      if (remainingTime == 0) {
+			        stop();
+			      }
+			      GameViewController.getGVC().setTimer(remainingTime);
+			      System.out.println(remainingTime);
+			    }
+			  });
 			}
-		}, 0, 1000);
+		}, 1000, 1000);
 	}
 
 	@Override
