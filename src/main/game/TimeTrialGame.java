@@ -6,6 +6,7 @@ import java.util.TimerTask;
 import main.board.Board;
 import main.board.Position;
 import main.exceptions.MoveNotValidException;
+import main.gui.GameViewController;
 
 /**
  * Implementation of a Time Trial game. In this game mode, the player gets a
@@ -137,6 +138,13 @@ public class TimeTrialGame extends Game {
       return true;
     }
     return false;
+  }
+  
+  @Override
+  public void close() {
+    super.close();
+    timer = null;
+    remainingTime = 0;
   }
   
   /**

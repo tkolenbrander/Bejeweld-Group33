@@ -165,4 +165,13 @@ public abstract class Game {
 	 * @return if the game is over.
 	 */
 	public abstract boolean isGameOver();
+	
+	/**
+	 * Closes the game.
+	 */
+	public void close() {
+	  player = null;
+	  board = null;
+	  inProgress = false;
+	}
 }
