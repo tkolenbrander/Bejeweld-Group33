@@ -67,7 +67,6 @@ public class TimeTrialGame extends Game {
 	@SuppressWarnings("magicnumber")
 	@Override
 	public void start() {
-		setInProgress(true);
 		timer.scheduleAtFixedRate(new TimerTask() {
 			
 			@Override
@@ -77,7 +76,6 @@ public class TimeTrialGame extends Game {
 					public void run() {
 						remainingTime--;
 						if (remainingTime == 0) {
-							GameViewController.getGVC().setGameOver();
 							stop();
 						}
 						GameViewController.getGVC().setTimer(remainingTime);
@@ -85,12 +83,13 @@ public class TimeTrialGame extends Game {
 				});
 			}
 		}, 1000, 1000);
+		super.start();
 	}
 
 	@Override
 	public void stop() {
-		setInProgress(false);
 		timer.cancel();
+		super.stop();
 	}
 
 	@Override
@@ -123,7 +122,7 @@ public class TimeTrialGame extends Game {
 	 */
 	@Override
 	public boolean moveAllowed(Position one, Position two) throws MoveNotValidException {
-		if (inProgress() && remainingTime > 0) {
+		if (remainingTime > 0) {
 			Logger.logInfo("Attempting to swap gem at (" + one.getX() + "," + one.getY() + ") "
 					+ "with (" + two.getX() + "," + two.getY() + ")");
 			if (one.isAdjacentTo(two)) {
@@ -140,17 +139,13 @@ public class TimeTrialGame extends Game {
 	 * Checks if the game is over. Also regenerates the board if there are no more moves left.
 	 * 
 	 * In this game, the game is over when there is no more time left.
-	 * @return if the game is over.
 	 */
 	@Override
-	public boolean isGameOver() {
+	public void checkGameOver() {
 		boardNeedsReset();
 		if (remainingTime == 0) {
-			Logger.logInfo("Game over! Score was " + getPlayer().getScore());
 			stop();
-			return true;
 		}
-		return false;
 	}
 
 	@Override

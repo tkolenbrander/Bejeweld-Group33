@@ -164,10 +164,7 @@ public class BoardPane {
 					animating = false;
 					
 					//Check for game over here to make sure animation finished.
-					if (GameViewController.getGame().isGameOver()) {
-						GameViewController.getGVC().setGameOver();
-						Logger.logInfo("Game over!");
-					}
+					GameViewController.getGame().checkGameOver();
 				}
 			});
 
