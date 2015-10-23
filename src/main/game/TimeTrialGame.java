@@ -6,7 +6,6 @@ import java.util.TimerTask;
 import main.board.Board;
 import main.board.Position;
 import main.exceptions.MoveNotValidException;
-import main.gui.GameViewController;
 
 /**
  * Implementation of a Time Trial game. In this game mode, the player gets a
@@ -22,6 +21,9 @@ public class TimeTrialGame extends Game {
    */
   private static final int TIMELIMIT = 120;
   
+  /**
+   * Time added per newly generated powergem.
+   */
   private static final int TIME_PER_POWERGEM = 30;
   
   /**
@@ -84,9 +86,11 @@ public class TimeTrialGame extends Game {
 
   @Override
   public void reset() {
+    timer.cancel();
     getPlayer().reset();
     getBoard().reset();
-    timer.cancel();
+    timer = new Timer();
+    remainingTime = TIMELIMIT;
   }
   
   @Override
