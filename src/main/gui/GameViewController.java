@@ -27,7 +27,7 @@ import main.game.SaveGame;
  */
 public class GameViewController implements Observer {
 
-	private static final String FILENAME = "game.fxml";
+	private static final String FILENAME = "main/resources/game.fxml";
 
 	private static Game game;
 	private static BoardPane boardPane;
