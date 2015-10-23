@@ -29,5 +29,9 @@
 
 #gameover {
 	-fx-background-color: #444;
+}
+
+#gameoverp {
 	/* Blur effect would be cool */
+	
 }
