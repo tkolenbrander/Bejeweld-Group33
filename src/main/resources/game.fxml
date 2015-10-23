@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.*?>
 <?import javafx.scene.text.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.image.*?>
@@ -7,23 +8,29 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="520.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.gui.GameViewController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="520.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.gui.GameViewController">
    <children>
       <BorderPane fx:id="borderPane" layoutX="160.0" layoutY="197.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <top>
-            <Pane fx:id="topPane" prefHeight="50.0" prefWidth="520.0" BorderPane.alignment="CENTER">
+            <Pane id="pane" fx:id="topPane" prefHeight="50.0" prefWidth="520.0" BorderPane.alignment="CENTER">
                <children>
-                  <Label fx:id="scoreLabel" layoutX="189.0" layoutY="8.0" text="Score: ">
+                  <Label fx:id="scoreLabel" contentDisplay="CENTER" layoutX="137.0" layoutY="8.0" prefHeight="30.0" prefWidth="154.0" text="Score: " textFill="WHITE">
                      <font>
-                        <Font size="24.0" />
+                        <Font name="System Bold" size="24.0" />
                      </font>
                   </Label>
-                  <Button fx:id="exitGameButton" layoutX="14.0" layoutY="13.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="100.0" text="Exit Game" />
+                  <Button fx:id="exitGameButton" layoutX="14.0" layoutY="13.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="100.0" text="Exit to menu" />
+                  <Separator layoutY="40.0" prefHeight="20.0" prefWidth="520.0" />
+                  <Label fx:id="remainingTime" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="378.0" layoutY="10.0" prefHeight="31.0" prefWidth="128.0" text="Time: 120" textFill="WHITE" visible="false">
+                     <font>
+                        <Font name="System Bold" size="21.0" />
+                     </font>
+                  </Label>
                </children>
             </Pane>
          </top>
          <bottom>
-            <Pane fx:id="bottomPane" prefHeight="61.0" prefWidth="520.0" BorderPane.alignment="CENTER">
+            <Pane id="pane" fx:id="bottomPane" prefHeight="61.0" prefWidth="520.0" BorderPane.alignment="CENTER">
                <children>
                   <Label fx:id="errorLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="19.0" layoutY="7.0" prefHeight="17.0" prefWidth="481.0" textAlignment="CENTER" textFill="RED">
                      <font>
@@ -33,9 +40,43 @@
                   <Button fx:id="saveGameButton" layoutX="292.0" layoutY="28.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="100.0" text="Save Game" />
                   <Button fx:id="loadGameButton" layoutX="404.0" layoutY="28.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="100.0" text="Load Game" />
                   <Button fx:id="restartGameButton" layoutX="17.0" layoutY="28.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="100.0" text="Restart Game" />
+                  <Separator layoutY="-9.0" prefHeight="20.0" prefWidth="520.0" />
                </children>
             </Pane>
          </bottom>
       </BorderPane>
+      <AnchorPane fx:id="gameOverPane" prefHeight="650.0" prefWidth="520.0" visible="false">
+         <children>
+            <BorderPane prefHeight="650.0" prefWidth="520.0">
+               <center>
+                  <Pane id="gameover" prefHeight="205.0" prefWidth="520.0" styleClass="style.css" BorderPane.alignment="CENTER">
+                     <children>
+                        <Label layoutX="165.0" layoutY="14.0" text="GAME OVER" textFill="#ff3a20">
+                           <font>
+                              <Font name="System Bold" size="33.0" />
+                           </font>
+                        </Label>
+                        <Button id="button" fx:id="gameOverMenuButton" layoutX="185.0" layoutY="153.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="150.0" text="Main Menu" />
+                        <Button id="button" fx:id="gameOverRestartButton" layoutX="185.0" layoutY="115.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="151.0" text="Restart" />
+                        <Label fx:id="scoreLabelGO" alignment="CENTER" contentDisplay="CENTER" layoutX="162.0" layoutY="53.0" prefHeight="34.0" prefWidth="197.0" text="Score: 0" textAlignment="CENTER" textFill="WHITE">
+                           <font>
+                              <Font size="23.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </Pane>
+               </center>
+               <top>
+                  <Pane id="gameoverp" fx:id="topMidPane" prefHeight="210.0" prefWidth="520.0" BorderPane.alignment="CENTER" />
+               </top>
+               <bottom>
+                  <Pane id="gameoverp" fx:id="bottomMidPane" prefHeight="210.0" prefWidth="520.0" BorderPane.alignment="CENTER" />
+               </bottom>
+            </BorderPane>
+         </children>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+      </AnchorPane>
    </children>
 </AnchorPane>

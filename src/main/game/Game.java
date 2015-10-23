@@ -17,11 +17,10 @@ import main.board.Position;
  * @author Bart van Oort
  *
  */
-public abstract class Game {
+public abstract class Game extends GameInProgress {
 
 	private Player player;
 	private Board board;
-	private boolean inProgress;
 
 	/**
 	 * Creates a new game object, with a freshly initialised player and a new board.
@@ -30,7 +29,6 @@ public abstract class Game {
 	public Game() {
 		player = new Player();
 		board = new Board();
-		inProgress = false;
 	}
 
 	/**
@@ -44,7 +42,6 @@ public abstract class Game {
 	public Game(Board newBoard, Player newPlayer) {
 		player = newPlayer;
 		board = newBoard;
-		inProgress = false;
 	}
 
 	/**
@@ -62,40 +59,6 @@ public abstract class Game {
 	public Board getBoard() {
 		return board;
 	}
-	
-	/**
-	 * @return True if the game is in progress.
-	 */
-	public boolean inProgress() {
-		return inProgress;
-	}
-	
-	/**
-	 * Sets if a game is in progress.
-	 * 
-	 * Not to be used for starting and stopping the game.
-	 * Use {@link Game#start} and {@link Game#stop} for this instead.
-	 * 
-	 * @param inPro inProgress.
-	 */
-	protected void setInProgress(boolean inPro) {
-	  inProgress = inPro;
-	}
-	
-	/**
-	 * Starts the game.
-	 */
-	public abstract void start();
-
-	/**
-	 * Pauses the game.
-	 */
-	public abstract void stop();
-
-	/**
-	 * Resets the game to how it was when it was just initialised.
-	 */
-	public abstract void reset();
 	
 	/**
 	 * Swaps two gems.
@@ -144,25 +107,16 @@ public abstract class Game {
 				throw new MoveNotValidException("Move doesn't make a chain");
 			}
 
-			isGameOver();
+			checkGameOver();
 		}
 		TimelineController.setList(changes);
 	}
-
+	
 	/**
-	 * Checks if the move you want to make is allowed.
-	 * 
-	 * @param one Position on the board of one selected gem
-	 * @param two Position on the board of the other selected gem
-	 * @return if the move is allowed
-	 * @throws MoveNotValidException When the move is not allowed, because the cells 
-	 * are not adjacent.
+	 * Closes the game.
 	 */
-	public abstract boolean moveAllowed(Position one, Position two) throws MoveNotValidException;
-
-	/**
-	 * Checks if the game is over.
-	 * @return if the game is over.
-	 */
-	public abstract boolean isGameOver();
+	public void close() {
+	  player = null;
+	  board = null;
+	}
 }
