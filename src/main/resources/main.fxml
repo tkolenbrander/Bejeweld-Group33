@@ -19,5 +19,6 @@
          </image>
       </ImageView>
       <Label layoutX="2.0" layoutY="612.0" text="© 2015 - The SwekJeweled SEM team | Group-33" />
+      <Button id="button" fx:id="quitButton" layoutX="192.0" layoutY="431.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="140.0" text="Exit Game" />
    </children>
 </AnchorPane>

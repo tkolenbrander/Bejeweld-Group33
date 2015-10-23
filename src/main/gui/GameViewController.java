@@ -19,6 +19,7 @@ import main.game.LoadGame;
 import main.game.Logger;
 import main.game.Observer;
 import main.game.SaveGame;
+import main.game.TimeTrialGame;
 
 /**
  * Controller class for the game.
@@ -36,8 +37,6 @@ public class GameViewController implements Observer {
 	private static Game game;
 	private static BoardPane boardPane;
 
-	public static boolean isGameOver;
-
 	@FXML private BorderPane borderPane;
 	@FXML private AnchorPane gameOverPane;
 	@FXML private Pane topPane;
@@ -51,10 +50,10 @@ public class GameViewController implements Observer {
 	@FXML private Button exitGameButton;
 	@FXML private Button gameOverRestartButton;
 	@FXML private Button gameOverMenuButton;
-	@FXML private Button gameOverQuitButton;
 
 	@FXML private Label scoreLabel;
 	@FXML private Label errorLabel;
+	@FXML private Label remainingTime;
 	@FXML private Label scoreLabelGO;
 
 	@FXML
@@ -74,13 +73,19 @@ public class GameViewController implements Observer {
 		scoreLabel.setText("Score: 0");
 
 		//TODO Make this work
-		BoxBlur boxBlur = new BoxBlur(10,30,3);
+		BoxBlur boxBlur = new BoxBlur(10, 30, 3);
 		topMidPane.setEffect(boxBlur);
 		bottomMidPane.setEffect(boxBlur);
 
 		initializeButtons();
-
-		Logger.logInfo("New Normal game started");
+		if (game instanceof TimeTrialGame) {
+			saveGameButton.setVisible(false);
+			loadGameButton.setVisible(false);
+			remainingTime.setVisible(true);
+			Logger.logInfo("New Time Trial game started");
+		} else {
+			Logger.logInfo("New Normal game started");
+		}
 	}
 
 	/**
@@ -117,21 +122,20 @@ public class GameViewController implements Observer {
 
 		exitGameButton.setOnAction((event) -> {
 			game.getPlayer().unregister(this);
+			game.stop(); //TODO Change to to be implemented close method
 			MenuViewController.show();
 		});
 
 		gameOverRestartButton.setOnAction((event) -> {
-			GameViewController.show(new ClassicGame());
+			if (game instanceof TimeTrialGame) {
+				GameViewController.show(new TimeTrialGame());
+			} else {
+				GameViewController.show(new ClassicGame());
+			}
 		});
 
 		gameOverMenuButton.setOnAction((event) -> {
 			MenuViewController.show();
-		});
-
-		gameOverQuitButton.setOnAction((event) -> {
-			Logger.logInfo("Exiting...");
-			Logger.close();
-			System.exit(0);
 		});
 	}
 
@@ -156,20 +160,20 @@ public class GameViewController implements Observer {
 	}
 
 	/**
-	 * Enables the game over screen.
-	 */
-	protected void setGameOver() {
-		scoreLabelGO.setText(scoreLabel.getText());
-		gameOverPane.setVisible(true);
-	}
-
-	/**
 	 * Update method for observer.
 	 */
 	@Override
 	public void update() {
 		int newScore = (int) game.getPlayer().getUpdate(this);
 		setScore(newScore);
+	}
+	
+	/**
+	 * Enables the game over screen.
+	 */
+	public void setGameOver() {
+		scoreLabelGO.setText(scoreLabel.getText());
+		gameOverPane.setVisible(true);
 	}
 
 	/**
@@ -190,6 +194,16 @@ public class GameViewController implements Observer {
 		String s = "Score: " + score;
 		scoreLabel.setText(s);
 	}
+	
+	/**
+	 * Sets the timer.
+	 * 
+	 * @param timer number to be displayed
+	 */
+	protected void setTimer(int timer) {
+		String s = "Time: " + timer;
+		remainingTime.setText(s);
+	}
 
 	/**
 	 * @return The game.
@@ -208,7 +222,7 @@ public class GameViewController implements Observer {
 	/**
 	 * @return The GameViewController.
 	 */
-	protected static GameViewController getGVC() {
+	public static GameViewController getGVC() {
 		return gameViewController;
 	}
 }

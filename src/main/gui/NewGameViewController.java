@@ -8,6 +8,7 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
 import main.SwekJeweled;
 import main.game.ClassicGame;
+import main.game.TimeTrialGame;
 
 /**
  * Controller class for the New Game selection screen.
@@ -30,7 +31,7 @@ public class NewGameViewController {
 		});
 
 		newTimeTrialButton.setOnAction((event) -> {
-			//TODO Add Time Trial game to menu
+			GameViewController.show(new TimeTrialGame());
 		});
 
 		newBackButton.setOnAction((event) -> {

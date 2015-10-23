@@ -9,7 +9,7 @@
    <children>
       <Button id="button" fx:id="newNormalButton" layoutX="190.0" layoutY="310.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="140.0" styleClass="style.css" text="Normal Game" AnchorPane.topAnchor="310.0" />
       <Button id="button" fx:id="newBackButton" layoutX="190.0" layoutY="380.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="140.0" styleClass="style.css" text="Back" AnchorPane.topAnchor="380.0" />
-      <Button id="button" fx:id="newTimeTrialButton" disable="true" layoutX="190.0" layoutY="345.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="140.0" styleClass="style.css" text="Time Trial" AnchorPane.topAnchor="345.0" />
+      <Button id="button" fx:id="newTimeTrialButton" layoutX="190.0" layoutY="345.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="140.0" styleClass="style.css" text="Time Trial" AnchorPane.topAnchor="345.0" />
       <ImageView fitHeight="191.0" fitWidth="333.0" layoutX="95.0" layoutY="58.0" pickOnBounds="true" preserveRatio="true" AnchorPane.topAnchor="48.0">
          <image>
             <Image url="@menuLogo.png" />

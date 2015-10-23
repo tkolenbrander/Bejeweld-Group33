@@ -163,10 +163,10 @@ public class BoardPane {
 				public void handle(ActionEvent e) {
 					animating = false;
 					
-					if (!GameViewController.getGame().inProgress()) {
+					//Check for game over here to make sure animation finished.
+					if (GameViewController.getGame().isGameOver()) {
 						GameViewController.getGVC().setGameOver();
 						Logger.logInfo("Game over!");
-						Logger.close();
 					}
 				}
 			});

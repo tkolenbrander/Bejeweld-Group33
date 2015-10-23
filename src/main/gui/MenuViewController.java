@@ -8,6 +8,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
 import main.SwekJeweled;
+import main.game.Logger;
 
 /**
  * Controller class fot the main menu.
@@ -21,6 +22,7 @@ public class MenuViewController {
 	@FXML private Button newGameButton;
 	@FXML private Button loadGameButton;
 	@FXML private Button settingsButton;
+	@FXML private Button quitButton;
 
 	@FXML
 	private void initialize() {
@@ -35,6 +37,12 @@ public class MenuViewController {
 
 		settingsButton.setOnAction((event) -> {
 			//TODO Settings menu
+		});
+		
+		quitButton.setOnAction((event) -> {
+			Logger.logInfo("Exiting...");
+			Logger.close();
+			System.exit(0);
 		});
 	}
 
