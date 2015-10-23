@@ -16,7 +16,7 @@ import main.SwekJeweled;
  */
 public class MenuViewController {
 
-	private static final String FILENAME = "main/resources/main.fxml";
+	private static final String FILENAME = "main.fxml";
 
 	@FXML private Button newGameButton;
 	@FXML private Button loadGameButton;

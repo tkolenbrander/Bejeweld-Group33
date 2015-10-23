@@ -15,7 +15,7 @@ import main.SwekJeweled;
  */
 public class NewGameViewController {
 
-	private static final String FILENAME = "main/resources/newgame.fxml";
+	private static final String FILENAME = "newgame.fxml";
 
 	@FXML private Button newNormalButton;
 	@FXML private Button newTimeTrialButton;
