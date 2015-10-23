@@ -8,6 +8,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
 import main.SwekJeweled;
+import main.game.Game;
+import main.game.LoadGame;
 import main.game.Logger;
 
 /**
@@ -32,7 +34,15 @@ public class MenuViewController {
 		});
 
 		loadGameButton.setOnAction((event) -> {
-			//TODO Ability to load game from main menu
+			try {
+				Game game = LoadGame.load();
+				game.start();
+				GameViewController.show(game);
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			
 		});
 
 		settingsButton.setOnAction((event) -> {

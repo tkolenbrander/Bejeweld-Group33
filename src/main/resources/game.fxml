@@ -20,7 +20,7 @@
                   </Label>
                   <Button fx:id="exitGameButton" layoutX="14.0" layoutY="13.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="100.0" text="Exit to menu" />
                   <Separator layoutY="40.0" prefHeight="20.0" prefWidth="520.0" />
-                  <Label fx:id="remainingTime" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="378.0" layoutY="10.0" prefHeight="31.0" prefWidth="128.0" text="Time: 120" textFill="WHITE">
+                  <Label fx:id="remainingTime" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="378.0" layoutY="10.0" prefHeight="31.0" prefWidth="128.0" text="Time: 120" textFill="WHITE" visible="false">
                      <font>
                         <Font name="System Bold" size="21.0" />
                      </font>
