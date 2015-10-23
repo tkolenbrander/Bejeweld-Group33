@@ -69,7 +69,6 @@ public class GameViewController implements Observer {
 		//Make sure the top pane is over the falling gems
 		borderPane.getChildren().remove(topPane);
 		borderPane.setTop(topPane);
-
 		scoreLabel.setText("Score: 0");
 
 		//TODO Make this work
@@ -78,6 +77,7 @@ public class GameViewController implements Observer {
 		bottomMidPane.setEffect(boxBlur);
 
 		initializeButtons();
+		
 		if (game instanceof TimeTrialGame) {
 			saveGameButton.setVisible(false);
 			loadGameButton.setVisible(false);
@@ -92,12 +92,29 @@ public class GameViewController implements Observer {
 	 * Initializes the on-screen buttons.
 	 */
 	private void initializeButtons() {
+		initSaveGameButton();
+		initLoadGameButton();
+		initRestartGameButton();
+		initExitGameButton();
+		initGORestartButton();
+		initGOMenuButton();
+	}
+	
+	/**
+	 * Initialize the save game button.
+	 */
+	private void initSaveGameButton() {
 		saveGameButton.setOnAction((event) -> {
 			SaveGame.save(game);
 			setError("Game saved!");
 			Logger.logInfo("Game saved");
 		});
-
+	}
+	
+	/**
+	 * Initialize the load game button.
+	 */
+	private void initLoadGameButton() {
 		loadGameButton.setOnAction((event) -> {
 			try {
 				game = LoadGame.load();
@@ -112,20 +129,35 @@ public class GameViewController implements Observer {
 				Logger.logWarning("Failed to load game from file with error: " + e);
 			} 
 		});
-
+	}
+	
+	/**
+	 * Initialize the restart game button.
+	 */
+	private void initRestartGameButton() {
 		restartGameButton.setOnAction((event) -> {
 			game.reset();
 			game.start();
 			setScore(0);
 			boardPane.refresh();
 		});
-
+	}
+	
+	/**
+	 * Initialize the exit game button.
+	 */
+	private void initExitGameButton() {
 		exitGameButton.setOnAction((event) -> {
 			game.getPlayer().unregister(this);
 			game.stop(); //TODO Change to to be implemented close method
 			MenuViewController.show();
 		});
-
+	}
+	
+	/**
+	 * Initialize the restart game button on the game over screen.
+	 */
+	private void initGORestartButton() {
 		gameOverRestartButton.setOnAction((event) -> {
 			if (game instanceof TimeTrialGame) {
 				GameViewController.show(new TimeTrialGame());
@@ -133,7 +165,12 @@ public class GameViewController implements Observer {
 				GameViewController.show(new ClassicGame());
 			}
 		});
-
+	}
+	
+	/**
+	 * Initialize the menu button on the game over screen.
+	 */
+	private void initGOMenuButton() {
 		gameOverMenuButton.setOnAction((event) -> {
 			MenuViewController.show();
 		});
@@ -200,7 +237,7 @@ public class GameViewController implements Observer {
 	 * 
 	 * @param timer number to be displayed
 	 */
-	protected void setTimer(int timer) {
+	public void setTimer(int timer) {
 		String s = "Time: " + timer;
 		remainingTime.setText(s);
 	}
