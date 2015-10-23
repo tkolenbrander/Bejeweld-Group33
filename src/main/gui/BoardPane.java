@@ -5,9 +5,8 @@ import main.exceptions.MoveNotValidException;
 import main.game.Logger;
 import main.board.Board;
 import main.board.Cell;
-import main.board.Gem;
 import main.board.Position;
-
+import main.board.gems.Gem;
 import javafx.event.EventHandler;
 import javafx.event.ActionEvent;
 import javafx.scene.image.ImageView;
@@ -88,7 +87,7 @@ public class BoardPane {
 	 * Initializes the board.
 	 */
 	public void initBoard() {
-		Board board = GUI.getGame().getBoard();
+		Board board = GameViewController.getGame().getBoard();
 		Cell[][] cells = board.getCells();
 
 		for (int y = 0; y < cells.length; y++) {
@@ -101,7 +100,6 @@ public class BoardPane {
 				image.setY(y * SPRITE_SIZE);
 				image.setOnMousePressed(new EventHandler<MouseEvent>() {
 					public void handle(MouseEvent me) {
-						System.out.println(me.getSceneX() + ", " + (me.getSceneY() - 55));
 						int x = (int) me.getSceneX() / SPRITE_SIZE;
 						int y = (int) (me.getSceneY() - 55) / SPRITE_SIZE;
 						if (!animating) {
@@ -148,13 +146,10 @@ public class BoardPane {
 	 * @param view
 	 * 			  The imageview
 	 */
-	public void clicked(int x, int y, ImageView view) {
-		Board board = GUI.getGame().getBoard();
+	public synchronized void clicked(int x, int y, ImageView view) {
+		Board board = GameViewController.getGame().getBoard();
 		Cell[][] cells = board.getCells();
 		Gem gem = cells[y][x].getGem();
-
-		//ImageView view = imageviews[x][y];
-		System.out.println("Selected: " + gem.getType());
 
 		if (selected) {			
 			makeMove(new Position(x, y), selectedPosition);
@@ -163,9 +158,12 @@ public class BoardPane {
 				@Override
 				public void handle(ActionEvent e) {
 					animating = false;
+					
+					//Check for game over here to make sure animation finished.
+					GameViewController.getGame().checkGameOver();
 				}
 			});
-			
+
 			animating = true;
 			t.play();
 			displayNormal(selectedView, selectedGem);
@@ -187,7 +185,7 @@ public class BoardPane {
 	 * @param gem
 	 *            The gem whose 'clicked' sprite shall be added.
 	 */
-	public void displayClicked(ImageView view, Gem gem) {
+	public synchronized void displayClicked(ImageView view, Gem gem) {
 		view.setImage(gem.getImageClicked());
 	}
 
@@ -199,7 +197,7 @@ public class BoardPane {
 	 * @param gem
 	 *            The gem whose sprite shall be added.
 	 */
-	public void displayNormal(ImageView view, Gem gem) {
+	public synchronized void displayNormal(ImageView view, Gem gem) {
 		view.setImage(gem.getImage());
 	}
 
@@ -214,19 +212,15 @@ public class BoardPane {
 	 */
 	public boolean makeMove(Position p1, Position p2) {
 		boolean result = false;
+
 		try {
-			GUI.getGame().makeMove(p1, p2);			
+			GameViewController.getGame().makeMove(p1, p2);			
 			result = true;
-			GUI.getgui().setError("");
-			GUI.getgui().setScore(GUI.getGame().getPlayer().getScore());
 		} catch (MoveNotValidException e) {
-			GUI.getgui().setError(e.getMessage());
+			GameViewController.getGVC().setError(e.getMessage());
+			Logger.logInfo("Move failed with exception: " + e);
 		}
-		if (!GUI.getGame().inProgress()) {
-			// TODO: Game over
-			GUI.getgui().setError("Game over!");
-			Logger.close();
-		}
+		
 		return result;
 	}
 
@@ -243,7 +237,6 @@ public class BoardPane {
 	 */
 	public void refresh() {
 		borderPane.getChildren().removeAll(borderPane.getChildren());
-		GUI.getgui().setScore(GUI.getGame().getPlayer().getScore());
 		initBoard();
 	}
 }

@@ -8,7 +8,7 @@ import java.util.Random;
 import org.junit.Before;
 import org.junit.Test;
 
-import main.board.GemType;
+import main.board.gems.GemType;
 
 /**
  * Test for GemType enumeration.
