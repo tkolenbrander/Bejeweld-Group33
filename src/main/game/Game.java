@@ -64,7 +64,6 @@ public abstract class Game extends GameInProgress {
 	}
 	
 	/**
-<<<<<<< HEAD
 	 * Resets the board of game.
 	 */
 	public void resetBoard() {
