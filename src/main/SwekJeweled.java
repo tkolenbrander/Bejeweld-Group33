@@ -31,6 +31,9 @@ public class SwekJeweled extends Application {
 	 */
 	public static void main(String[] args) {
 		launch(args);
+		
+		//Exit all threads on close
+		System.exit(0);
 	}
 
 	@Override
