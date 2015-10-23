@@ -29,11 +29,10 @@ public class Board {
 	private Cell[][] board;
 
 	/**
-	 * Constructor for a board. Also generates and places all cells and their content.
+	 * Constructor for a board.
 	 */
 	public Board() {
-		//board = new Cell[BOARDSIZE][BOARDSIZE];
-		//initBoard();
+
 	}
 
 	/**
@@ -60,14 +59,6 @@ public class Board {
 	public void setCells(Cell[][] cells) {
 		board = cells;
 	}
-
-	/**
-	 * Resets the board to how it came out of the constructor. Basically, the board is
-	 * reinitialised, that's it.
-	 */
-//	public void reset() {
-//		initBoard();
-//	}
 
 	/**
 	 * Sets a cell at location (x, y).
