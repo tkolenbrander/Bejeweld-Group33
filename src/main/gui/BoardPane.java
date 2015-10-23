@@ -224,15 +224,10 @@ public class BoardPane {
 			GameViewController.getGame().makeMove(p1, p2);			
 			result = true;
 		} catch (MoveNotValidException e) {
-			//TODO Uncomment both setters once getGVC is implemented
-			//GameViewController.getGVC().setError(e.getMessage());
+			GameViewController.getGVC().setError(e.getMessage());
 			Logger.logInfo("Move failed with exception: " + e);
 		}
-		if (!GameViewController.getGame().inProgress()) {
-			//GameViewController.getGVC().setGameOver();
-			Logger.logInfo("Game over!");
-			Logger.close();
-		}
+		
 		return result;
 	}
 

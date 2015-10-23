@@ -35,7 +35,7 @@ public class GameViewController implements Observer {
 
 	private static Game game;
 	private static BoardPane boardPane;
-	
+
 	public static boolean isGameOver;
 
 	@FXML private BorderPane borderPane;
@@ -70,7 +70,7 @@ public class GameViewController implements Observer {
 		//Make sure the top pane is over the falling gems
 		borderPane.getChildren().remove(topPane);
 		borderPane.setTop(topPane);
-		
+
 		scoreLabel.setText("Score: 0");
 
 		//TODO Make this work
@@ -204,7 +204,7 @@ public class GameViewController implements Observer {
 	protected static BoardPane getBoardPane() {
 		return boardPane;
 	}
-	
+
 	/**
 	 * @return The GameViewController.
 	 */
