@@ -34,12 +34,10 @@ public class Board {
 	private int newPowerGems;
 
 	/**
-	 * Constructor for a board. Also generates and places all cells and their content.
+	 * Constructor for a board.
 	 */
 	public Board() {
-		board = new Cell[BOARDSIZE][BOARDSIZE];
-		initBoard();
-		newPowerGems = 0;
+
 	}
 
 	/**
@@ -77,26 +75,11 @@ public class Board {
 	}
 
 	/**
-	 * Resets the board to how it came out of the constructor. Basically, the board is
-	 * reinitialised, that's it.
+	 * Set the cells of the board
+	 * @param cells The matrix of cells to set as the board.
 	 */
-	public void reset() {
-		initBoard();
-		newPowerGems = 0;
-	}
-
-	/**
-	 * Fills up the initially empty board with cells.
-	 */
-	private void initBoard() {
-		for (int y = 0; y < BOARDSIZE; y++) {
-			for (int x = 0; x < BOARDSIZE; x++) {
-				board[y][x] = new Cell(new RegularGem(GemType.randomGem()));
-				while (isTripletAt(x, y)) {
-					board[y][x] = new Cell(new RegularGem(GemType.randomGem()));
-				}
-			}
-		}
+	public void setCells(Cell[][] cells) {
+		board = cells;
 	}
 
 	/**
@@ -107,24 +90,6 @@ public class Board {
 	 */
 	public void setCell(Cell cell, int x, int y) {
 		board[y][x] = cell;
-	}
-	/**
-	 * Checks if the origin cell, at location (x, y), is part of a chain of three 
-	 * of the same gems.
-	 * @param x x-coordinate of the origin cell
-	 * @param y y-coordinate of the origin cell
-	 * @return true iff the origin cell, at location (x, y), is part of a chain of
-	 *         three of the same gems.
-	 */
-	@SuppressWarnings("magicnumber") //4 is the amount of directions there are.
-	public boolean isTripletAt(int x, int y) {
-		for (int i = 0; i < 4; i++) {
-			Direction dir = Direction.DIRECTIONS.get(i);
-			if (isTripletInDir(x, y, dir)) {
-				return true;
-			}
-		}
-		return false;
 	}
 
 	/**

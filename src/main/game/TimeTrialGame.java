@@ -96,7 +96,7 @@ public class TimeTrialGame extends Game {
 	public void reset() {
 		timer.cancel();
 		getPlayer().reset();
-		getBoard().reset();
+		resetBoard();
 		timer = new Timer();
 		remainingTime = TIMELIMIT;
 	}
@@ -160,7 +160,7 @@ public class TimeTrialGame extends Game {
 	 */
 	private void boardNeedsReset() {
 		if (!getBoard().checkMoves()) {
-			getBoard().reset();
+			resetBoard();
 			GameViewController.getGVC().refreshBoard("No more moves left, Board refreshed!");
 		}
 	}
