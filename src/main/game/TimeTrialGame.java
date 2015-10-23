@@ -32,9 +32,7 @@ public class TimeTrialGame extends Game {
    * Time remaining.
    */
   private int remainingTime;
-  
-  private int powerGems;
-  
+
   /**
    * Creates a new game object, with a freshly initialised player and a new board.
    * Initialises the timer to the time limit specified in the field TIMELIMIT.
