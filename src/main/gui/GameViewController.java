@@ -1,7 +1,11 @@
 package main.gui;
 
 import java.io.IOException;
+import java.util.Timer;
+import java.util.TimerTask;
 
+import javafx.animation.FadeTransition;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -11,7 +15,7 @@ import javafx.scene.effect.BoxBlur;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
-
+import javafx.util.Duration;
 import main.SwekJeweled;
 import main.game.ClassicGame;
 import main.game.Game;
@@ -77,7 +81,7 @@ public class GameViewController implements Observer {
 		bottomMidPane.setEffect(boxBlur);
 
 		initializeButtons();
-		
+
 		if (game instanceof TimeTrialGame) {
 			saveGameButton.setVisible(false);
 			loadGameButton.setVisible(false);
@@ -99,7 +103,7 @@ public class GameViewController implements Observer {
 		initGORestartButton();
 		initGOMenuButton();
 	}
-	
+
 	/**
 	 * Initialize the save game button.
 	 */
@@ -110,7 +114,7 @@ public class GameViewController implements Observer {
 			Logger.logInfo("Game saved");
 		});
 	}
-	
+
 	/**
 	 * Initialize the load game button.
 	 */
@@ -130,7 +134,7 @@ public class GameViewController implements Observer {
 			} 
 		});
 	}
-	
+
 	/**
 	 * Initialize the restart game button.
 	 */
@@ -142,7 +146,7 @@ public class GameViewController implements Observer {
 			boardPane.refresh();
 		});
 	}
-	
+
 	/**
 	 * Initialize the exit game button.
 	 */
@@ -153,7 +157,7 @@ public class GameViewController implements Observer {
 			MenuViewController.show();
 		});
 	}
-	
+
 	/**
 	 * Initialize the restart game button on the game over screen.
 	 */
@@ -166,7 +170,7 @@ public class GameViewController implements Observer {
 			}
 		});
 	}
-	
+
 	/**
 	 * Initialize the menu button on the game over screen.
 	 */
@@ -204,7 +208,7 @@ public class GameViewController implements Observer {
 		int newScore = (int) game.getPlayer().getUpdate(this);
 		setScore(newScore);
 	}
-	
+
 	/**
 	 * Enables the game over screen.
 	 */
@@ -219,7 +223,28 @@ public class GameViewController implements Observer {
 	 * @param s the message to be displayed
 	 */
 	protected void setError(String s) {
+		//TODO Fix overwriting animation on duplicate call
 		errorLabel.setText(s);
+		
+		Timer timer = new Timer();
+		timer.schedule(new TimerTask() {
+
+			@Override
+			public void run() {
+				Platform.runLater(new Runnable() {
+
+					@Override
+					public void run() {
+						FadeTransition ft = new FadeTransition(Duration.millis(2000), errorLabel);
+						ft.setFromValue(1.0);
+						ft.setToValue(0.0);
+						ft.play();
+					}
+				});
+			}
+		}, 4000);
+		
+		errorLabel.setOpacity(1.0);
 	}
 
 	/**
@@ -231,7 +256,7 @@ public class GameViewController implements Observer {
 		String s = "Score: " + score;
 		scoreLabel.setText(s);
 	}
-	
+
 	/**
 	 * Sets the timer.
 	 * 
