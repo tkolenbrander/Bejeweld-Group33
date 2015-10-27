@@ -38,7 +38,8 @@ import main.game.TimeTrialGame;
 public class GameViewController implements Observer {
 
 	private static final String FILENAME = "game.fxml";
-	private static final int DURATION_FADE = 500;
+	private static final int DURATION_GAMEOVER_FADE = 500;
+	private static final int DURATION_ERROR_FADEOUT = 1500;
 	private static final int DURATION_ERROR_DELAY = 3000;
 
 	private static GameViewController gameViewController;
@@ -132,7 +133,7 @@ public class GameViewController implements Observer {
 							game.getPlayer().register(this);
 							setError("Game loaded!");
 							Logger.logInfo("Loaded game from file");
-							
+
 							AnimationController.fadeIn(boardPane.getBoardPane());
 						} catch (Exception e) {
 							setError("Cannot load game!");
@@ -159,7 +160,7 @@ public class GameViewController implements Observer {
 								game.reset();
 								game.start();
 								setScore(0);
-								setTimer(120);
+								setTimer(TimeTrialGame.getTimeLimit());
 								boardPane.refresh();
 
 								AnimationController.fadeIn(boardPane.getBoardPane());
@@ -225,7 +226,7 @@ public class GameViewController implements Observer {
 			AnimationController.fadeOut(anchorPane);
 
 			Timeline timeout = 
-					new Timeline(new KeyFrame(Duration.millis(DURATION_FADE), (event2) -> {
+					new Timeline(new KeyFrame(Duration.millis(DURATION_GAMEOVER_FADE), (event2) -> {
 						game.getPlayer().unregister(this);
 						game.close();
 						MenuViewController.setAnimateLogo(true);
@@ -288,8 +289,7 @@ public class GameViewController implements Observer {
 	 * 
 	 * @param s the message to be displayed
 	 */
-	protected void setError(String s) {
-		//TODO Fix overwriting animation on duplicate call
+	protected synchronized void setError(String s) {
 		errorLabel.setText(s);
 
 		Timer timer = new Timer();
@@ -301,7 +301,7 @@ public class GameViewController implements Observer {
 
 					@Override
 					public void run() {
-						AnimationController.fadeOut(errorLabel, 1500);
+						AnimationController.fadeOut(errorLabel, DURATION_ERROR_FADEOUT);
 					}
 				});
 			}

@@ -104,7 +104,7 @@ public class MenuViewController {
 	private void initHelpButton() {
 		helpButton.setOnAction((event) -> {
 			fadeOutButtons();
-			
+
 			Timeline timeout = 
 					new Timeline(
 							new KeyFrame(

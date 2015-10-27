@@ -14,7 +14,7 @@ abstract class AnimationController {
 
 	private static final int DURATION_FADEIN = 400;
 	private static final int DURATION_FADEOUT = 300;
-	
+
 	private static final double BUTTON_OFFSET = 50.0;
 
 	/**
@@ -28,7 +28,7 @@ abstract class AnimationController {
 		ft.setToValue(1.0);
 		ft.play();
 	}
-	
+
 	/**
 	 * Fades in a node.
 	 * 

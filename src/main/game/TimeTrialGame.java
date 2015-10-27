@@ -164,4 +164,12 @@ public class TimeTrialGame extends Game {
 			GameViewController.getGVC().refreshBoard("No more moves left, Board refreshed!");
 		}
 	}
+	
+	/**
+	 * @return TIMELIMIT
+	 */
+	public static int getTimeLimit() {
+		return TIMELIMIT;
+
+	}
 }

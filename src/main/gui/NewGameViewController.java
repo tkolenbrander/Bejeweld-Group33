@@ -61,14 +61,15 @@ public class NewGameViewController {
 	/**
 	 * Fade in all buttons.
 	 */
+	@SuppressWarnings("magicnumber")
 	private void fadeInButtons() {
 		newNormalButton.setOpacity(0.0);
 		newTimeTrialButton.setOpacity(0.0);
 		newBackButton.setOpacity(0.0);
 
-		AnimationController.fadeIn(newNormalButton);
-		AnimationController.fadeIn(newTimeTrialButton);
-		AnimationController.fadeIn(newBackButton);
+		AnimationController.fadeIn(newNormalButton, 300);
+		AnimationController.fadeIn(newTimeTrialButton, 400);
+		AnimationController.fadeIn(newBackButton, 500);
 	}
 
 	/**
