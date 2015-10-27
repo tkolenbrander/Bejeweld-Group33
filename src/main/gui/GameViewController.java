@@ -119,20 +119,28 @@ public class GameViewController implements Observer {
 	 */
 	private void initLoadGameButton() {
 		loadGameButton.setOnAction((event) -> {
-			try {
-				game = LoadGame.load();
-				game.start();
-				boardPane.refresh();
-				
-				setScore(GameViewController.game.getPlayer().getScore());
-				game.getPlayer().register(this);
-				setError("Game loaded!");
-				
-				Logger.logInfo("Loaded game from file");
-			} catch (Exception e) {
-				setError("Cannot load game!");
-				Logger.logWarning("Failed to load game from file with error: " + e);
-			} 
+			AnimationController.fadeOut(boardPane.getBoardPane());
+
+			Timeline timeout = new Timeline(new KeyFrame(Duration.millis(
+					AnimationController.getFadeOut()), (event2) -> {
+						try {
+							game = LoadGame.load();
+							game.start();
+							boardPane.refresh();
+
+							setScore(GameViewController.game.getPlayer().getScore());
+							game.getPlayer().register(this);
+							setError("Game loaded!");
+							Logger.logInfo("Loaded game from file");
+							
+							AnimationController.fadeIn(boardPane.getBoardPane());
+						} catch (Exception e) {
+							setError("Cannot load game!");
+							Logger.logWarning("Failed to load game from file with error: " + e);
+						} 
+					}));
+
+			timeout.play();
 		});
 	}
 
