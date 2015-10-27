@@ -2,10 +2,8 @@ package main.gui;
 
 import java.io.IOException;
 
-import javafx.animation.FadeTransition;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.animation.TranslateTransition;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -51,7 +49,7 @@ public class NewGameViewController {
 			fadeOutButtons();
 
 			Timeline timeout = 
-					new Timeline(new KeyFrame(Duration.millis(DURATION_TIMEOUT + 100), (event2) -> {
+					new Timeline(new KeyFrame(Duration.millis(DURATION_TIMEOUT), (event2) -> {
 						MenuViewController.show();
 					}));
 

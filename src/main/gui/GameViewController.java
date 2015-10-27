@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import javafx.animation.FadeTransition;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
@@ -52,8 +51,6 @@ public class GameViewController implements Observer {
 	@FXML private AnchorPane gameOverPane;
 	@FXML private Pane topPane;
 	@FXML private Pane bottomPane;
-	@FXML private Pane topMidPane;
-	@FXML private Pane bottomMidPane;
 
 	@FXML private Button saveGameButton;
 	@FXML private Button loadGameButton;
@@ -81,12 +78,6 @@ public class GameViewController implements Observer {
 		borderPane.getChildren().remove(topPane);
 		borderPane.setTop(topPane);
 		scoreLabel.setText("Score: " + game.getPlayer().getScore());
-
-		//TODO Make this work
-		//Boxblur cannot be applied to a pane, Gaben pls fix
-		BoxBlur boxBlur = new BoxBlur(10, 30, 3);
-		topMidPane.setEffect(boxBlur);
-		bottomMidPane.setEffect(boxBlur);
 
 		initializeButtons();
 
@@ -117,6 +108,7 @@ public class GameViewController implements Observer {
 	 */
 	private void initSaveGameButton() {
 		saveGameButton.setOnAction((event) -> {
+			setGameOver();
 			SaveGame.save(game);
 			setError("Game saved!");
 			Logger.logInfo("Game saved");
@@ -132,9 +124,11 @@ public class GameViewController implements Observer {
 				game = LoadGame.load();
 				game.start();
 				boardPane.refresh();
+				
 				setScore(GameViewController.game.getPlayer().getScore());
 				game.getPlayer().register(this);
 				setError("Game loaded!");
+				
 				Logger.logInfo("Loaded game from file");
 			} catch (Exception e) {
 				setError("Cannot load game!");
@@ -153,23 +147,25 @@ public class GameViewController implements Observer {
 			AnimationController.fadeOut(boardPane.getBoardPane());
 
 			Timeline timeout = 
-					new Timeline(new KeyFrame(Duration.millis(DURATION_FADE), (event2) -> {
-						game.reset();
-						game.start();
-						setScore(0);
-						setTimer(120);
-						boardPane.refresh();
+					new Timeline(new KeyFrame(Duration.millis(AnimationController.getFadeOut()), 
+							(event2) -> {
+								game.reset();
+								game.start();
+								setScore(0);
+								setTimer(120);
+								boardPane.refresh();
 
-						AnimationController.fadeIn(boardPane.getBoardPane());
+								AnimationController.fadeIn(boardPane.getBoardPane());
 
-						Timeline timeout2 = 
-								new Timeline(
-										new KeyFrame(Duration.millis(DURATION_FADE), (event3) -> {
+								//Re-enables the restart button
+								Timeline timeout2 = new Timeline(new KeyFrame(
+										Duration.millis(AnimationController.getFadeOut()), 
+										(event3) -> {
 											restartGameButton.setDisable(false);
 										}));
 
-						timeout2.play();
-					}));
+								timeout2.play();
+							}));
 
 			timeout.play();
 		});
@@ -183,12 +179,14 @@ public class GameViewController implements Observer {
 			AnimationController.fadeOut(anchorPane);
 
 			Timeline timeout = 
-					new Timeline(new KeyFrame(Duration.millis(DURATION_FADE), (event2) -> {
-						game.getPlayer().unregister(this);
-						game.close();
-						MenuViewController.setAnimateLogo(true);
-						MenuViewController.show();
-					}));
+					new Timeline(
+							new KeyFrame(
+									Duration.millis(AnimationController.getFadeOut()), (event2) -> {
+										game.getPlayer().unregister(this);
+										game.close();
+										MenuViewController.setAnimateLogo(true);
+										MenuViewController.show();
+									}));
 
 			timeout.play();
 		});
@@ -199,7 +197,16 @@ public class GameViewController implements Observer {
 	 */
 	private void initGORestartButton() {
 		gameOverRestartButton.setOnAction((event) -> {
-			game.reset();
+			AnimationController.fadeOut(anchorPane);
+
+			Timeline timeout = 
+					new Timeline(
+							new KeyFrame(
+									Duration.millis(AnimationController.getFadeOut()), (event2) -> {
+										game.reset();
+									}));
+
+			timeout.play();
 		});
 	}
 
@@ -259,8 +266,13 @@ public class GameViewController implements Observer {
 	 * Enables the game over screen.
 	 */
 	public void setGameOver() {
+		BoxBlur boxBlur = new BoxBlur(15, 10, 3);
+		borderPane.setEffect(boxBlur);
+
 		scoreLabelGO.setText(scoreLabel.getText());
 		gameOverPane.setVisible(true);
+		AnimationController.fadeIn(gameOverPane);
+
 		game = new GameOver(game);
 	}
 

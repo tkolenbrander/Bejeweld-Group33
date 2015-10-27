@@ -84,9 +84,10 @@ public class MenuViewController {
 				Timeline timeout = 
 						new Timeline(
 								new KeyFrame(
-										Duration.millis(AnimationController.getFadeOut()), (event2) -> {
-											GameViewController.show(game);
-										}));
+										Duration.millis(
+												AnimationController.getFadeOut()), (event2) -> {
+													GameViewController.show(game);
+												}));
 
 				timeout.play();
 

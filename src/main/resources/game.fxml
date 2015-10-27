@@ -67,10 +67,10 @@
                   </Pane>
                </center>
                <top>
-                  <Pane id="gameoverp" fx:id="topMidPane" prefHeight="210.0" prefWidth="520.0" BorderPane.alignment="CENTER" />
+                  <Pane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
                </top>
                <bottom>
-                  <Pane id="gameoverp" fx:id="bottomMidPane" prefHeight="210.0" prefWidth="520.0" BorderPane.alignment="CENTER" />
+                  <Pane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
                </bottom>
             </BorderPane>
          </children>
