@@ -14,12 +14,12 @@
          <top>
             <Pane id="pane" fx:id="topPane" prefHeight="50.0" prefWidth="520.0" BorderPane.alignment="CENTER">
                <children>
-                  <Label fx:id="scoreLabel" contentDisplay="CENTER" layoutX="137.0" layoutY="8.0" prefHeight="35.0" prefWidth="224.0" text="Score: " textFill="WHITE">
+                  <Label fx:id="scoreLabel" contentDisplay="CENTER" layoutX="148.0" layoutY="8.0" prefHeight="35.0" prefWidth="224.0" text="Score: " textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="24.0" />
                      </font>
                   </Label>
-                  <Button fx:id="exitGameButton" layoutX="14.0" layoutY="13.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="100.0" text="Exit to menu" />
+                  <Button id="igbutton" fx:id="exitGameButton" layoutX="14.0" layoutY="12.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="128.0" text="Exit to menu" />
                   <Separator layoutY="40.0" prefHeight="20.0" prefWidth="520.0" />
                   <Label fx:id="remainingTime" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="378.0" layoutY="10.0" prefHeight="31.0" prefWidth="128.0" text="Time: 120" textFill="WHITE" visible="false">
                      <font>
@@ -37,9 +37,9 @@
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </Label>
-                  <Button fx:id="saveGameButton" layoutX="292.0" layoutY="28.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="100.0" text="Save Game" />
-                  <Button fx:id="loadGameButton" layoutX="404.0" layoutY="28.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="100.0" text="Load Game" />
-                  <Button fx:id="restartGameButton" layoutX="17.0" layoutY="28.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="100.0" text="Restart Game" />
+                  <Button id="igbutton" fx:id="saveGameButton" layoutX="260.0" layoutY="26.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="122.0" text="Save Game" />
+                  <Button id="igbutton" fx:id="loadGameButton" layoutX="385.0" layoutY="26.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="121.0" text="Load Game" />
+                  <Button id="igbutton" fx:id="restartGameButton" layoutX="14.0" layoutY="26.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="132.0" text="Restart Game" />
                   <Separator layoutY="-9.0" prefHeight="20.0" prefWidth="520.0" />
                </children>
             </Pane>
