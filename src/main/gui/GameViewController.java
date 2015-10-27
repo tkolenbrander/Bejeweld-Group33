@@ -108,7 +108,6 @@ public class GameViewController implements Observer {
 	 */
 	private void initSaveGameButton() {
 		saveGameButton.setOnAction((event) -> {
-			setGameOver();
 			SaveGame.save(game);
 			setError("Game saved!");
 			Logger.logInfo("Game saved");
