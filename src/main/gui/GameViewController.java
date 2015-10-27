@@ -5,6 +5,8 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import javafx.animation.FadeTransition;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -16,8 +18,8 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
+
 import main.SwekJeweled;
-import main.game.ClassicGame;
 import main.game.Game;
 import main.game.GameOver;
 import main.game.GameState;
@@ -37,11 +39,14 @@ import main.game.TimeTrialGame;
 public class GameViewController implements Observer {
 
 	private static final String FILENAME = "game.fxml";
+	private static final int DURATION_FADE = 500;
+	private static final int DURATION_ERROR_DELAY = 3000;
 
 	private static GameViewController gameViewController;
-
 	private static GameState game;
 	private static BoardPane boardPane;
+
+	@FXML private static AnchorPane anchorPane;
 
 	@FXML private BorderPane borderPane;
 	@FXML private AnchorPane gameOverPane;
@@ -75,7 +80,7 @@ public class GameViewController implements Observer {
 		//Make sure the top pane is over the falling gems
 		borderPane.getChildren().remove(topPane);
 		borderPane.setTop(topPane);
-		scoreLabel.setText("Score: 0");
+		scoreLabel.setText("Score: " + game.getPlayer().getScore());
 
 		//TODO Make this work
 		//Boxblur cannot be applied to a pane, Gaben pls fix
@@ -143,10 +148,30 @@ public class GameViewController implements Observer {
 	 */
 	private void initRestartGameButton() {
 		restartGameButton.setOnAction((event) -> {
-			game.reset();
-			game.start();
-			setScore(0);
-			boardPane.refresh();
+			restartGameButton.setDisable(true);
+
+			AnimationController.fadeOut(boardPane.getBoardPane());
+
+			Timeline timeout = 
+					new Timeline(new KeyFrame(Duration.millis(DURATION_FADE), (event2) -> {
+						game.reset();
+						game.start();
+						setScore(0);
+						setTimer(120);
+						boardPane.refresh();
+
+						AnimationController.fadeIn(boardPane.getBoardPane());
+
+						Timeline timeout2 = 
+								new Timeline(
+										new KeyFrame(Duration.millis(DURATION_FADE), (event3) -> {
+											restartGameButton.setDisable(false);
+										}));
+
+						timeout2.play();
+					}));
+
+			timeout.play();
 		});
 	}
 
@@ -155,9 +180,17 @@ public class GameViewController implements Observer {
 	 */
 	private void initExitGameButton() {
 		exitGameButton.setOnAction((event) -> {
-			game.getPlayer().unregister(this);
-			game.close();
-			MenuViewController.show();
+			AnimationController.fadeOut(anchorPane);
+
+			Timeline timeout = 
+					new Timeline(new KeyFrame(Duration.millis(DURATION_FADE), (event2) -> {
+						game.getPlayer().unregister(this);
+						game.close();
+						MenuViewController.setAnimateLogo(true);
+						MenuViewController.show();
+					}));
+
+			timeout.play();
 		});
 	}
 
@@ -175,7 +208,17 @@ public class GameViewController implements Observer {
 	 */
 	private void initGOMenuButton() {
 		gameOverMenuButton.setOnAction((event) -> {
-			MenuViewController.show();
+			AnimationController.fadeOut(anchorPane);
+
+			Timeline timeout = 
+					new Timeline(new KeyFrame(Duration.millis(DURATION_FADE), (event2) -> {
+						game.getPlayer().unregister(this);
+						game.close();
+						MenuViewController.setAnimateLogo(true);
+						MenuViewController.show();
+					}));
+
+			timeout.play();
 		});
 	}
 
@@ -193,7 +236,11 @@ public class GameViewController implements Observer {
 		try {
 			AnchorPane game = l.load();
 			GameViewController.gameViewController = l.getController();
+			game.setOpacity(0.0);
 			SwekJeweled.getStage().setScene(new Scene(game));
+			anchorPane = game;
+
+			AnimationController.fadeIn(game);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -225,7 +272,7 @@ public class GameViewController implements Observer {
 	protected void setError(String s) {
 		//TODO Fix overwriting animation on duplicate call
 		errorLabel.setText(s);
-		
+
 		Timer timer = new Timer();
 		timer.schedule(new TimerTask() {
 
@@ -235,15 +282,12 @@ public class GameViewController implements Observer {
 
 					@Override
 					public void run() {
-						FadeTransition ft = new FadeTransition(Duration.millis(2000), errorLabel);
-						ft.setFromValue(1.0);
-						ft.setToValue(0.0);
-						ft.play();
+						AnimationController.fadeOutError(errorLabel);
 					}
 				});
 			}
-		}, 4000);
-		
+		}, DURATION_ERROR_DELAY);
+
 		errorLabel.setOpacity(1.0);
 	}
 
@@ -287,14 +331,14 @@ public class GameViewController implements Observer {
 	public static GameViewController getGVC() {
 		return gameViewController;
 	}
-	
+
 	/**
 	 * Refreshes the current board and posts a message to the user with it.
 	 * @param message the message to be posted.
 	 */
 	public void refreshBoard(String message) {
-	  boardPane.getBoardPane().getChildren().clear();
-	  boardPane.initBoard();
-	  setError(message);
+		boardPane.getBoardPane().getChildren().clear();
+		boardPane.initBoard();
+		setError(message);
 	}
 }

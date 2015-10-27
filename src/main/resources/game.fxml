@@ -14,7 +14,7 @@
          <top>
             <Pane id="pane" fx:id="topPane" prefHeight="50.0" prefWidth="520.0" BorderPane.alignment="CENTER">
                <children>
-                  <Label fx:id="scoreLabel" contentDisplay="CENTER" layoutX="137.0" layoutY="8.0" prefHeight="30.0" prefWidth="154.0" text="Score: " textFill="WHITE">
+                  <Label fx:id="scoreLabel" contentDisplay="CENTER" layoutX="137.0" layoutY="8.0" prefHeight="35.0" prefWidth="224.0" text="Score: " textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="24.0" />
                      </font>

@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
+
 import main.game.Logger;
 import main.gui.MenuViewController;
 
@@ -60,5 +61,4 @@ public class SwekJeweled extends Application {
 	public static Stage getStage() {
 		return stage;
 	}
-
 }
