@@ -24,7 +24,6 @@ import main.game.TimeTrialGame;
 public class NewGameViewController {
 
 	private static final String FILENAME = "newgame.fxml";
-	private static final int DURATION_TIMEOUT = 350;
 
 	private static AnchorPane anchorPane;
 
@@ -34,7 +33,6 @@ public class NewGameViewController {
 
 	@FXML
 	private void initialize() {
-
 		fadeInButtons();
 
 		newNormalButton.setOnAction((event) -> {
@@ -49,9 +47,11 @@ public class NewGameViewController {
 			fadeOutButtons();
 
 			Timeline timeout = 
-					new Timeline(new KeyFrame(Duration.millis(DURATION_TIMEOUT), (event2) -> {
-						MenuViewController.show();
-					}));
+					new Timeline(
+							new KeyFrame(
+									Duration.millis(AnimationController.getFadeOut()), (event2) -> {
+										MenuViewController.show();
+									}));
 
 			timeout.play();
 		});
@@ -88,9 +88,11 @@ public class NewGameViewController {
 		AnimationController.fadeOut(anchorPane);
 
 		Timeline timeout = 
-				new Timeline(new KeyFrame(Duration.millis(DURATION_TIMEOUT), (event2) -> {
-					GameViewController.show(game);
-				}));
+				new Timeline(
+						new KeyFrame(
+								Duration.millis(AnimationController.getFadeOut()), (event2) -> {
+									GameViewController.show(game);
+								}));
 
 		timeout.play();
 	}

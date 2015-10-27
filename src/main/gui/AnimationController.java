@@ -14,7 +14,6 @@ abstract class AnimationController {
 
 	private static final int DURATION_FADEIN = 400;
 	private static final int DURATION_FADEOUT = 300;
-	private static final int DURATION_FADEOUT_ERROR = 1500;
 	
 	private static final double BUTTON_OFFSET = 50.0;
 
@@ -25,6 +24,19 @@ abstract class AnimationController {
 	 */
 	protected static void fadeIn(Node node) {
 		FadeTransition ft = new FadeTransition(Duration.millis(DURATION_FADEIN), node);
+		ft.setFromValue(0.0);
+		ft.setToValue(1.0);
+		ft.play();
+	}
+	
+	/**
+	 * Fades in a node.
+	 * 
+	 * @param node The node to fade in
+	 * @param duration The duration of the fade in in milliseconds
+	 */
+	protected static void fadeIn(Node node, double duration) {
+		FadeTransition ft = new FadeTransition(Duration.millis(duration), node);
 		ft.setFromValue(0.0);
 		ft.setToValue(1.0);
 		ft.play();
@@ -45,9 +57,10 @@ abstract class AnimationController {
 	 * Fades out a node, with a longer duration.
 	 * 
 	 * @param node The node to fade out
+	 * @param duration The duration of the fade out in milliseconds
 	 */
-	protected static void fadeOutError(Node node) {
-		FadeTransition ft = new FadeTransition(Duration.millis(DURATION_FADEOUT_ERROR), node);
+	protected static void fadeOut(Node node, double duration) {
+		FadeTransition ft = new FadeTransition(Duration.millis(duration), node);
 		ft.setToValue(0.0);
 		ft.play();
 	}
@@ -98,12 +111,5 @@ abstract class AnimationController {
 	 */
 	protected static int getFadeOut() {
 		return DURATION_FADEOUT;
-	}
-
-	/**
-	 * @return DURATION_FADEOUT_ERROR
-	 */
-	protected static int getFadeOutError() {
-		return DURATION_FADEOUT_ERROR;
 	}
 }

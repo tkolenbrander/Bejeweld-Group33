@@ -301,7 +301,7 @@ public class GameViewController implements Observer {
 
 					@Override
 					public void run() {
-						AnimationController.fadeOutError(errorLabel);
+						AnimationController.fadeOut(errorLabel, 1500);
 					}
 				});
 			}

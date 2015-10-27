@@ -103,8 +103,16 @@ public class MenuViewController {
 	 */
 	private void initHelpButton() {
 		helpButton.setOnAction((event) -> {
-			//animateButtons();
-			//TODO help menu
+			fadeOutButtons();
+			
+			Timeline timeout = 
+					new Timeline(
+							new KeyFrame(
+									Duration.millis(AnimationController.getFadeIn()), (event2) -> {
+										HelpViewController.show();
+									}));
+
+			timeout.play();
 		});
 	}
 
