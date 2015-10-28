@@ -218,7 +218,7 @@ public class BoardPane {
 			result = true;
 		} catch (MoveNotValidException e) {
 			GameViewController.getGVC().setError(e.getMessage());
-			Logger.logInfo("Move failed with exception: " + e);
+			Logger.logWarning("Move failed with exception: " + e);
 		}
 		
 		return result;
