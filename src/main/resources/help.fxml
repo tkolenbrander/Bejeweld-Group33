@@ -24,7 +24,7 @@
       </Text>
       <Text fx:id="text2" layoutX="38.0" layoutY="305.0" strokeType="OUTSIDE" strokeWidth="0.0" text="This game features two game modes: Normal and Time Trial. In the Normal mode, the objective is to get as much points as possible before you run out of moves. In Time Trial, you have to get as much points as possible before you run out of time. You get 2 minutes, and an additional 30 seconds per power gem you make." wrappingWidth="443.6601507663727" />
       <Text fx:id="text3" layoutX="38.0" layoutY="377.0" strokeType="OUTSIDE" strokeWidth="0.0" text="You can make a power gem by making a chain of at least 4 gems long." wrappingWidth="443.6601507663727" />
-      <Text fx:id="text4" layoutX="38.0" layoutY="402.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Play the game by clicking one gem, and then another gem that is adjecent to the first one. If the switch creates a chain, you get points. Otherwise, the gems are switched back again." wrappingWidth="443.66016353474697" />
+      <Text fx:id="text4" layoutX="38.0" layoutY="402.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Play the game by clicking one gem, and then another gem that is adjacent to the first one. If swapping these creates a chain, you get points. Otherwise, the gems are swapped back again." wrappingWidth="443.66016353474697" />
       <Text fx:id="text5" layoutX="38.0" layoutY="457.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Good luck and have fun playing!">
          <font>
             <Font name="System Bold Italic" size="12.0" />

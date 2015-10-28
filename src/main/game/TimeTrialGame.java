@@ -151,6 +151,7 @@ public class TimeTrialGame extends Game {
 	@Override
 	public void close() {
 		super.close();
+		timer.cancel();
 		timer = null;
 		remainingTime = 0;
 	}

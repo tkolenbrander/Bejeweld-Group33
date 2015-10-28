@@ -12,8 +12,8 @@ import javafx.util.Duration;
  */
 abstract class AnimationController {
 
-	private static final int DURATION_FADEIN = 400;
-	private static final int DURATION_FADEOUT = 300;
+	private static final int DURATION_FADEIN = 200;
+	private static final int DURATION_FADEOUT = 200;
 
 	private static final double BUTTON_OFFSET = 50.0;
 
