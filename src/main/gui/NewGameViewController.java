@@ -1,13 +1,19 @@
 package main.gui;
 
 import java.io.IOException;
+
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
+import javafx.util.Duration;
+
 import main.SwekJeweled;
 import main.game.ClassicGame;
+import main.game.Game;
 import main.game.TimeTrialGame;
 
 /**
@@ -19,25 +25,77 @@ public class NewGameViewController {
 
 	private static final String FILENAME = "newgame.fxml";
 
+	private static AnchorPane anchorPane;
+
 	@FXML private Button newNormalButton;
 	@FXML private Button newTimeTrialButton;
 	@FXML private Button newBackButton;
 
 	@FXML
 	private void initialize() {
+		fadeInButtons();
 
 		newNormalButton.setOnAction((event) -> {
-			GameViewController.show(new ClassicGame());
+			newGame(new ClassicGame());
 		});
 
 		newTimeTrialButton.setOnAction((event) -> {
-			GameViewController.show(new TimeTrialGame());
+			newGame(new TimeTrialGame());
 		});
 
 		newBackButton.setOnAction((event) -> {
-			MenuViewController.show();
+			fadeOutButtons();
+
+			Timeline timeout = 
+					new Timeline(
+							new KeyFrame(
+									Duration.millis(AnimationController.getFadeOut()), (event2) -> {
+										MenuViewController.show();
+									}));
+
+			timeout.play();
 		});
 
+	}
+
+	/**
+	 * Fade in all buttons.
+	 */
+	@SuppressWarnings("magicnumber")
+	private void fadeInButtons() {
+		newNormalButton.setOpacity(0.0);
+		newTimeTrialButton.setOpacity(0.0);
+		newBackButton.setOpacity(0.0);
+
+		AnimationController.fadeIn(newNormalButton, 300);
+		AnimationController.fadeIn(newTimeTrialButton, 400);
+		AnimationController.fadeIn(newBackButton, 500);
+	}
+
+	/**
+	 * Fade out all buttons.
+	 */
+	private void fadeOutButtons() {
+		AnimationController.fadeOutNodeRight(newNormalButton);
+		AnimationController.fadeOutNodeRight(newTimeTrialButton);
+		AnimationController.fadeOutNodeRight(newBackButton);
+	}
+
+	/**
+	 * Creates a new game and makes sure the current screen fades out nicely.
+	 * @param game The kind of game to start.
+	 */
+	private void newGame(Game game) {
+		AnimationController.fadeOut(anchorPane);
+
+		Timeline timeout = 
+				new Timeline(
+						new KeyFrame(
+								Duration.millis(AnimationController.getFadeOut()), (event2) -> {
+									GameViewController.show(game);
+								}));
+
+		timeout.play();
 	}
 
 	/**
@@ -49,6 +107,7 @@ public class NewGameViewController {
 
 		try {
 			AnchorPane newgame = l.load();
+			anchorPane = newgame;
 			SwekJeweled.getStage().setScene(new Scene(newgame));
 		} catch (IOException e) {
 			e.printStackTrace();

@@ -3,7 +3,9 @@ package main;
 import java.io.IOException;
 
 import javafx.application.Application;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
+
 import main.game.Logger;
 import main.gui.MenuViewController;
 
@@ -12,7 +14,7 @@ import main.gui.MenuViewController;
  * This class makes sure the GUI is loaded and the game is started.
  * 
  * @author The SwekJeweled Team
- * @version 20/10/2015
+ * @version 27/10/2015
  */
 public class SwekJeweled extends Application {
 
@@ -31,7 +33,7 @@ public class SwekJeweled extends Application {
 	 */
 	public static void main(String[] args) {
 		launch(args);
-		
+
 		//Exit all threads on close
 		System.exit(0);
 	}
@@ -40,6 +42,7 @@ public class SwekJeweled extends Application {
 	public void start(Stage primaryStage) throws IOException {
 		SwekJeweled.stage = primaryStage;
 		SwekJeweled.stage.setTitle("SwekJeweled");
+		SwekJeweled.stage.getIcons().add(new Image(("file:assets/textures/icon.png")));
 
 		//Properties of the stage
 		SwekJeweled.stage.setResizable(false);
@@ -47,9 +50,9 @@ public class SwekJeweled extends Application {
 		SwekJeweled.stage.setWidth(WINDOW_X);
 		SwekJeweled.stage.setHeight(WINDOW_Y);
 		SwekJeweled.stage.show();
-		
+
 		Logger.logInfo("Game succesfully initialized");
-		
+
 		//Show the main menu
 		MenuViewController.show();
 	}
@@ -60,5 +63,4 @@ public class SwekJeweled extends Application {
 	public static Stage getStage() {
 		return stage;
 	}
-
 }

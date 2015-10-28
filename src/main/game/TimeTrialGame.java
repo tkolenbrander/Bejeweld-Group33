@@ -151,6 +151,7 @@ public class TimeTrialGame extends Game {
 	@Override
 	public void close() {
 		super.close();
+		timer.cancel();
 		timer = null;
 		remainingTime = 0;
 	}
@@ -163,5 +164,13 @@ public class TimeTrialGame extends Game {
 			resetBoard();
 			GameViewController.getGVC().refreshBoard("No more moves left, Board refreshed!");
 		}
+	}
+	
+	/**
+	 * @return TIMELIMIT
+	 */
+	public static int getTimeLimit() {
+		return TIMELIMIT;
+
 	}
 }

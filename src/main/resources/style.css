@@ -23,15 +23,35 @@
         linear-gradient(#395c77, #223733);
 }
 
+#igbutton {
+    -fx-background-color: 
+        #000000,
+        linear-gradient(#1239a4, #245bbf),
+        linear-gradient(#2439a4, #365bbf),
+        linear-gradient(#0039a4, #005bbf);
+    -fx-background-insets: 0,1,2,3;
+    -fx-background-radius: 3,2,2,2;
+    -fx-padding: 3 30 3 30;
+    -fx-text-fill: white;
+    -fx-font-size: 12px;
+}
+
+#igbutton Text {
+    -fx-effect: dropshadow( one-pass-box , rgba(0,0,0,0.8) , 0, 0.0 , 0 , 1);
+}
+
+#igbutton:hover {
+    -fx-background-color: 
+        #000000,
+        linear-gradient(#006ea0, #0595ff),
+        linear-gradient(#126ea0, #1795ff),
+        linear-gradient(#246ea0, #2995ff);
+}
+
 #pane {
 	-fx-background-color: #053565;
 }
 
 #gameover {
 	-fx-background-color: #444;
-}
-
-#gameoverp {
-	/* Blur effect would be cool */
-	
 }
