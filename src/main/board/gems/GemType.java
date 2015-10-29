@@ -11,7 +11,6 @@ import java.util.Random;
  * 	special gem types in the future.
  * 
  * @author Bart van Oort
- *
  */
 public enum GemType {
 
