@@ -14,7 +14,8 @@ import main.gui.MenuViewController;
  * This class makes sure the GUI is loaded and the game is started.
  * 
  * @author The SwekJeweled Team
- * @version 27/10/2015
+ * @version 1.0.0-STABLE
+ * @see Application
  */
 public class SwekJeweled extends Application {
 
@@ -24,6 +25,9 @@ public class SwekJeweled extends Application {
 	private static final int WINDOW_X = 526;
 	private static final int WINDOW_Y = 660;
 
+	/**
+	 * The stage of the gui.
+	 */
 	private static Stage stage;
 
 	/**
@@ -41,10 +45,10 @@ public class SwekJeweled extends Application {
 	@Override
 	public void start(Stage primaryStage) throws IOException {
 		SwekJeweled.stage = primaryStage;
-		SwekJeweled.stage.setTitle("SwekJeweled");
 		SwekJeweled.stage.getIcons().add(new Image(("file:assets/textures/icon.png")));
 
 		//Properties of the stage
+		SwekJeweled.stage.setTitle("SwekJeweled");
 		SwekJeweled.stage.setResizable(false);
 		SwekJeweled.stage.centerOnScreen();
 		SwekJeweled.stage.setWidth(WINDOW_X);
