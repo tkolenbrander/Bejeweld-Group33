@@ -11,12 +11,11 @@ import main.board.Change;
 import main.board.Position;
 
 /**
- * Game class. Governs the entire game. In terms of the backend, this is the top of the dome.
+ * Game class. Governs the entire game. In terms of the back-end, this is the top of the dome.
  * Straight from the top of my dome. Freestyler
  * https://www.youtube.com/watch?v=xWHBogvoHqM
  * 
  * @author Bart van Oort
- *
  */
 public abstract class Game extends GameInProgress {
 
@@ -25,7 +24,7 @@ public abstract class Game extends GameInProgress {
 	private static BoardFactory boardFactory;
 
 	/**
-	 * Creates a new game object, with a freshly initialised player and a new board.
+	 * Creates a new game object, with a freshly initialized player and a new board.
 	 * The game is paused at the start.
 	 */
 	public Game() {
@@ -47,66 +46,44 @@ public abstract class Game extends GameInProgress {
 		board = newBoard;
 	}
 
-	/**
-	 * Returns the player.
-	 * @return The player
-	 */
+	@Override
 	public Player getPlayer() {
 		return player;
 	}
 
-	/**
-	 * Returns the board.
-	 * @return The board
-	 */
+	@Override
 	public Board getBoard() {
 		return board;
 	}
-	
+
 	/**
 	 * Resets the board of game.
 	 */
 	public void resetBoard() {
 		board = boardFactory.generateBoard();
 	}
-	
+
 	/**
-	 * Returns the boardFactory that is used.
 	 * @return The boardFactory that is used.
 	 */	
 	public BoardFactory getBoardFactory() {
 		return boardFactory;
 	}
-	
-	/**
-	 * Swaps two gems.
-	 * @param one The first gem
-	 * @param two The second gem
-	 */
+
+	@Override
 	public void swap(Position one, Position two) {
 		board.swap(one.getX(), one.getY(), two.getX(), two.getY());
 		TimelineController.swap(one, two);
 	}
 
-	/**
-	 * Lets the player make a move, as long as moveAllowed returns true.
-	 * 
-	 * This means this method will swap the two cells, see if that creates at least
-	 * one chain and if so, removes the created chains, makes the remaining cells
-	 * fall down and fills the empty cell.
-	 * 
-	 * @param one Position on the board of one selected gem
-	 * @param two Position on the board of the other selected gem
-	 * @throws MoveNotValidException When the move is not allowed, because the cells 
-	 * 		are not adjacent or because the move does not create a chain.
-	 * be executed. 
-	 */
-	public void makeMove(Position one, Position two) 
-			throws MoveNotValidException {
+	@Override
+	public void makeMove(Position one, Position two) throws MoveNotValidException {
 		List<List<Change<Position>>> changes = new ArrayList<List<Change<Position>>>();
 		TimelineController.clearSwapList();
+
 		if (moveAllowed(one, two)) {
 			swap(one, two);
+
 			if (board.hasChain()) { // check if the board has any chains
 				int bonus = 0;
 				Logger.logInfo("Move was successful");
@@ -129,12 +106,10 @@ public abstract class Game extends GameInProgress {
 		}
 		TimelineController.setList(changes);
 	}
-	
-	/**
-	 * Closes the game.
-	 */
+
+	@Override
 	public void close() {
-	  player = null;
-	  board = null;
+		player = null;
+		board = null;
 	}
 }
