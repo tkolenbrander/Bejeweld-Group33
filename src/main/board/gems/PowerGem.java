@@ -4,27 +4,28 @@ import javafx.scene.image.Image;
 
 /**
  * A class to represent a special Power Gem.
- * @author Ruben
- *
+ * 
+ * @author Ruben Vrolijk
  */
 public class PowerGem extends Gem {
 
 	/**
 	 * Creates a PowerGem object with GemType t.
+	 * 
 	 * @param t The GemType of this PowerGem object.
 	 */
 	public PowerGem(GemType t) {
 		super(t);
-		onDestroy = new PowerDestroyBehaviour();
+		setOnDestroy(new PowerDestroyBehaviour());
 	}
 
 	/**
-	 * Return the image of a power gem.
-	 * @return The image of a power gem
+	 * @return The image of a power gem.
 	 */
 	public Image getImage() {
 		Image image = new Image("file:assets/textures/gems/gemMissing.png");
-		switch (type) {
+
+		switch (getType()) {
 		case BLUE:
 			image = new Image("file:assets/textures/powergems/gemBlueBomb.png");
 			break;
@@ -47,18 +48,18 @@ public class PowerGem extends Gem {
 			image = new Image("file:assets/textures/powergems/gemOrangeBomb.png");
 			break;
 		default:
-		  break;
+			break;
 		}
 		return image;
 	}
 
 	/**
-	 * Return the image of a power gem when it's clicked.
-	 * @return The image of a power gem when it's clicked
+	 * @return The image of a power gem when it's clicked.
 	 */
 	public Image getImageClicked() {
 		Image image = new Image("file:assets/textures/gems/gemMissing.png"); 	
-		switch (type) {
+
+		switch (getType()) {
 		case BLUE:
 			image = new Image("file:assets/textures/powergems/gemBlueBombClicked.png");
 			break;
@@ -81,9 +82,8 @@ public class PowerGem extends Gem {
 			image = new Image("file:assets/textures/powergems/gemOrangeBombClicked.png");
 			break;
 		default:
-		  break;
+			break;
 		}	
 		return image;
 	}
-
 }
