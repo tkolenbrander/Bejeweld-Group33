@@ -1,10 +1,10 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>nl.tudelft.sembejeweled33</groupId>
-  <artifactId>SEM_Bejeweled</artifactId>
-  <version>0.6.9-STABLE</version>
+  <artifactId>SEM-Bejeweled</artifactId>
+  <version>1.0.0-STABLE</version>
   <name>SEM Bejeweled</name>
-  <description>Bejeweled for the course Software Engineering Methods</description>
+  <description>Bejeweled for the Software Engineering Methods [TI2206] course at the TU Delft.</description>
   <dependencies>
 	<dependency>
 		<groupId>junit</groupId>
@@ -30,4 +30,8 @@
       </plugin>
     </plugins>
   </build>
+  <ciManagement>
+  	<system>Travis-CI</system>
+  	<url>https://travis-ci.org/tkolenbrander/Bejeweld-Group33</url>
+  </ciManagement>
 </project>

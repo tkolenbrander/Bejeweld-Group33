@@ -4,8 +4,8 @@ import main.gui.GameViewController;
 
 /**
  * Represents a game that is in progress.
- * @author Ruben
- *
+ * 
+ * @author Ruben Vrolijk
  */
 public abstract class GameInProgress implements GameState {
 
@@ -15,7 +15,7 @@ public abstract class GameInProgress implements GameState {
 	 */
 	@Override
 	public void start() {
-		
+
 	}
 
 	/**
@@ -27,5 +27,4 @@ public abstract class GameInProgress implements GameState {
 		Logger.logInfo("Game over! Score was " + getPlayer().getScore());
 		GameViewController.getGVC().setGameOver();
 	}
-
 }

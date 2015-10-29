@@ -177,6 +177,7 @@ public class MenuViewController {
 
 	/**
 	 * Set if the logo should be animated.
+	 * 
 	 * @param b True if the logo has to be animated
 	 */
 	public static void setAnimateLogo(boolean b) {
