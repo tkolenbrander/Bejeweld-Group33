@@ -9,7 +9,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
- * 
  * Handles the logging of events to an external file.
  * 
  * @author Steven Meijer
@@ -18,7 +17,7 @@ public final class Logger {
 
 	private static final Object SYNC = new Object();
 	private static final String PATH = "logfile.txt"; //static path for now
-	private static boolean logInfo = true; //TODO: config options in GUI
+	private static boolean logInfo = true;
 	private static boolean logWarning = true;
 
 	private static PrintWriter out;
@@ -66,8 +65,8 @@ public final class Logger {
 	 * 0: No logging whatsoever <br>
 	 * 1: Only warnings are logged <br>
 	 * Anything else: Warnings and Info messages are both logged <br>
-	 * @param level level of messages to be logged.
 	 * 
+	 * @param level level of messages to be logged.
 	 */
 	public static void setLogLevel(int level) {
 		switch (level) {
@@ -87,6 +86,7 @@ public final class Logger {
 
 	/**
 	 * Logs all info and higher to a log file.
+	 * 
 	 * @param text The text to be written.
 	 */
 	public static void logInfo(final String text) {
@@ -97,6 +97,7 @@ public final class Logger {
 
 	/**
 	 * Logs all warnings and higher to a log file.
+	 * 
 	 * @param text The text to be written.
 	 */
 	public static void logWarning(final String text) {
@@ -107,6 +108,7 @@ public final class Logger {
 
 	/**
 	 * Makes sure the desired message is written to a log file.
+	 * 
 	 * @param level The severity of the message.
 	 * @param text The text to be written.
 	 */

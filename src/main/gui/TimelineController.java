@@ -19,9 +19,10 @@ import javafx.util.Duration;
 
 /**
  * Class that controls the timeline, used for the animations.
- * @author Thomas & Bart
- *
+ * 
+ * @author Thomas Kolenbrander & Bart van Oort
  */
+@SuppressWarnings("magicnumber") //Values are sizes of the sprite, which are not changable.
 public class TimelineController {
 
 	/**
@@ -46,6 +47,7 @@ public class TimelineController {
 
 	/**
 	 * Generates animations from the changes.
+	 * 
 	 * @return The timeline with animations.
 	 */
 	public SequentialTransition getTimeline() {
@@ -59,6 +61,7 @@ public class TimelineController {
 
 	/**
 	 * Generates Timelines from the changes.
+	 * 
 	 * @return The different Timelines with animations.
 	 */
 	public Timeline[] generateTimelines() {
@@ -80,6 +83,7 @@ public class TimelineController {
 
 	/**
 	 * Generates key values from the changes.
+	 * 
 	 * @param changes The list with all the changes that should occur parallel.
 	 * @return The generated key values.
 	 */
@@ -108,6 +112,7 @@ public class TimelineController {
 
 	/**
 	 * Animation for removing a gem.
+	 * 
 	 * @param imageViews The imageviews
 	 * @param change The position of the change
 	 * @return The keyvalue for the animation
@@ -122,6 +127,7 @@ public class TimelineController {
 
 	/**
 	 * Handles the animation when a gem should fall down.
+	 * 
 	 * @param imageViews All imageviews of the board
 	 * @param change The change that has to be made to the new gem.
 	 * @return The keyvalue corresponding to the animation of a gem falling down.
@@ -144,12 +150,12 @@ public class TimelineController {
 
 	/**
 	 * This method generates a new gem and its animation.
+	 * 
 	 * @param imageViews All imageviews of the board
 	 * @param change The change that has to be made to the new gem.
 	 * @return The keyvalue corresponding to the animation of a new gem appearing.
 	 */
 	public KeyValue generateGem(ImageView[][] imageViews, Change<Position> change) {
-		Position from = change.getFrom();
 		Position to = change.getTo();
 
 		Create<Position> create = (Create<Position>) change;
@@ -184,6 +190,7 @@ public class TimelineController {
 
 	/**
 	 * Generates the animation of a swap action.
+	 * 
 	 * @param one The position of the first cell to swap.
 	 * @param two The position of the second cell to swap with.
 	 */
@@ -204,7 +211,8 @@ public class TimelineController {
 
 	/**
 	 * Generates the keyvalues of a swap animation.
-	 * @param imageViews All imageviews of the board
+	 * 
+	 * @param imageViews All imageviews of the board.
 	 * @param one The position of the first cell to swap.
 	 * @param two The position of the second cell to swap with.
 	 * @return The keyvalues corresponding with a swap animation.
@@ -230,6 +238,7 @@ public class TimelineController {
 
 	/**
 	 * Sets the list of current changes.
+	 * 
 	 * @param l A list of changes.
 	 */
 	public static void setList(List<List<Change<Position>>> l) {

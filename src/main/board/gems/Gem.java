@@ -12,17 +12,17 @@ import javafx.scene.image.Image;
  * @author Bart van Oort
  */
 public abstract class Gem {
-	
+
 	/**
 	 * The GemType of the gem.
 	 */
-	protected GemType type;
-	
+	private GemType type;
+
 	/**
 	 * The current DestroyBehaviour of the gem.
 	 */
-	protected DestroyBehaviour onDestroy;
-	
+	private DestroyBehaviour onDestroy;
+
 	/**
 	 * Creates a Gem object with GemType t.
 	 * @param t GemType of the Gem.
@@ -30,7 +30,7 @@ public abstract class Gem {
 	public Gem(GemType t) {
 		type = t;
 	}
-	
+
 	/**
 	 * Returns the type of gem.
 	 * @return type of gem.
@@ -38,19 +38,19 @@ public abstract class Gem {
 	public GemType getType() {
 		return type;
 	}
-	
+
 	/**
 	 * Return the image of a gem.
 	 * @return The image of a gem
 	 */
 	public abstract Image getImage();
-	
+
 	/**
 	 * Return the image of a gem when it's clicked.
 	 * @return The image of a gem when it's clicked
 	 */
 	public abstract Image getImageClicked();
-	
+
 	/**
 	 * Destroys this gem.
 	 * Gives a list of the positions of all the other gems that got destroyed 
@@ -62,19 +62,35 @@ public abstract class Gem {
 	 * destroyed when this gem gets destroyed.
 	 */
 	public List<Position> destroy(Cell[][] cells, Position pos) {
-		return onDestroy.destroy(cells, pos);
+		return getOnDestroy().destroy(cells, pos);
 	};
-	
+
 	/**
-   * Checks if two gems are equal.
-   * @param other gem to check
-   * @return true iff the two gems are equal.
-   */
+	 * Checks if two gems are equal.
+	 * @param other gem to check
+	 * @return true iff the two gems are equal.
+	 */
 	@Override
 	public boolean equals(Object other) {
-	  if (other instanceof Gem) {
-	    return this.type == ((Gem) other).type;
-	  }
-	  return false;
+		if (other instanceof Gem) {
+			return this.type == ((Gem) other).type;
+		}
+		return false;
+	}
+
+	/**
+	 * @return The destroy behavior.
+	 */
+	public DestroyBehaviour getOnDestroy() {
+		return onDestroy;
+	}
+
+	/**
+	 * Sets the destroy behaviour.
+	 * 
+	 * @param onDestroy The destroy behaviour.
+	 */
+	public void setOnDestroy(DestroyBehaviour onDestroy) {
+		this.onDestroy = onDestroy;
 	}
 }

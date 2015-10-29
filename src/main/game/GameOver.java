@@ -8,15 +8,16 @@ import main.gui.GameViewController;
 /**
  * A class to represent the game when it's over.
  * The game has no functionality anymore in this state besides restarting.
- * @author Ruben
- *
+ * 
+ * @author Ruben Vrolijk
  */
 public class GameOver implements GameState {
-	
+
 	private GameState oldGame;
-	
+
 	/**
 	 * Creates a new GameOver object for the given game that just ended.
+	 * 
 	 * @param oldState	The game that is over.
 	 */
 	public GameOver(GameState oldState) {
@@ -35,12 +36,12 @@ public class GameOver implements GameState {
 
 	@Override
 	public void start() {
-		
+
 	}
 
 	@Override
 	public void stop() {
-		
+
 	}
 
 	/**
@@ -57,23 +58,22 @@ public class GameOver implements GameState {
 
 	@Override
 	public void swap(Position one, Position two) {
-		
+
 	}
 
 	@Override
 	public void makeMove(Position one, Position two) {
-		
+
 	}
 
 	@Override
-	public boolean moveAllowed(Position one, Position two)
-			throws MoveNotValidException {
+	public boolean moveAllowed(Position one, Position two) throws MoveNotValidException {
 		return false;
 	}
 
 	@Override
 	public void checkGameOver() {
-		
+
 	}
 
 	@Override
@@ -81,5 +81,4 @@ public class GameOver implements GameState {
 		oldGame.close();
 		oldGame = null;
 	}
-
 }

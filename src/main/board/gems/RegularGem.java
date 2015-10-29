@@ -4,27 +4,28 @@ import javafx.scene.image.Image;
 
 /**
  * A class to represent a regular gem on the board.
- * @author Ruben
- *
+ * 
+ * @author Ruben Vrolijk
  */
 public class RegularGem extends Gem {
 
 	/**
 	 * Creates a RegularGem object with GemType t.
+	 * 
 	 * @param t GemType of the RegularGem.
 	 */
 	public RegularGem(GemType t) {
 		super(t);
-		onDestroy = new RegularDestroyBehaviour();
+		setOnDestroy(new RegularDestroyBehaviour());
 	}
-	
+
 	/**
-	 * Return the image of a regular gem.
-	 * @return The image of a regular gem
+	 * @return The image of a regular gem.
 	 */
 	public Image getImage() {
 		Image image = new Image("file:assets/textures/gems/gemMissing.png");
-		switch (type) {
+
+		switch (getType()) {
 		case BLUE:
 			image = new Image("file:assets/textures/gems/gemBlue.png");
 			break;
@@ -47,18 +48,18 @@ public class RegularGem extends Gem {
 			image = new Image("file:assets/textures/gems/gemOrange.png");
 			break;
 		default:
-		  break;
+			break;
 		}
 		return image;
 	}
-	
+
 	/**
-	 * Return the image of a regular gem when it's clicked.
-	 * @return The image of a regular gem when it's clicked
+	 * @return The image of a regular gem when it's clicked.
 	 */
 	public Image getImageClicked() {
 		Image image = new Image("file:assets/textures/gems/gemMissing.png"); 	
-		switch (type) {
+
+		switch (getType()) {
 		case BLUE:
 			image = new Image("file:assets/textures/gems/gemBlueClicked.png");
 			break;
@@ -81,9 +82,8 @@ public class RegularGem extends Gem {
 			image = new Image("file:assets/textures/gems/gemOrangeClicked.png");
 			break;
 		default:
-		  break;
+			break;
 		}	
 		return image;
 	}
-
 }

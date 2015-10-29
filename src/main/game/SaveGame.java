@@ -10,10 +10,11 @@ import main.board.Position;
 
 /**
  * Utility class for saving the game to a save game.
+ * 
  * @author Bart van Oort
- *
  */
 public final class SaveGame {
+	
 	private static final Object SYNC = new Object();
 	private static final String PATH = "savefile.bjw";
 
@@ -26,6 +27,7 @@ public final class SaveGame {
 
 	/**
 	 * Saves the game to the save game.
+	 * 
 	 * @param game Game to be saved.
 	 */
 	public static void save(GameState game) {
@@ -36,6 +38,7 @@ public final class SaveGame {
 				List<Position> powerPos = game.getBoard().getPowerGems();
 				out.println(game.getPlayer().getScore());
 				out.println(powerPos.size());
+				
 				for (Position pos : powerPos) {
 					out.println(pos);
 				}

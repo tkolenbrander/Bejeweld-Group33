@@ -16,7 +16,7 @@ import main.board.gems.RegularGem;
 /**
  * Utility class for loading the game from a saved game.
  * 
- * @author Ruben
+ * @author Ruben Vrolijk
  */
 public final class LoadGame {
 
@@ -32,6 +32,7 @@ public final class LoadGame {
 
 	/**
 	 * Loads the game from the last saved game.
+	 * 
 	 * @throws FileNotFoundException Which is handled in the GUI.
 	 * @return a new Game with the saved score and Board.
 	 */
@@ -40,6 +41,7 @@ public final class LoadGame {
 			Cell[][] cells = new Cell[Board.BOARDSIZE][Board.BOARDSIZE];
 			Scanner in = null;
 			ClassicGame game = new ClassicGame();
+			
 			try {
 				in = new Scanner(new FileReader(PATH));
 				Player player = new Player(in.nextInt());

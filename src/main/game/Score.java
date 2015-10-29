@@ -9,12 +9,14 @@ public interface Score {
 
 	/**
 	 * Registers an observer.
+	 * 
 	 * @param obj The observer
 	 */
 	void register(Observer obj);
 
 	/**
 	 * Unregisters an observer.
+	 * 
 	 * @param obj The observer.
 	 */
 	void unregister(Observer obj);
@@ -26,6 +28,7 @@ public interface Score {
 
 	/**
 	 * Gets updates from the observed object.
+	 * 
 	 * @param obj The observer.
 	 * @return The update.
 	 */

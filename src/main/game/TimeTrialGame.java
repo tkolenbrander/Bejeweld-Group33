@@ -14,7 +14,7 @@ import main.gui.GameViewController;
  * certain amount of time to get a score as high as possible. 
  * 
  * @author Bart van Oort
- * @version 23/10/2015
+ * @since 23/10/2015
  */
 public class TimeTrialGame extends Game {
 
@@ -27,6 +27,11 @@ public class TimeTrialGame extends Game {
 	 * Time added per newly generated powergem.
 	 */
 	private static final int TIME_PER_POWERGEM = 30;
+	
+	/**
+	 * The time delay.
+	 */
+	private static final int DELAY = 1000;
 
 	/**
 	 * Timer to keep track of the time.
@@ -39,8 +44,8 @@ public class TimeTrialGame extends Game {
 	private int remainingTime;
 
 	/**
-	 * Creates a new game object, with a freshly initialised player and a new board.
-	 * Initialises the timer to the time limit specified in the field TIMELIMIT.
+	 * Creates a new game object, with a freshly initialized player and a new board.
+	 * Initializes the timer to the time limit specified in the field TIMELIMIT.
 	 * The game is paused at the start.
 	 */
 	public TimeTrialGame() {
@@ -52,7 +57,7 @@ public class TimeTrialGame extends Game {
 	/**
 	 * Creates a new game object, with the given board and player.
 	 * 
-	 * Initialises the timer to the time limit specified in the field TIMELIMIT.
+	 * Initializes the timer to the time limit specified in the field TIMELIMIT.
 	 * The game is paused at the start.
 	 * 
 	 * @param newBoard Board to be loaded into the game.
@@ -64,7 +69,6 @@ public class TimeTrialGame extends Game {
 		remainingTime = TIMELIMIT;
 	}
 
-	@SuppressWarnings("magicnumber")
 	@Override
 	public void start() {
 		timer.scheduleAtFixedRate(new TimerTask() {
@@ -82,7 +86,7 @@ public class TimeTrialGame extends Game {
 					}
 				});
 			}
-		}, 1000, 1000);
+		}, DELAY, DELAY);
 		super.start();
 	}
 
@@ -108,23 +112,12 @@ public class TimeTrialGame extends Game {
 		remainingTime += getBoard().getNewPowerGems() * TIME_PER_POWERGEM;
 	}
 
-	/**
-	 * Checks if the move you want to make is allowed.
-	 * 
-	 * In this game, a move is allowed when the game is in progress and there still
-	 * is time remaining.
-	 * 
-	 * @param one Position on the board of one selected gem
-	 * @param two Position on the board of the other selected gem
-	 * @return if the move is allowed
-	 * @throws MoveNotValidException When the move is not allowed, because the cells 
-	 * are not adjacent.
-	 */
 	@Override
 	public boolean moveAllowed(Position one, Position two) throws MoveNotValidException {
 		if (remainingTime > 0) {
 			Logger.logInfo("Attempting to swap gem at (" + one.getX() + "," + one.getY() + ") "
 					+ "with (" + two.getX() + "," + two.getY() + ")");
+			
 			if (one.isAdjacentTo(two)) {
 				return true;
 			}
@@ -151,6 +144,7 @@ public class TimeTrialGame extends Game {
 	@Override
 	public void close() {
 		super.close();
+		timer.cancel();
 		timer = null;
 		remainingTime = 0;
 	}
@@ -163,5 +157,13 @@ public class TimeTrialGame extends Game {
 			resetBoard();
 			GameViewController.getGVC().refreshBoard("No more moves left, Board refreshed!");
 		}
+	}
+	
+	/**
+	 * @return TIMELIMIT
+	 */
+	public static int getTimeLimit() {
+		return TIMELIMIT;
+
 	}
 }
