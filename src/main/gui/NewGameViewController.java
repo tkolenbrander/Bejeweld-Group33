@@ -61,7 +61,7 @@ public class NewGameViewController {
 	/**
 	 * Fade in all buttons.
 	 */
-	@SuppressWarnings("magicnumber")
+	@SuppressWarnings("magicnumber") //Values should not be changable
 	private void fadeInButtons() {
 		newNormalButton.setOpacity(0.0);
 		newTimeTrialButton.setOpacity(0.0);
@@ -83,6 +83,7 @@ public class NewGameViewController {
 
 	/**
 	 * Creates a new game and makes sure the current screen fades out nicely.
+	 * 
 	 * @param game The kind of game to start.
 	 */
 	private void newGame(Game game) {

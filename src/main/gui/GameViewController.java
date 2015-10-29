@@ -353,6 +353,7 @@ public class GameViewController implements Observer {
 
 	/**
 	 * Refreshes the current board and posts a message to the user with it.
+	 * 
 	 * @param message the message to be posted.
 	 */
 	public void refreshBoard(String message) {

@@ -34,10 +34,10 @@ public class HelpViewController {
 	@FXML
 	private void initialize() {
 		fadeIn();
-		
+
 		backButton.setOnAction((event) -> {
 			fadeOut();
-			
+
 			Timeline timeout = 
 					new Timeline(
 							new KeyFrame(
@@ -48,11 +48,11 @@ public class HelpViewController {
 			timeout.play();
 		});
 	}
-	
+
 	/**
 	 * Fade in all nodes.
 	 */
-	@SuppressWarnings("magicnumber")
+	@SuppressWarnings("magicnumber") //Values should not be changable.
 	private void fadeIn() {
 		text1.setOpacity(0.0);
 		text2.setOpacity(0.0);
@@ -60,7 +60,7 @@ public class HelpViewController {
 		text4.setOpacity(0.0);
 		text5.setOpacity(0.0);
 		backButton.setOpacity(0.0);
-		
+
 		AnimationController.fadeIn(text1, 300);
 		AnimationController.fadeIn(text2, 400);
 		AnimationController.fadeIn(text3, 500);
@@ -68,7 +68,7 @@ public class HelpViewController {
 		AnimationController.fadeIn(text5, 700);
 		AnimationController.fadeIn(backButton, 900);
 	}
-	
+
 	/**
 	 * Fade out all nodes.
 	 */
