@@ -7,6 +7,7 @@ import main.board.Change;
 import main.board.Create;
 import main.board.Position;
 import main.board.Remove;
+
 import javafx.animation.Interpolator;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
@@ -180,7 +181,6 @@ public class TimelineController {
 	public void addMousePressed(ImageView newImage) {
 		newImage.setOnMousePressed(new EventHandler<MouseEvent>() {
 			public void handle(MouseEvent me) {
-				System.out.println(me.getSceneX() + ", " + (me.getSceneY() - 55));
 				int x = (int) me.getSceneX() / 65;
 				int y = (int) (me.getSceneY() - 55) / 65;
 				GameViewController.getBoardPane().clicked(x, y, newImage);
@@ -251,5 +251,4 @@ public class TimelineController {
 	public static void clearSwapList() {
 		swapList = new ArrayList<Timeline>();
 	}
-
 }
