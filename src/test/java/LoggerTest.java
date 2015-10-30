@@ -18,7 +18,6 @@ import static org.mockito.Mockito.verify;
 import main.game.Logger;
 
 /**
- * 
  * Tests the Logger class.
  * 
  * @author Steven Meijer
@@ -75,8 +74,6 @@ public class LoggerTest {
 	 * It should not be called when the log level is 0.
 	 */
 	@Test
-	//verify is the oracle of this test, no assert() or fail() needed.
-	@SuppressWarnings("PMD.JUnitTestsShouldIncludeAssert")
 	public void testWriteInfoLevel0() {
 		Logger.setLogLevel(0);
 		Logger.logInfo("WriteInfoLevel0");
@@ -90,8 +87,6 @@ public class LoggerTest {
 	 * when logging the warning.
 	 */
 	@Test
-	//verify is the oracle of this test, no assert() or fail() needed.
-	@SuppressWarnings("PMD.JUnitTestsShouldIncludeAssert")
 	public void testWriteInfoLevel1() {
 		Logger.setLogLevel(1);
 		Logger.logInfo("WriteInfoLevel1");
@@ -105,8 +100,6 @@ public class LoggerTest {
 	 * both for the warning and the info.
 	 */
 	@Test
-	//verify is the oracle of this test, no assert() or fail() needed.
-	@SuppressWarnings("PMD.JUnitTestsShouldIncludeAssert")
 	public void testWriteInfoLevelDefault() {
 		Logger.setLogLevel(2);
 		Logger.logInfo("WriteInfoLevel2");
