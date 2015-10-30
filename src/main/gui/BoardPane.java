@@ -82,6 +82,14 @@ public class BoardPane {
 	public BorderPane getPane() {
 		return borderPane;
 	}
+	
+	/**
+	 * Returns if an animation is currently played.
+	 * @return True if an animation is currently played.
+	 */
+	public boolean getAnimating() {
+		return animating;
+	}
 
 	/**
 	 * Initializes the board.

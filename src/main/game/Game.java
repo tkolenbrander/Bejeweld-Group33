@@ -101,8 +101,6 @@ public abstract class Game extends GameInProgress {
 				TimelineController.setList(changes);
 				throw new MoveNotValidException("Move doesn't make a chain");
 			}
-
-			checkGameOver();
 		}
 		TimelineController.setList(changes);
 	}

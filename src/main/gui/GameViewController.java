@@ -13,12 +13,13 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.effect.BoxBlur;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
-
 import main.SwekJeweled;
+import main.board.Board;
 import main.game.Game;
 import main.game.GameOver;
 import main.game.GameState;
@@ -357,6 +358,9 @@ public class GameViewController implements Observer {
 	 * @param message the message to be posted.
 	 */
 	public void refreshBoard(String message) {
+		while(boardPane.getAnimating()) {
+			
+		}
 		boardPane.getBoardPane().getChildren().clear();
 		boardPane.initBoard();
 		setError(message);
