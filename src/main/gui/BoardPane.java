@@ -82,6 +82,14 @@ public class BoardPane {
 	public BorderPane getPane() {
 		return borderPane;
 	}
+	
+	/**
+	 * Returns if an animation is currently played.
+	 * @return True if an animation is currently played.
+	 */
+	public boolean getAnimating() {
+		return animating;
+	}
 
 	/**
 	 * Initializes the board.
@@ -121,8 +129,7 @@ public class BoardPane {
 	}
 
 	/**
-	 * Returns the imageviews.
-	 * @return the imageviews.
+	 * @return The imageviews.
 	 */
 	public ImageView[][] getImageViews() {
 		return imageviews;
@@ -130,6 +137,7 @@ public class BoardPane {
 
 	/**
 	 * Sets the imageviews.
+	 * 
 	 * @param views The views
 	 */
 	public void setImageViews(ImageView[][] views) {
@@ -139,12 +147,9 @@ public class BoardPane {
 	/**
 	 * Handles the event when a gem is clicked.
 	 * 
-	 * @param x
-	 *            The x coordinate of the gem.
-	 * @param y
-	 *            The y coordinate of the gem.
-	 * @param view
-	 * 			  The imageview
+	 * @param x The x coordinate of the gem.
+	 * @param y The y coordinate of the gem.
+	 * @param view The imageview.
 	 */
 	public synchronized void clicked(int x, int y, ImageView view) {
 		Board board = GameViewController.getGame().getBoard();
@@ -158,7 +163,7 @@ public class BoardPane {
 				@Override
 				public void handle(ActionEvent e) {
 					animating = false;
-					
+
 					//Check for game over here to make sure animation finished.
 					GameViewController.getGame().checkGameOver();
 				}
@@ -180,10 +185,8 @@ public class BoardPane {
 	/**
 	 * Changes the sprite of the gem to the 'clicked' sprite.
 	 * 
-	 * @param view
-	 *            The ImageView to add the sprite to.
-	 * @param gem
-	 *            The gem whose 'clicked' sprite shall be added.
+	 * @param view The ImageView to add the sprite to.
+	 * @param gem The gem whose 'clicked' sprite shall be added.
 	 */
 	public synchronized void displayClicked(ImageView view, Gem gem) {
 		view.setImage(gem.getImageClicked());
@@ -192,10 +195,8 @@ public class BoardPane {
 	/**
 	 * Adds the sprite of a gem to an ImageView.
 	 * 
-	 * @param view
-	 *            The ImageView to add the sprite to.
-	 * @param gem
-	 *            The gem whose sprite shall be added.
+	 * @param view The ImageView to add the sprite to.
+	 * @param gem The gem whose sprite shall be added.
 	 */
 	public synchronized void displayNormal(ImageView view, Gem gem) {
 		view.setImage(gem.getImage());
@@ -204,11 +205,9 @@ public class BoardPane {
 	/**
 	 * Tries to make a move between two positions. True if successful.
 	 * 
-	 * @param p1
-	 *            The first position.
-	 * @param p2
-	 *            The second position.
-	 * @return returns whether a move is possible
+	 * @param p1 The first position.
+	 * @param p2 The second position.
+	 * @return Whether a move is possible
 	 */
 	public boolean makeMove(Position p1, Position p2) {
 		boolean result = false;
@@ -218,14 +217,15 @@ public class BoardPane {
 			result = true;
 		} catch (MoveNotValidException e) {
 			GameViewController.getGVC().setError(e.getMessage());
-			Logger.logInfo("Move failed with exception: " + e);
+			Logger.logWarning("Move failed with exception: " + e);
 		}
-		
+
 		return result;
 	}
 
 	/**
 	 * Plays the swap animation.
+	 * 
 	 * @param swapAnim The animation
 	 */
 	public void playSwapAnim(SequentialTransition swapAnim) {

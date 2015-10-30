@@ -28,6 +28,7 @@ public class Player implements Score {
 
 	/**
 	 * Creates a new player with the given score.
+	 * 
 	 * @param newScore The new score of the player.
 	 */
 	public Player(final int newScore) {
@@ -36,8 +37,7 @@ public class Player implements Score {
 	}
 
 	/**
-	 * Returns the score of the player.
-	 * @return score of the player.
+	 * @return The score of the player.
 	 */
 	public final int getScore() {
 		return score;
@@ -45,6 +45,7 @@ public class Player implements Score {
 
 	/**
 	 * Adds score to the player's score.
+	 * 
 	 * @param add score to be added to the player's score.
 	 */
 	public final void addScore(final int add) {
@@ -54,7 +55,7 @@ public class Player implements Score {
 	}
 
 	/**
-	 * Resets the player to its initial state, that is, score = 0..
+	 * Resets the player to its initial state, that is, score = 0.
 	 */
 	public final void reset() {
 		score = 0;
@@ -62,6 +63,7 @@ public class Player implements Score {
 
 	/**
 	 * Registers this object to an observer.
+	 * 
 	 * @param obj The observer.
 	 */
 	@Override
@@ -79,6 +81,7 @@ public class Player implements Score {
 
 	/**
 	 * Unregisters this object from an observer.
+	 * 
 	 * @param obj The observer
 	 */
 	@Override
@@ -118,5 +121,4 @@ public class Player implements Score {
 	public final Object getUpdate(final Observer obj) {
 		return score;
 	}
-
 }

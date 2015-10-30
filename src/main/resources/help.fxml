@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="620.0" prefWidth="520.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.gui.HelpViewController">
+   <children>
+      <ImageView fitHeight="191.0" fitWidth="333.0" layoutX="95.0" layoutY="48.0" pickOnBounds="true" preserveRatio="true" AnchorPane.topAnchor="48.0">
+         <image>
+            <Image url="@MenuLogo.png" />
+         </image>
+      </ImageView>
+      <Label layoutX="2.0" layoutY="612.0" text="© 2015 - The SwekJeweled SEM team | Group-33" />
+      <Button id="button" fx:id="backButton" layoutX="192.0" layoutY="514.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="140.0" text="Back to menu" />
+      <Text fx:id="text1" layoutX="38.0" layoutY="289.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Welcome to SwekJeweled!">
+         <font>
+            <Font name="System Bold Italic" size="16.0" />
+         </font>
+      </Text>
+      <Text fx:id="text2" layoutX="38.0" layoutY="305.0" strokeType="OUTSIDE" strokeWidth="0.0" text="This game features two game modes: Normal and Time Trial. In the Normal mode, the objective is to get as much points as possible before you run out of moves. In Time Trial, you have to get as much points as possible before you run out of time. You get 2 minutes, and an additional 30 seconds per power gem you make." wrappingWidth="443.6601507663727" />
+      <Text fx:id="text3" layoutX="38.0" layoutY="377.0" strokeType="OUTSIDE" strokeWidth="0.0" text="You can make a power gem by making a chain of at least 4 gems long." wrappingWidth="443.6601507663727" />
+      <Text fx:id="text4" layoutX="38.0" layoutY="402.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Play the game by clicking one gem, and then another gem that is adjacent to the first one. If swapping these creates a chain, you get points. Otherwise, the gems are swapped back again." wrappingWidth="443.66016353474697" />
+      <Text fx:id="text5" layoutX="38.0" layoutY="457.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Good luck and have fun playing!">
+         <font>
+            <Font name="System Bold Italic" size="12.0" />
+         </font>
+      </Text>
+   </children>
+</AnchorPane>
